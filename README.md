@@ -2,7 +2,7 @@
 
 frontEnd 브랜치에서 branch 생성 후 code 업로드
 
-##사용한 git 명령어
+## 사용한 git 명령어
 
 $git checkout frontEnd
 
@@ -13,6 +13,6 @@ branch 이름 예시
  여기서 작업 후 나중에 frontEnd 브랜치로 merge 예정~~
 
 
-##이런 모양으로 branch가 만들어졌다고 생각중
+## 이런 모양으로 branch가 만들어졌다고 생각중
 
 main - frontEnd - feature/history
