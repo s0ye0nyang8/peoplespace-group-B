@@ -16,6 +16,9 @@ branch 이름 예시
 ## 이런 모양으로 branch 모양 생각중
 
 main - frontEnd - feature/history (민주)
-                - (가은님branch)
-                - (정은님branch)
-                - (혜민님 branch)
+                  
+                  - (가은님branch)
+                
+                  - (정은님branch)
+                
+                  - (혜민님 branch)
