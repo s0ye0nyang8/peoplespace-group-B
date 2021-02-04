@@ -13,6 +13,9 @@ branch 이름 예시
  여기서 작업 후 나중에 frontEnd 브랜치로 merge 예정~~
 
 
-## 이런 모양으로 branch가 만들어졌다고 생각중
+## 이런 모양으로 branch 모양 생각중
 
-main - frontEnd - feature/history
+main - frontEnd - feature/history (민주)
+                - (가은님branch)
+                - (정은님branch)
+                - (혜민님 branch)
