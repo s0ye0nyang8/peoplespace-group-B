@@ -1,0 +1,267 @@
+<!---------------------------------------------------------------------------------------------------------------------- 여기서부터 가은 추가 -->
+
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+    <!--Load the AJAX API-->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawVisualization);
+
+				var min = '60';		// 이것도 나중에 계산해서 넣어줘야 해요
+				var dis = <%=rows[0].attendence%>;		// 그냥 들어가는지만 보려고 rows[0] 본거.. 그리고 attendance인데 디비에 attendence라고 써놔서.. 허허..;; 
+				// 왜 애러는 나는데 웹에서는 되는거죠? ????? 예?????????????
+				var ave = 3;		// 이것도 나중에 계산해서..
+                function drawVisualization() {
+					// var data = google.visualization.arrayToDataTable([
+					// 	['Minutes', 'Student distraction count', 'Average'],
+					// 	['10',      1,  0],													// fixed array
+					// 	['20',      3,  0.5],
+					// 	['30',      4,  2],
+					// 	['40',      2,  3],
+					// 	['50',      0,  4]
+					// ]);
+					var data = new google.visualization.DataTable();
+					data.addColumn('string', 'Minutes');
+					data.addColumn('number', 'Distraction count');
+					data.addColumn('number', 'Average');
+					data.addRows([
+						['10',      1,  0],
+						['20',      3,  0.5],
+						['30',      4,  2],
+						['40',      2,  3],
+						['50',      0,  4],
+						[min, 		dis, ave]						// 요롷게 추가시키면 될듯. 보니까 여러개 추가할때는 .addRows 하는거 같고 하나 추가하면 .addRow 하는듯.
+					]);
+	
+					var options = {
+						title : 'Degree of Distraction',
+						vAxis: {title: 'distraction count'},
+						hAxis: {title: 'class duration'},
+						seriesType: 'bars',
+						series: {1: {type: 'line'}}
+					};
+
+					var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+					chart.draw(data, options);
+				}
+				
+        </script>
+		<title>Elements - Editorial by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<!--jjeong : 15 초마다 페이지 refresh-->
+		<meta http-equiv="refresh" content="15"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+									</ul>
+								</header>
+							<!---------------------------------------------------------------------------------------------------------------------- 여기부터 데이터 불러오는거 -->
+								<!-- <section>
+									<header class="main">
+										<h1>실시간 정보를 받아오는 Realtime이 되어야 하는 페이지</h1>
+									</header>
+									<table>
+									<thead>
+										<tr>
+											<th>No.</th>
+											<th>Date</th>
+											<th>Attention</th>
+											
+										</tr>
+									</thead>
+									<tbody>
+									
+										<%for(var i=0; i<rows.length; i++) {%>
+										<tr>
+											<td><%=rows.length-i%></td>
+											<td><%=rows[i].time%></td>
+											<td><%=rows[i].attendence%></td>
+										</tr>
+										<%}%>
+									
+									</tbody>
+								</table>    -->
+							<!---------------------------------------------------------------------------------------------------------------------- 여기까지 데이터 불러오는거 -->
+								<!-- <%for(var i=0; i<rows.length; i++) {%>
+									<p>length-i</p>
+									<h1><%=rows.length-i%></h1>
+									<p>time</p>
+									<h1><%=rows[i].time%></h1>
+									<p>attendence</p>
+									<h1><%=rows[i].attendence%></h1>
+								<%}%> -->
+							<!-- Content -->
+								<section>		
+									<header class="main">
+                                        <h1>Real-Time Statistics</h1>
+									</header>
+								<!-- Content -->
+									<hr class="major" />
+									<h2>This Class : Class01</h2>
+									<div class="row gtr-200">
+										<div class="col-6 col-12-medium">
+										<!-- 콤보 그래프 -->
+											<div id="chart_div" style="width: 100%; height: 200%;"></div>
+										</div>
+										<div class="col-6 col-12-medium">
+											<div class="box">
+												<p><span class="image left"><img src="images/student.png" alt="" /></span>Name : Kim</p>
+												<p>여기에 또 뭐쓰지....</p>
+												<nav id="menu">
+													<ul>
+														<li>
+															<span class="opener">Students</span>		
+															<ul>
+															<!-- 여기에는 수업듣는 학생들 목록 ---------------------------- 이것도 이제 디비에서 불러와서 선생님의 학생들로 넣어야 합니다. -->
+																<li><a href="#">Kim</a></li>
+																<li><a href="#">Lee</a></li>
+																<li><a href="#">Park</a></li>
+																<li><a href="#">Choi</a></li>
+															</ul>
+														</li>
+													</ul>
+												</nav>
+											</div>
+										</div>                                 
+									</div>
+								</section>	
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="generic.html">Generic</a></li>
+                                        <li><a href="elements.html">Elements</a></li>
+                                        <li>											<!--가은 추가-->
+											<span class="opener">Statistics</span>		
+											<ul>
+												<li><a href="history.html">History</a></li>
+												<li><a href="realtime.html">Realtime</a></li>
+											</ul>
+										</li>
+										<li>
+											<span class="opener">Submenu</span>
+											<ul>
+												<li><a href="#">Lorem Dolor</a></li>
+												<li><a href="#">Ipsum Adipiscing</a></li>
+												<li><a href="#">Tempus Magna</a></li>
+												<li><a href="#">Feugiat Veroeros</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Etiam Dolore</a></li>
+										<li><a href="#">Adipiscing</a></li>
+										<li>
+											<span class="opener">Another Submenu</span>
+											<ul>
+												<li><a href="#">Lorem Dolor</a></li>
+												<li><a href="#">Ipsum Adipiscing</a></li>
+												<li><a href="#">Tempus Magna</a></li>
+												<li><a href="#">Feugiat Veroeros</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Maximus Erat</a></li>
+										<li><a href="#">Sapien Mauris</a></li>
+										<li><a href="#">Amet Lacinia</a></li>
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<!-- <section>
+									<header class="major">
+										<h2>Ante interdum</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="#" class="button">More</a></li>
+									</ul>
+								</section> -->
+
+							<!-- Section -->
+								<!-- <section>
+									<header class="major">
+										<h2>Get in touch</h2>
+									</header>
+									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
+										<li class="icon solid fa-phone">(000) 000-0000</li>
+										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
+										Nashville, TN 00000-0000</li>
+									</ul>
+								</section> -->
+
+							<!-- Footer -->
+								<!-- <footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer> -->
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
+<!---------------------------------------------------------------------------------------------------------------------- 여기까지 가은 추가 -->
