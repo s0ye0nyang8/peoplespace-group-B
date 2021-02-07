@@ -18,16 +18,19 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import initialize_app
 from firebase_admin import storage
+from firebase_admin import db
 import sys, os
 import tempfile
-from uuid import uuid4
 
 PROJECT_ID = "peoplespace-test"
 
 cred = credentials.Certificate('peoplespace-test-firebase-adminsdk-dawk1-a7fad79476.json')
 initialize_app(cred, {
+    'databaseURL': 'https://peoplespace-test-default-rtdb.firebaseio.com/',
     'storageBucket': f'{PROJECT_ID}.appspot.com'
 })
+
+dir = db.reference()
 
 
 def call_repeatedly(interval, func, *args):
@@ -70,13 +73,17 @@ def index():
 
 def capture():
     myScreenshot = pyautogui.screenshot()
-    #filename = fr'C:\Users\sangh\PycharmProjects\flask\{strftime("%Y%m%d%H%M%S", gmtime())}.png'
     filename = strftime("%Y%m%d%H%M%S", gmtime())+'.png'
     myScreenshot.save(filename)
+    upload(filename)
+    temp = tempfile.NamedTemporaryFile(delete=False)
+
+
+def upload(filename):
     bucket = storage.bucket()
     blob = bucket.blob(filename)
     blob.upload_from_filename(filename)
-    temp = tempfile.NamedTemporaryFile(delete=False)
+    dir.update({0: f"https://firebasestorage.googleapis.com/v0/b/{PROJECT_ID}.appspot.com/o/{filename}?alt=media"})
 
 
 if __name__ == "__main__":
