@@ -81,28 +81,25 @@
 									</header>
 								<!-- Content -->
 									<hr class="major" />
-									<h2>This Class : Class01</h2>
-									<div class="row gtr-200">
-										<div class="col-6 col-12-medium">
-										<!-- 콤보 그래프 -->
-											<div id="chart_div" style="width: 100%; height: 100%;"></div>
-										</div>
+									<h2>Presenter : Kim</h2>			<!-- 이름은 디비에 없어서.. 그냥 넣ㅇ었음.. -->
+
+									<div class="row">
 										<div class="col-6 col-12-medium">
 											<div class="box">
 												<p>
 													<span class="image left"><img src="images/teacher.png" alt="" /></span>		<!-- 선생님 소개 ... -->
-													Name : Kim
+												<!--	Name : Kim				 이름은 디비에 없어서.. 그냥 넣ㅇ었음.. -->
 												</p>
-												<h4>TeacherID = <%=rows[0].teacherID%></h4>
-												<h4>LectureID = <%=rows[0].lectureID%></h4>
-												<h4>Subject = <%=rows[0].subject%></h4>
-
+												<h4>E-mail : <%=rows[0].teacherID%></h4>
+												<h4>LectureID : <%=rows[0].lectureID%></h4>
+												<h4>Subject : <%=rows[0].subject%></h4>
+		
 												<!-- <nav id="menu">
 													<ul>
 														<li>
 															<span class="opener">Students</span>		
 															<ul>
-														 		여기에는 수업듣는 학생들 목록 ---------------------------- 이것도 이제 디비에서 불러와서 선생님의 학생들로 넣어야 합니다.
+																 여기에는 수업듣는 학생들 목록 ---------------------------- 이것도 이제 디비에서 불러와서 선생님의 학생들로 넣어야 합니다.
 																<li><a href="#">Kim</a></li>
 																<li><a href="#">Lee</a></li>
 																<li><a href="#">Park</a></li>
@@ -112,8 +109,21 @@
 													</ul>
 												</nav> -->
 											</div>
-										</div>                                 
+										</div>
 									</div>
+									<div class="row">
+										<div id="chart_div" style="width: 100%; height: 100%;"></div>
+									</div>
+
+
+									<!-- <div class="row gtr-200">
+										<div class="col-6 col-12-medium">
+										 콤보 그래프
+										</div>
+										<div class="col-6 col-12-medium">
+											
+										</div>                                 
+									</div> -->
 								</section>	
 						</div>
 					</div>
@@ -158,7 +168,8 @@
 											</script>
 										</form>
 									</li>
-									<li>											<!--가은 추가-->
+								<!----------------------------------------------------------------------------------------------------- 여기서부터 가은 추가-->
+									<li>											
 										<span class="opener">Statistics</span>		
 										<ul>
 											<li>
@@ -183,6 +194,8 @@
 											</li>
 										</ul>
 									</li>
+								<!----------------------------------------------------------------------------------------------------- 여기까지 가은 추가-->
+
 										<!--
 										<span class="opener">Submenu</span>
 										<ul>
