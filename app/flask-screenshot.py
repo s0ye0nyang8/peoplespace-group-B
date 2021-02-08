@@ -14,23 +14,46 @@ from flask import render_template
 import pyautogui
 from time import gmtime, strftime
 from threading import Event, Thread
-import firebase_admin
+"""import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import initialize_app
 from firebase_admin import storage
-from firebase_admin import db
+from firebase_admin import db"""
+import pyrebase
+import dropbox
 import sys, os
 import tempfile
 
 PROJECT_ID = "peoplespace-test"
 
-cred = credentials.Certificate('peoplespace-test-firebase-adminsdk-dawk1-a7fad79476.json')
+"""cred = credentials.Certificate('peoplespace-test-firebase-adminsdk-dawk1-a7fad79476.json')
 initialize_app(cred, {
     'databaseURL': 'https://peoplespace-test-default-rtdb.firebaseio.com/',
     'storageBucket': f'{PROJECT_ID}.appspot.com'
-})
+})"""
 
-dir = db.reference()
+config = {
+    "apiKey": "AIzaSyB-LvIsxuee_a-STvtrSO_vhgQl4tcVYX8",
+    "authDomain": "peoplespace-test.firebaseapp.com",
+    "databaseURL": "https://peoplespace-test-default-rtdb.firebaseio.com",
+    "projectId": "peoplespace-test",
+    "storageBucket": "peoplespace-test.appspot.com",
+    "messagingSenderId": "619443014529",
+    "appId": "1:619443014529:web:93ed39bb1d09654a227680",
+    "measurementId": "G-PZLEB8DKRS"
+}
+
+firebase = pyrebase.initialize_app(config)
+storage = firebase.storage()
+
+auth = firebase.auth()
+email = "sanghwaann@gmail.com"
+password = "sanghwa0618"
+user = auth.sign_in_with_email_and_password(email, password)
+
+db = firebase.database()
+
+#dir = db.reference()
 
 
 def call_repeatedly(interval, func, *args):
@@ -80,10 +103,14 @@ def capture():
 
 
 def upload(filename):
-    bucket = storage.bucket()
-    blob = bucket.blob(filename)
-    blob.upload_from_filename(filename)
-    dir.update({0: f"https://firebasestorage.googleapis.com/v0/b/{PROJECT_ID}.appspot.com/o/{filename}?alt=media"})
+    #bucket = storage.bucket()
+    #blob = bucket.blob(filename)
+    #blob.upload_from_filename(filename)
+    storage.child(filename).put(filename)
+
+    url = storage.child(filename).get_url(user['idToken'])
+    print(url)
+    db.child().push({"screenshot": url})
 
 
 if __name__ == "__main__":
