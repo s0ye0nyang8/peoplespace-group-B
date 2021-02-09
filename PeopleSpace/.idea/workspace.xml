@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b0c11486-bf0f-4bf6-9848-4617d70a1b31" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/PeopleSpace.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/001-teacher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/002-teacher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/003-student.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/004-student.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/005-graduated.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/006-rugby.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/007-compass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/008-kindergarten.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/009-university.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/010-school.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/011-school bus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/012-diploma.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/013-certificate.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/014-graduation diploma.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/015-calendar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/016-clock.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/017-geography.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/018-computer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/019-bell.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/020-ring bell.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/021-graduation hat.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/022-microscope.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/023-atom.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/024-telescope.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/025-chemistry.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/026-fountain pen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/027-whistle.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/028-bust.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/029-art.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/030-column.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/031-music.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/032-pen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/033-crayon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/034-ruler.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/035-abacus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/036-book.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/037-book.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/038-books.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/039-notepad.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/040-school bag.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/041-backpack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/042-lunch box.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/043-blackboard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/044-board.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/045-desk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/046-door.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/047-locker.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/048-locker.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/049-flag.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/png/050-online learning.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/total_statistics.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dotenv/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dotenv/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/xmlhttprequest/.jshintrc" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/xmlhttprequest/.jshintrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/xmlhttprequest/.npmignore" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/xmlhttprequest/.npmignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/xmlhttprequest/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/xmlhttprequest/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/xmlhttprequest/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/xmlhttprequest/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/xmlhttprequest/lib/XMLHttpRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/xmlhttprequest/lib/XMLHttpRequest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/xmlhttprequest/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/xmlhttprequest/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/elements.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/elements.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/generic.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/generic.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1o0hay7iCCCG1LHebnkVMjxUb5n" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/bin" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\임혜민\source\repos\peoplespace-group-B frontend\PeopleSpace\bin" />
+      <recent name="C:\Users\임혜민\source\repos\peoplespace-group-B\PeopleSpace\public\images" />
+      <recent name="C:\Users\임혜민\source\repos\peoplespace-group-B\PeopleSpace\views" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.www">
+    <configuration name="total_statistics.ejs" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/PeopleSpace/views/total_statistics.ejs" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="app.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/app.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <configuration name="www" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/bin/www" working-dir="$PROJECT_DIR$/bin">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.www" />
+        <item itemvalue="JavaScript Debug.total_statistics.ejs" />
+        <item itemvalue="Node.js.app.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b0c11486-bf0f-4bf6-9848-4617d70a1b31" name="Default Changelist" comment="" />
+      <created>1612429482474</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1612429482474</updated>
+      <workItem from="1612429484006" duration="4237000" />
+      <workItem from="1612496424120" duration="17386000" />
+      <workItem from="1612673339233" duration="16902000" />
+      <workItem from="1612699736479" duration="19245000" />
+      <workItem from="1612761783363" duration="8659000" />
+      <workItem from="1612788441782" duration="3739000" />
+      <workItem from="1612829246445" duration="1680000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1026" y="317" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1612714273003">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state x="1026" y="317" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1707.1027@0.0.1707.1027" timestamp="1612714273003" />
+    <state width="842" height="270" key="GridCell.Tab.0.bottom" timestamp="1612842006171">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="842" height="270" key="GridCell.Tab.0.bottom/0.0.1707.1027@0.0.1707.1027" timestamp="1612842006171" />
+    <state width="842" height="270" key="GridCell.Tab.0.center" timestamp="1612842006171">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="842" height="270" key="GridCell.Tab.0.center/0.0.1707.1027@0.0.1707.1027" timestamp="1612842006171" />
+    <state width="842" height="270" key="GridCell.Tab.0.left" timestamp="1612842006171">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="842" height="270" key="GridCell.Tab.0.left/0.0.1707.1027@0.0.1707.1027" timestamp="1612842006171" />
+    <state width="842" height="270" key="GridCell.Tab.0.right" timestamp="1612842006171">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="842" height="270" key="GridCell.Tab.0.right/0.0.1707.1027@0.0.1707.1027" timestamp="1612842006171" />
+    <state width="1685" height="342" key="GridCell.Tab.1.bottom" timestamp="1612513963654">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="1685" height="342" key="GridCell.Tab.1.bottom/0.0.1707.1027@0.0.1707.1027" timestamp="1612513963654" />
+    <state width="1685" height="342" key="GridCell.Tab.1.center" timestamp="1612513963654">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="1685" height="342" key="GridCell.Tab.1.center/0.0.1707.1027@0.0.1707.1027" timestamp="1612513963654" />
+    <state width="1685" height="342" key="GridCell.Tab.1.left" timestamp="1612513963654">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="1685" height="342" key="GridCell.Tab.1.left/0.0.1707.1027@0.0.1707.1027" timestamp="1612513963654" />
+    <state width="1685" height="342" key="GridCell.Tab.1.right" timestamp="1612513963654">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="1685" height="342" key="GridCell.Tab.1.right/0.0.1707.1027@0.0.1707.1027" timestamp="1612513963654" />
+    <state width="1685" height="342" key="GridCell.Tab.2.bottom" timestamp="1612513963655">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="1685" height="342" key="GridCell.Tab.2.bottom/0.0.1707.1027@0.0.1707.1027" timestamp="1612513963655" />
+    <state width="1685" height="342" key="GridCell.Tab.2.center" timestamp="1612513963654">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="1685" height="342" key="GridCell.Tab.2.center/0.0.1707.1027@0.0.1707.1027" timestamp="1612513963654" />
+    <state width="1685" height="342" key="GridCell.Tab.2.left" timestamp="1612513963654">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="1685" height="342" key="GridCell.Tab.2.left/0.0.1707.1027@0.0.1707.1027" timestamp="1612513963654" />
+    <state width="1685" height="342" key="GridCell.Tab.2.right" timestamp="1612513963654">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state width="1685" height="342" key="GridCell.Tab.2.right/0.0.1707.1027@0.0.1707.1027" timestamp="1612513963654" />
+    <state x="407" y="243" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1612513903896">
+      <screen x="0" y="0" width="1707" height="1027" />
+    </state>
+    <state x="407" y="243" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1707.1027@0.0.1707.1027" timestamp="1612513903895" />
+  </component>
+</project>
