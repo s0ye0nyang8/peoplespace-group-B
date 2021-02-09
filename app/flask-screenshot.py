@@ -8,24 +8,56 @@
 # from fastai.distributed import *
 # from fastprogress import fastprogress
 # from torchvision.models import *
+# from firebase_admin import initialize_app
+# from firebase_admin import storage
+# from firebase_admin import db
+
 import storage as storage
 from flask import Flask, request, make_response
 from flask import render_template
 import pyautogui
+
 from time import gmtime, strftime
 from threading import Event, Thread
+
 import firebase_admin
-from firebase_admin import credentials
-#from firebase_admin import initialize_app
-#from firebase_admin import storage
-#from firebase_admin import db
 from firebase_admin import firestore
+from firebase_admin import credentials
+from firebase_admin import initialize_app
+from firebase_admin import storage
 import pyrebase
-import dropbox
 import sys, os
 import tempfile
+import uuid
 
-cred = credentials.Certificate('peoplespace-test-firebase-adminsdk-dawk1-a7fad79476.json')
+from fastai.tabular import *
+import numpy as np
+import os
+import pickle
+from models_func import *
+
+import firebase_admin
+from firebase_admin import credentials
+
+from flask import redirect
+
+anno_train = Path('annotation/_annotations.coco.json')
+
+with open(anno_train) as f:
+    train_json = json.load(f)
+
+cwd = os.getcwd()
+path = cwd + '/'
+model = load_learner(path, 'model.pkl')
+
+img = open_image('test.jpg')
+
+# Err/ new predict 함수 :  y = newreconstruct(ds.y, _pred, x) if has_arg(ds.y.reconstruct, 'x') else ds.y.reconstruct(_pred)
+label, positive_pred_clas, positive_prob_clas,bbox = newpredict(model, img, train_json, return_x=False, batch_first=True, with_dropout=False)
+
+
+#peoplespace-test-firebase-adminsdk-dawk1-a7fad79476
+cred = credentials.Certificate('boom-b900b-firebase-adminsdk-s6iqg-c78a8cd251.json')
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -67,7 +99,12 @@ app = Flask(__name__)
 capture_thread_stop = None
 
 
+# start 버튼 클릭
 @app.route('/start/')
+def start_page():
+    start()
+    return render_template('capturing.html')
+
 def start():
     global capture_thread_stop
     if capture_thread_stop:
@@ -76,7 +113,12 @@ def start():
     return "Started"
 
 
+# stop 버튼 클릭 
 @app.route('/stop/')
+def turn_to_index():
+     stop()
+     return render_template('index.html')
+
 def stop():
     global capture_thread_stop
     if capture_thread_stop:
@@ -87,9 +129,16 @@ def stop():
         return "Not running"
 
 
+# 기본 idex 페이지 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+# 웹 팀 리다이렉트 
+@app.route('/web/') 
+def redirect_web_team(): 
+    return redirect("https://www.naver.com")
 
 
 def capture():
