@@ -24,12 +24,50 @@ from fastai.vision.image import ImageBBox
 
 from functools import partial
 
-anno_train = Path(coco/'anno/_annotations.coco.json')
+img_dir = Path('train_dataset')
+anno_train = Path('annotation/_annotations.coco.json')
 
 with open(anno_train) as f:
     train_json = json.load(f)
 
 ncat = len(train_json['categories'])
+
+images, lbl_bbox = get_annotations(anno_train)
+# images, lbl_bbox = get_annotations(anno_train)
+
+# for idx, lbl in enumerate(lbl_bbox):
+#     if len(lbl[1]) == 0:
+#         print(f"found empty annotation: {idx}")
+
+
+img_list = ImageList.from_folder(img_dir)
+#image size
+sz = 224
+# print(len(img_list))
+# ncat =9
+
+img2bbox = dict(zip(images, lbl_bbox))
+# img2bbox.sort()
+print(type(images))
+# cnt = 0
+def get_y_func(o):
+    filename = o.name
+    if img2bbox.get(o.name):
+        return img2bbox[o.name]
+    else:
+        # 데이터가 다 잘 들어간걸 확인했는데도 자꾸 오류가 나서 넣은 코드
+        # 라벨링이 안된 사진이 들어갔을때 나는 오류라서
+        # 임의로 bbox 리턴. 데이터 교체하면 오류 없을것.
+        return [[[0, 0, 0, 0]], ['front']]
+
+
+data = (ObjectItemList.from_folder(img_dir)
+        .split_by_rand_pct(valid_pct=0.2, seed=0)                         
+        .label_from_func(get_y_func)
+#         .transform(size=224)
+        .databunch(bs=2, collate_fn=bb_pad_collate, num_workers=0)
+        .normalize(imagenet_stats)
+        ) 
 
 #ncat = 17
 
@@ -78,7 +116,23 @@ class SSD_Head(nn.Module):
         return self.out(x)
 
 
+
+ncells = 4
+k = 1 # num boxes per cell
+first_ctr = -1 + 2/(2*ncells)
+last_ctr  =  1 - 2/(2*ncells)
+a_x = np.repeat(np.linspace(first_ctr, last_ctr, ncells), ncells)
+a_y = np.tile(np.linspace(first_ctr, last_ctr, ncells), ncells)
+a_sz = np.array([2/ncells for _ in a_x])
+anchors = torch.tensor(np.stack([a_x, a_y, a_sz, a_sz], axis=1)).type(torch.FloatTensor).cuda()
+
+
 def hw2corners(ctr, hw): return torch.cat([ctr-hw/2, ctr+hw/2], dim=1)
+
+anchor_cnr = hw2corners(anchors[:,:2], anchors[:,2:])
+
+grid_sizes = torch.tensor(np.array([2/ncells]), requires_grad=False).type(torch.FloatTensor).unsqueeze(1).cuda()
+
 
 
 def one_hot_embedding(labels, num_classes):
@@ -177,7 +231,7 @@ def show_results(max_show, printit=False):
     i = 0
     while i < max_show:
         img, label = data.valid_ds[i]
-        img.show(ax=axs[i,0], y=label, figsize=(5,5))        
+        #####  img.show(ax=axs[i,0], y=label, figsize=(5,5))    ???????????    
         x, y = data.one_item(img)
 #         print(x)
         pred_bb, pred_cc = learn.model(x)
@@ -226,9 +280,10 @@ def show_results(max_show, printit=False):
 #             if i == 1:
 #                 pdb.set_trace()
             pred_label = ImageBBox.create(224, 224, pos_a_ic.cpu(), pos_pred_clas.cpu(), data.train_ds.y.classes)
-            img.show(ax=axs[i,1], y=pred_label, figsize=(5,5))
+            #####img.show(ax=axs[i,1], y=pred_label, figsize=(5,5))
         else:
-            img.show(ax=axs[i,1], figsize= (5,5))
+            #####img.show(ax=axs[i,1], figsize= (5,5))
+            pass
         i = i+1
         
 
@@ -251,7 +306,7 @@ def newreconstruct(classes,t, x):
     return newcreate(*x.size, bboxes, labels=labels, classes=classes, scale=False)
 
 
-def newpredict(self, item:ItemBase,train_json, return_x:bool=False, batch_first:bool=True, with_dropout:bool=False, **kwargs):
+def newpredict(self, item:ItemBase, train_json, return_x:bool=False, batch_first:bool=True, with_dropout:bool=False, **kwargs):
         item =item.resize(244)
         h =w=244
         threshold = 0
@@ -286,12 +341,13 @@ def newpredict(self, item:ItemBase,train_json, return_x:bool=False, batch_first:
         anc_cnr.mul_(torch.tensor([h/2, w/2, h/2, w/2]).cuda()).long()
         if any(pos_idx):
             pred_label = newcreate(224, 224, pos_a_ic.cpu(), pos_labels.cpu(), data.train_ds.y.classes)
-            img.show(y=pred_label, figsize=(5,5))
+            ####### img.show(y=pred_label, figsize=(5,5)) ??????????
         else:
-            img.show(figsize= (5,5)) 
+            ####### img.show(figsize= (5,5)) 
+            pass
 #         bboxes,labels, scores = delete_zero(pos_a_ic, pos_labels, scores)
-        mask   = scores > threshold
-        bboxes  = pos_a_ic[mask]
+        mask = scores > threshold
+        bboxes = pos_a_ic[mask]
         labels = pos_labels[mask]
         scores = scores[mask]
         _pred = (bboxes,labels)

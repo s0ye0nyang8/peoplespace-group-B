@@ -41,13 +41,19 @@ from firebase_admin import credentials
 
 from flask import redirect
 
+anno_train = Path('annotation/_annotations.coco.json')
+
+with open(anno_train) as f:
+    train_json = json.load(f)
 
 cwd = os.getcwd()
 path = cwd + '/'
 model = load_learner(path, 'model.pkl')
 
 img = open_image('test.jpg')
-label, positive_pred_clas, positive_prob_clas,bbox = newpredict(self=model, item= img, return_x=False, batch_first=True, with_dropout=False)
+
+# Err/ new predict 함수 :  y = newreconstruct(ds.y, _pred, x) if has_arg(ds.y.reconstruct, 'x') else ds.y.reconstruct(_pred)
+label, positive_pred_clas, positive_prob_clas,bbox = newpredict(model, img, train_json, return_x=False, batch_first=True, with_dropout=False)
 
 
 #peoplespace-test-firebase-adminsdk-dawk1-a7fad79476
