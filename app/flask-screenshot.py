@@ -14,23 +14,21 @@ from flask import render_template
 import pyautogui
 from time import gmtime, strftime
 from threading import Event, Thread
-"""import firebase_admin
+import firebase_admin
 from firebase_admin import credentials
-from firebase_admin import initialize_app
-from firebase_admin import storage
-from firebase_admin import db"""
+#from firebase_admin import initialize_app
+#from firebase_admin import storage
+#from firebase_admin import db
+from firebase_admin import firestore
 import pyrebase
 import dropbox
 import sys, os
 import tempfile
 
-PROJECT_ID = "peoplespace-test"
+cred = credentials.Certificate('peoplespace-test-firebase-adminsdk-dawk1-a7fad79476.json')
+firebase_admin.initialize_app(cred)
 
-"""cred = credentials.Certificate('peoplespace-test-firebase-adminsdk-dawk1-a7fad79476.json')
-initialize_app(cred, {
-    'databaseURL': 'https://peoplespace-test-default-rtdb.firebaseio.com/',
-    'storageBucket': f'{PROJECT_ID}.appspot.com'
-})"""
+db = firestore.client()
 
 config = {
     "apiKey": "AIzaSyB-LvIsxuee_a-STvtrSO_vhgQl4tcVYX8",
@@ -51,7 +49,7 @@ email = "sanghwaann@gmail.com"
 password = "sanghwa0618"
 user = auth.sign_in_with_email_and_password(email, password)
 
-db = firebase.database()
+#db = firebase.database()
 
 #dir = db.reference()
 
@@ -102,6 +100,9 @@ def capture():
     temp = tempfile.NamedTemporaryFile(delete=False)
 
 
+n = 0
+
+
 def upload(filename):
     #bucket = storage.bucket()
     #blob = bucket.blob(filename)
@@ -110,7 +111,14 @@ def upload(filename):
 
     url = storage.child(filename).get_url(user['idToken'])
     print(url)
-    db.child().push({"screenshot": url})
+
+    global n
+    doc_ref = db.collection(u'screenshots').document(u'{}'.format(n))
+    doc_ref.set({
+        u'{}'.format(filename): url
+    })
+    n += 1
+    #db.child().push({"screenshot": url})
 
 
 if __name__ == "__main__":
