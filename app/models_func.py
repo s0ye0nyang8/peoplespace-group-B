@@ -33,43 +33,27 @@ with open(anno_train) as f:
 ncat = len(train_json['categories'])
 
 images, lbl_bbox = get_annotations(anno_train)
-# images, lbl_bbox = get_annotations(anno_train)
-
-# for idx, lbl in enumerate(lbl_bbox):
-#     if len(lbl[1]) == 0:
-#         print(f"found empty annotation: {idx}")
-
 
 img_list = ImageList.from_folder(img_dir)
-#image size
 sz = 224
-# print(len(img_list))
-# ncat =9
 
 img2bbox = dict(zip(images, lbl_bbox))
-# img2bbox.sort()
-print(type(images))
-# cnt = 0
+
 def get_y_func(o):
     filename = o.name
     if img2bbox.get(o.name):
         return img2bbox[o.name]
     else:
-        # 데이터가 다 잘 들어간걸 확인했는데도 자꾸 오류가 나서 넣은 코드
-        # 라벨링이 안된 사진이 들어갔을때 나는 오류라서
-        # 임의로 bbox 리턴. 데이터 교체하면 오류 없을것.
         return [[[0, 0, 0, 0]], ['front']]
 
 
 data = (ObjectItemList.from_folder(img_dir)
         .split_by_rand_pct(valid_pct=0.2, seed=0)                         
         .label_from_func(get_y_func)
-#         .transform(size=224)
         .databunch(bs=2, collate_fn=bb_pad_collate, num_workers=0)
         .normalize(imagenet_stats)
         ) 
 
-#ncat = 17
 
 class StdConv(nn.Module):
     def __init__(self, nin, nout, stride=2, drop=0.2):
@@ -211,12 +195,9 @@ def map_to_ground_truth(overlaps, print_it=False):
 
 def actn_to_bb(actn, anchors):
     actn_bbs = torch.tanh(actn.type(torch.FloatTensor)).cuda()
-#     print(actn_bbs)
-#     print(actn_bbs[:,:2]/2, grid_sizes, anchors[:,:2].shape)
     actn_centers = (actn_bbs[:,:2]/2 * grid_sizes).cuda() + anchors[:,:2].cuda()
     actn_hw = (actn_bbs[:,2:]/2+1) * anchors[:,2:]
     return hw2corners(actn_centers, actn_hw)
-
 
 
 def corners2hw(corners): return torch.cat([corners[:,:2], corners[:,2:] - corners[:,:2]], dim=1)
@@ -231,7 +212,7 @@ def show_results(max_show, printit=False):
     i = 0
     while i < max_show:
         img, label = data.valid_ds[i]
-        #####  img.show(ax=axs[i,0], y=label, figsize=(5,5))    ???????????    
+        #####  img.show(ax=axs[i,0], y=label, figsize=(5,5))    
         x, y = data.one_item(img)
 #         print(x)
         pred_bb, pred_cc = learn.model(x)
@@ -322,10 +303,7 @@ def newpredict(self, item:ItemBase, train_json, return_x:bool=False, batch_first
         (bboxes, pred) = raw_pred
         labels = pred.max(1)[1] # get the index of the max as the predicted clas
         scores = pred.max(1)[0].sigmoid() # get the sigmoid of the max as the class probability
-        # draw~
-#         bboxes = bboxes.squeeze()
-#         print((bboxes))
-#         print((bboxes))
+
         a_ic = actn_to_bb(bboxes, anchors)
 #         print("///>>",a_ic,"///>>")
         anc_cnr = anchor_cnr.clone()
@@ -341,7 +319,7 @@ def newpredict(self, item:ItemBase, train_json, return_x:bool=False, batch_first
         anc_cnr.mul_(torch.tensor([h/2, w/2, h/2, w/2]).cuda()).long()
         if any(pos_idx):
             pred_label = newcreate(224, 224, pos_a_ic.cpu(), pos_labels.cpu(), data.train_ds.y.classes)
-            ####### img.show(y=pred_label, figsize=(5,5)) ??????????
+            ####### img.show(y=pred_label, figsize=(5,5)) 
         else:
             ####### img.show(figsize= (5,5)) 
             pass
