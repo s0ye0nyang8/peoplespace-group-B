@@ -48,13 +48,11 @@ with open(anno_train) as f:
 
 cwd = os.getcwd()
 path = cwd + '/'
-model = load_learner(path, 'model.pkl')
-
+model = load_learner(path, 'test.pkl')
 img = open_image('test.jpg')
 
 # Err/ new predict 함수 :  y = newreconstruct(ds.y, _pred, x) if has_arg(ds.y.reconstruct, 'x') else ds.y.reconstruct(_pred)
-label, positive_pred_clas, positive_prob_clas,bbox = newpredict(model, img, train_json, return_x=False, batch_first=True, with_dropout=False)
-
+bboxes, labels, scores= newpredict(model,img,train_json)
 
 #peoplespace-test-firebase-adminsdk-dawk1-a7fad79476
 cred = credentials.Certificate('boom-b900b-firebase-adminsdk-s6iqg-c78a8cd251.json')
