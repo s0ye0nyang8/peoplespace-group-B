@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+	<head>
+		<title>Generic - Editorial by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<!--jjeong : 15 초마다 페이지 refresh-->
+		<meta http-equiv="refresh" content="15"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+		
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+										<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+										</form>
+									<!-- <span class="opener">Submenu</span>
+											<ul>
+												<li><a href="#">Lorem Dolor</a></li>
+												<li><a href="#">Ipsum Adipiscing</a></li>
+												<li><a href="#">Tempus Magna</a></li>
+												<li><a href="#">Feugiat Veroeros</a></li>
+											</ul> -->
+									<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
+										<ul class="icons">
+											<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+										</ul>
+									</form>
+								</header>
+<!-- jjeong : url 로 부터 가져온 디비의 데이터를 변수처럼 쓰면서 보여주고 싶을 경우 : ejs 사용함-->
+<!--~ jjeong : ~~~~~~~~~여기서부터~~~~~~~~~~~~~--> 
+								<section>
+									<header class="main">
+										<h1>Generic</h1>
+									</header>
+									<div class="container">
+										<canvas id="speedChart" width="600" height="400" ></canvas>
+										<script  type="text/javascript">
+											var j_data = [];
+											var j_label = [];
+										  <% for(var i=0; i<rows.length; i++) { %>
+									
+											 j_label.push(<%=rows[i].time.toDate().getTime()%>);
+											 j_data.push(<%=rows[i].attendance%>);
+									
+										 <%}%>
+									
+										var speedCanvas = document.getElementById("speedChart");
+									
+										 Chart.defaults.global.defaultFontFamily = "Lato";
+										 Chart.defaults.global.defaultFontSize = 18;
+										 console.log("yoooooooooo");
+										 // console.log(data);
+										 console.log("boooooooooo");
+										 var speedData = {
+											 labels: [j_label], 
+										 datasets: [{
+											 label: "Attendance",
+											 data: [j_data],
+											 lineTension: 0,
+											 fill: false,
+											 borderColor: 'orange',
+											 backgroundColor: 'transparent',
+											 pointBorderColor: 'orange',
+											 pointBackgroundColor: 'rgba(255,150,0,0.5)',
+											 borderDash: [5, 5],
+											 pointRadius: 5,
+											 pointHoverRadius: 10,
+											 pointHitRadius: 30,
+											 pointBorderWidth: 2,
+											 pointStyle: 'rectRounded'
+										 }]
+										 };
+									
+										 var chartOptions = {
+										 legend: {
+											 display: true,
+											 position: 'top',
+											 labels: {
+											 boxWidth: 80,
+											 fontColor: 'black'
+											 }
+										 },
+										 scales: {
+											 xAxes: [{
+											 gridLines: {
+												 display: false,
+												 color: "black"
+											 },
+											 scaleLabel: {
+												 display: true,
+												 labelString: "Time in Seconds",
+												 fontColor: "whiteç"
+											 }
+											 }],
+											 yAxes: [{
+											 gridLines: {
+												 color: "black",
+												 borderDash: [2, 5],
+											 },
+											 scaleLabel: {
+												 display: true,
+												 labelString: "Speed in Miles per Hour",
+												 fontColor: "white"
+											 }
+											 }]
+										 }
+										 };
+									
+										 var lineChart = new Chart(speedCanvas, {
+										 type: 'line',
+										 data: speedData,
+										 options: chartOptions
+										 });
+										 </script>
+								   </div>
+								   
+									<table>
+									<thead>
+										<tr>
+											<th>No.</th>
+											<th>Date</th>
+											<th>Attention</th>
+											
+										</tr>
+									</thead>
+									<tbody>
+									<%
+										 for(var i=0; i<rows.length; i++) {
+									%>
+										<tr>
+											<td><%=rows.length-i%></td>
+											<td><%=rows[i].time%></td>
+											<td><%=rows[i].attendance%></td>
+										</tr>
+									<%
+										 }
+									%>
+									</tbody>
+								</table> 
+								  
+<!-- jjeong : ~~~~~~~~~~여기까지~~~~~~~~~~~~~--> 		
+									
+								</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+				<div id="sidebar">
+					<div class="inner">
+
+						<!-- Search -->
+							<section id="search" class="alt">
+								<form method="post" action="#">
+									<input type="text" name="query" id="query" placeholder="Search" />
+								</form>
+							</section>
+
+						<!-- Menu -->
+							<nav id="menu">
+								<header class="major">
+									<h2>Menu</h2>
+								</header>
+								<ul>
+									<li>
+										<a href="/index" type="submit" style="font-weight : bold;">Homepage</a>
+									<!-- <li> 
+										<form action="/generic" id="generic" name="generic" style="margin: auto;">
+										<a type="submit" onclick="gen()">Generic</a>
+										<script>
+											function gen() {
+												$('#generic').submit();
+											}
+										</script>
+										</form> -->
+									</li>
+									<li>
+										<form action="/element" id="element" name="element"  style="margin: auto;">
+											<a type="submit" onclick="ele_()">Elements</a>
+											<script>
+												function ele_() {
+													$('#element').submit();
+												}
+											</script>
+											</form>
+									
+									<li>
+										<li><a href="/total">After Class</a></li>
+										<li>		
+											<span class="opener">Statistics</span>		
+											<ul>
+												<!-- history나 realtime이나 통계라는 공통된 .. 카테고리 같아서.. 이렇게 했음. history 페이지는 민주님. -->
+												<!-- <li>		
+													
+													<form action="/history" id="history" name="history"  style="margin: auto;">		
+														<a type="submit" onclick="ele()">History</a>
+														<script>
+															function ele() {
+																$('#history').submit();		
+															}
+														</script>
+													</form>
+												</li> -->
+												<li>		<!-- realtime 페이지는 가은. -->
+													<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;">
+														<a type="submit" onclick="ele()">Real-Time</a>
+														<script>
+															function ele() {
+																$('#realtime').submit();
+															}
+														</script>
+													</form>
+												</li>
+												
+													<li> <!--<a href="#">History</a>-->
+														<form action="/history" id="history" name="history"  style="margin: auto;">
+															<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+															<script>
+																function his() { 
+																	$('#history').submit();
+																}
+															</script>
+														</form>
+													</li>
+													<li>
+														<form action="/dailyreport" id="dailyreport" name="dailyreport"  style="margin: auto;">
+															<a type="submit" onclick="day()">Daily Report</a> <!--ele를 바꿔야할 듯-->
+															<script>
+																function day() { 
+																	$('#dailyreport').submit();
+																}
+															</script>
+														</form>
+													</li>
+													<!--라우터?랑 연결하기--->
+													<li>
+														<form action="/byClass" id="byClass" name="byClass"  style="margin: auto;">
+															<a type="submit" onclick="cla()">By Class</a> <!--ele를 바꿔야할 듯-->
+															<script>
+																function cla() { 
+																	$('#byClass').submit();
+																}
+															</script>
+														</form>
+													</li>
+											</ul>
+										</li>
+										
+								</ul>
+							</nav>
+
+						<!-- Section -->
+							
+					</div>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/data_chart.js"></script>
+			
+	</body>
+</html>

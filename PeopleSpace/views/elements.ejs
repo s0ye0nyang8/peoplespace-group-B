@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Elements - Editorial by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+							<header id="header">
+								<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+									<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+									</form>
+								<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
+									<ul class="icons">
+										<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+									</ul>
+								</form>
+								
+							</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Make Class</h1>
+									</header>
+
+									<!-- Content -->
+									<form name="r_form" action="/realtime" method="post" style="margin-left: 10px; " >
+										   <!-- <input tid="sStatusType" ype="text" name="id" value="check()" size="30" style="color:dimgray;" maxlength="120" readonly> -->
+										   <a href="#" class="button primary fit" type="button" onclick="nwindow()" style="align-self: center;">Open Your Class !</a>
+											<!-- window.open('http://google.co.kr/?'); -->
+									</form>
+									<script>
+										var input1 = document.createElement('input');
+										var input2 = document.createElement('input');
+										var random = Math.random()*(10^'<%=query.length%>');
+										random =parseInt(random);
+										function check(){
+											input1.setAttribute("name", "lectureID");
+											input1.setAttribute("class","button disabled");
+											input1.setAttribute("type", "text");
+											input1.setAttribute("style", "color:dimgray ; margin-top : 20px; height : 50px ; width : 500px align-self: center;");
+											tmp =random;
+											
+											input2.setAttribute("onfocus","this.value='';");
+											input2.setAttribute("value","Write your Subject");
+											input2.setAttribute("name", "subjectID");
+											input2.setAttribute("type", "text");
+											input2.setAttribute("style", "color:dimgray ; margin-top : 20px; align-self: center;");
+											
+											
+											input1.setAttribute("value", "your lecture ID is : "+tmp);
+											return tmp;
+										}
+										 check();
+										 r_form.appendChild(input1);
+										 r_form.appendChild(input2);
+										function nwindow(){
+											
+												const query = JSON.stringify({
+													"teacherID": '<%=query%>' ,
+													"lectureID": parseInt(random),
+													"subject" : input2.value,
+													// 과목 (과목 입력), 오늘날짜, 시간 , 수업ID 
+													"valid":"BOOOOOOM"
+												});
+											var url="http://google.co.kr/?"+JSON.stringify(query);
+											console.log(url)
+											window.open(url,"","width=400,height=400,left=600");
+											
+											r_form.submit();
+										}
+									</script>
+								
+								
+		
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+							<nav id="menu">
+								<header class="major">
+									<h2>Menu</h2>
+								</header>
+								<ul>
+									<li>
+										<a href="/index" type="submit" >Homepage</a>
+									<!-- <li> 
+										<form action="/generic" id="generic" name="generic" style="margin: auto;">
+										<a type="submit" onclick="gen()">Generic</a>
+										<script>
+											function gen() {
+												$('#generic').submit();
+											}
+										</script>
+										</form> -->
+									</li>
+									<li>
+										<form action="/element" id="element" name="element"  style="margin: auto;  font-weight : bold;">
+											<a type="submit" onclick="ele_()">Make Class</a>
+											<script>
+												function ele_() {
+													$('#element').submit();
+												}
+											</script>
+											</form>
+									
+									<li>
+										<li><a href="/total">After Class</a></li>
+										<li>		
+											<span class="opener">Statistics</span>		
+											<ul>
+												<!-- history나 realtime이나 통계라는 공통된 .. 카테고리 같아서.. 이렇게 했음. history 페이지는 민주님. -->
+												<!-- <li>		
+													
+													<form action="/history" id="history" name="history"  style="margin: auto;">		
+														<a type="submit" onclick="ele()">History</a>
+														<script>
+															function ele() {
+																$('#history').submit();		
+															}
+														</script>
+													</form>
+												</li> -->
+												<li>		<!-- realtime 페이지는 가은. -->
+													<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;">
+														<a type="submit" onclick="ele()">Real-Time</a>
+														<script>
+															function ele() {
+																$('#realtime').submit();
+															}
+														</script>
+													</form>
+												</li>
+												
+													<li> <!--<a href="#">History</a>-->
+														<form action="/history" id="history" name="history"  style="margin: auto;">
+															<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+															<script>
+																function his() { 
+																	$('#history').submit();
+																}
+															</script>
+														</form>
+													</li>
+													<li>
+														<form action="/dailyreport" id="dailyreport" name="dailyreport"  style="margin: auto;">
+															<a type="submit" onclick="day()">Daily Report</a> <!--ele를 바꿔야할 듯-->
+															<script>
+																function day() { 
+																	$('#dailyreport').submit();
+																}
+															</script>
+														</form>
+													</li>
+													<!--라우터?랑 연결하기--->
+													<li>
+														<form action="/byClass" id="byClass" name="byClass"  style="margin: auto;">
+															<a type="submit" onclick="cla()">By Class</a> <!--ele를 바꿔야할 듯-->
+															<script>
+																function cla() { 
+																	$('#byClass').submit();
+																}
+															</script>
+														</form>
+													</li>
+											</ul>
+										</li>
+										
+								</ul>
+							</nav>
+
+
+							<!-- Section -->
+								<!-- <section>
+									<header class="major">
+										<h2>Ante interdum</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="#" class="button">More</a></li>
+									</ul>
+								</section> -->
+
+							<!-- Section -->
+								<!-- <section>
+									<header class="major">
+										<h2>Get in touch</h2>
+									</header>
+									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
+										<li class="icon solid fa-phone">(000) 000-0000</li>
+										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
+										Nashville, TN 00000-0000</li>
+									</ul>
+								</section> -->
+
+							<!-- Footer -->
+								<!-- <footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer> -->
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
