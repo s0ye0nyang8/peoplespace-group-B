@@ -25,22 +25,22 @@
 					<div id="main">
 						<div class="inner">
 
+							
 							<!-- Header -->
-								<header id="header">
-									<a href="index.html" class="logo"><strong>BOOM</strong> by Group B</a>
-									<dl>
-										<h1>Daily Report</h1>
-									</dl>
-									
+							<header id="header">
+								<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+								<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+								</form>
+								<dl>
+									<h1>Daily Report</h1>
+								</dl>
+								<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
 									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+										<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
 									</ul>
-								</header>
-
+								</form>
+								
+							</header>
 								
 
 							<!-- Content -->
@@ -163,18 +163,21 @@
 													//data.addColumn('boolean', 'Full Time Employee');
 													var newrow=[];
 													
-													<%for(var i = 0; i < rows.length; i++){%>
+													<%for(var i = 0; rows!=null && i < rows.length; i++){%>
 														data.addRow(<%=rows[i].lectureID%>);
 													<%}%>
 													
-													var table = new google.visualization.Table(document.getElementById('table_div')); //document.getElementById('table_div'
-
-													table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+													// function table(){
+													   var table = new google.visualization.Table(document.getElementById('table_div')); //document.getElementById('table_div'
+														//console.log("jjjjjjjj")
+													//    table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+													// }
 												}
 												</script>
 											</head>
 											<body>
-												<div id="table_div"></div>
+												<!-- <div id="table_div" onclick=table()></div> -->
+												<a href="#" id="table_div" type="button" class="button" onclick="drawTable()">Table</a>
 											</body>
 										</html>
 
@@ -211,11 +214,6 @@
 									<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 									<script type="text/javascript">
 
-										google.charts.load('current', {'packages':['corechart']});
-										google.charts.setOnLoadCallback(drawChart);
-
-										function drawChart() {
-
 											var arr = [['Time', 'Attention']];
 											var urlArr = [];
 
@@ -231,18 +229,72 @@
 												idx_url.push(url);
 												urlArr.push(idx_url);
 											<%}%>
-
-
+										google.charts.load('current', {'packages':['corechart']});
+										function area(){
+											google.charts.setOnLoadCallback(areaChart);
+										}
+										function curve(){
+										   google.charts.setOnLoadCallback(curveChart);
+										}
+										function pie(){
+											google.charts.setOnLoadCallback(pieChart);
+										}
+										function areaChart(){
 											var data = google.visualization.arrayToDataTable(arr);
+											var options = {
+												title:'Attention Gauge',
+												backgroundColor: '',
+											hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+											vAxis: {minValue: 0}
+											};
+
+											var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+											chart.draw(data, options);
+										}
+										function pieChart(){
+											var data = new google.visualization.DataTable();
+											var attend = [0,0,0];
+											
+											for(var i = 0; i < urlArr.length; i++){
+												// console.log(arr[i][1]);
+													attend[arr[i][1]-1]++;
+											}
+											//console.log(attend);
+											data.addColumn('string', 'Topping');
+											data.addColumn('number', 'Slices');
+											data.addRows([
+											['level 1', attend[0]],
+											['level 2', attend[1]],
+											['level 3', attend[2]]
+											]);
 
 											var options = {
-
-												title: 'Attention Gauge',
-												curveType: 'function',
+												title:'Attention Gauge',
+												backgroundColor: '',
+												
 												legend: { position: 'bottom' }
 											};
 
-											var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+											var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+											chart.draw(data, options);
+
+										}
+										function curveChart() {
+											var data = google.visualization.arrayToDataTable(arr);
+
+											var options = {
+												
+												backgroundColor:  '',
+											
+												title: 'Attention Gauge',
+												curveType: 'function',
+												lineWidth: 8,
+												colors: ['#e2431e', '#d3362d', '#e7711b',
+                   '#e49307', '#e49307', '#b9c246'],
+												legend: { position: 'bottom' }
+											};
+
+											var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 											function selectHandler() {
 												var selectedItem = chart.getSelection()[0];
 												if (selectedItem) {
@@ -273,8 +325,8 @@
 										<header class="main">
 											<h1 align="center">Total Attention Gauge</h1>
 										</header>
-						
-										<div class="blackboard">
+										<div>
+										<div class="wrap blackboard">
 												<span class="image fit">
 													<img src="./images/png/043-blackboard.png">
 												</span>
@@ -282,13 +334,41 @@
 											<h3 align="center"><%=rows[1].time.toDate()%></h3>
 											<h4 align="center">Click on the chart to see the inattentives!</h4>
 										</div>
-										<div class="chartwrap">
-											<div id="curve_chart"></div>
+										<div class="wrap chartwrap">
+											
+											<div class="button_wrap" style="text-align: center;">
+												<div  class="button" onclick="curve()"  style="margin-left: 150px;" >Linear Chart</div>
+												<div   class="button" onclick="pie()" style="margin-left: 10px;">Pie Chart</div>
+												<div  class="button" onclick="area()"  style="margin-left: 10px;">Area Chart</div>
+											</div>
+											<div    style="height:100%; margin-left: 100px; margin-top:10px ;  margin-bottom: 20px;"id="chart_div"></div>
 										</div>
-										<div class="imgwrap">
+										<script>
+											function equalHeights( $objs )
+											{
+											var highest = 0;
+
+											$objs.each(function() {
+												thisHeight = $(this).height();
+												if(thisHeight > highest ) {
+												highest = thisHeight;
+												}
+											});
+
+											$objs.height( highest );
+											}
+
+											$(function(){
+												//setTimeout(function(){
+													equalHeights( $(".wrap") );
+												//}, 2000);
+											});
+										</script>
+									</div>
+										<!-- <div class="imgwrap">
 											<h2 align="center">Moments</h2>
 											<img src="./images/pic01.jpg" id="myimg">
-										</div>
+										</div> -->
 
 									</section>
 <!--------------------------혜민님 데이터 코드----------------------------------------------------------------------->
