@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<!--------------------------------------------------------------------------------------------------------- Make Class 페이지 -->
+<html>
+	<head>
+		<title>BOOM Make Class</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+		<div id="wrapper">
+			<!-- Main -->
+			<div id="main">
+				<div class="inner">
+					<!-- Header -->
+					<header id="header">
+						<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+							<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+						</form>
+						<header class="main">
+							<h1>Make Class</h1>		<!-- 페이지 제목 형식 맞췄습니다. -->
+						</header>	
+						<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
+							<ul class="icons">
+								<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+							</ul>
+						</form>
+					</header>
+					<!-- Content -->
+					<!-- 수업을 열기 전에, 수업에 관한 정보를 입력하고, 디비로 그 정보를 보내주어야 한다.-->
+					<section>	
+						<h3>Put your class information.</h3>
+						<form action="/makeclass" method="post">		<!-- 입력받은 값을 /makeclass 로 전한다. index.js의 router에서 확인할수있다.-->
+							<%var today = new Date().toDateString();%>
+							<h4>Date : <%=today%></h4>	<!-- 날짜는 당일로 고정. -->
+							<input type="text" name="subject" placeholder="Enter subject", style="color:dimgray; margin-top: 20px; height: 50px; width: 500px; align-self: center;">
+							<input type="text" name="stdNum" placeholder="Enter number of students", style="color:dimgray; margin-top: 20px; height: 50px; width: 500px; align-self: center;">
+							<!-- <input type="text" name="date" disabled placeholder="<%=today%>", style="color:rgb(0, 0, 0); margin-top: 20px; height: 50px; width: 500px; align-self: center;"> -->
+							<!-- 이건 다른 항목들이랑 디자인 맞춰본건데 사용자가 쓸때 착각할수있을것 같아서 그냥 원래대로 하는게 나을것 같다. -->
+							<input type="time" name="start" placeholder="Enter the class starts", style="color:dimgray; margin-top: 20px; height: 50px; width: 500px; align-self: center;">
+							<input type="time" name="end" placeholder="Enter the class end", style="color:dimgray; margin-top: 20px; height: 50px; width: 500px; align-self: center;">
+							<input type="submit" value="Submit", style="color:dimgray; margin-top: 20px; height: 50px; width: 500px; height: 50px; width: 500px; align-self: center;">
+						</form>
+					</section> 
+				</div>
+			</div>
+			<!-- Sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<!-- Menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>Menu</h2>
+						</header>
+						<ul>
+							<li>
+								<a href="/index" type="submit" >Homepage</a>
+							</li>
+							<li>
+								<form action="/element" id="element" name="element"  style="margin: auto;  font-weight : bold;">
+									<a type="submit" onclick="ele_()">Make Class</a>
+									<script>
+										function ele_() {
+											$('#element').submit();
+										}
+									</script>
+								</form>
+							</li>
+							<li><a href="/total">After Class</a></li>
+							<li>		
+								<span class="opener">Statistics</span>		
+								<ul>
+									<li>		<!-- realtime 페이지는 가은. -->
+										<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;">
+											<a type="submit" onclick="ele()">Real-Time</a>
+											<script>
+												function ele() {
+													$('#realtime').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<li>
+										<form action="/history" id="history" name="history"  style="margin: auto;">
+											<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function his() { 
+													$('#history').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<li>
+										<form action="/dailyreport" id="dailyreport" name="dailyreport"  style="margin: auto;">
+											<a type="submit" onclick="day()">Daily Report</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function day() { 
+													$('#dailyreport').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<!--라우터?랑 연결하기--->
+									<li>
+										<form action="/byClass" id="byClass" name="byClass"  style="margin: auto;">
+											<a type="submit" onclick="cla()">By Class</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function cla() { 
+													$('#byClass').submit();
+												}
+											</script>
+										</form>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
+					<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; 2021PeopleSpace TeamB. 우리이름나열?. 
+							GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+							Design: <a href="https://html5up.net">HTML5 UP</a>.
+						</p>
+					</footer>	
+				</div>
+			</div>
+		</div>
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+	</body>
+</html>

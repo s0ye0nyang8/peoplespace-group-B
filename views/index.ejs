@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Online Platform BOOM MainPage</title>		<!-- 웹 브라우저 탭에서 보여주는 이름 -->
+		<meta charset="utf-8" />
+		<meta name="viewport" http-equiv="content-type" content="width=device-width, initial-scale=1, user-scalable=no ,text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+		<div id="wrapper">
+			<!-- Main -->
+			<div id="main">
+				<div class="inner">
+					<!-- Header -->
+					<header id="header">
+						<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+							<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+						</form>
+						<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
+							<ul class="icons">
+								<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+							</ul>
+						</form>
+					</header>
+					<!-- Banner -->
+					<section id="banner">
+						<div class="content">
+							<header>
+								<h1>Hi, We are BOOM<br /> </h1>
+								<p>Start your perfect online class</p>
+							</header>
+							<ul class="actions">
+								<li><a href="/element" class="button big">Start</a></li>
+							</ul>
+						</div>
+						<span class="image object">
+							<img src="pic10.jpg" alt="" />
+						</span>
+					</section>
+				</div>
+			</div>
+			<!-- Sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<!-- Menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>Menu</h2>
+						</header>
+						<ul>
+							<li>
+								<a type="submit" style="font-weight : bold;">Homepage</a>
+							</li>
+							<li>
+								<form action="/element" id="element" name="element"  style="margin: auto;">
+									<a type="submit" onclick="ele_()">Make Class</a>
+									<script>
+										function ele_() {
+											$('#element').submit();
+										}
+									</script>
+								</form>
+							</li>
+							<li><a href="/total">After Class</a></li>
+							<li>		
+								<span class="opener">Statistics</span>		
+								<ul>
+									<li>		<!-- realtime 페이지는 가은. -->
+										<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;">
+											<a type="submit" onclick="ele()">Real-Time</a>
+											<script>
+												function ele() {
+													$('#realtime').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<li>
+										<form action="/history" id="history" name="history"  style="margin: auto;">
+											<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function his() { 
+													$('#history').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<li>
+										<form action="/dailyreport" id="dailyreport" name="dailyreport"  style="margin: auto;">
+											<a type="submit" onclick="day()">Daily Report</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function day() { 
+													$('#dailyreport').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<!--라우터?랑 연결하기--->
+									<li>
+										<form action="/byClass" id="byClass" name="byClass"  style="margin: auto;">
+											<a type="submit" onclick="cla()">By Class</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function cla() { 
+													$('#byClass').submit();
+												}
+											</script>
+										</form>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</nav>	
+					<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; 2021PeopleSpace TeamB. 우리이름나열?. 
+							GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+							Design: <a href="https://html5up.net">HTML5 UP</a>.
+						</p>
+					</footer>							
+				</div>
+			</div>
+		</div>
+		<!-- Scripts -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/browser.min.js"></script>
+		<script src="js/breakpoints.min.js"></script>
+		<script src="js/util.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>

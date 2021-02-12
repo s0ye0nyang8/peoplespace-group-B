@@ -1,0 +1,148 @@
+<!---------------------------------------------------------------------------------------------------------------------- 여기서부터 가은 추가 -->
+
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>BOOM 뿡ㅇㅇㅇㅇㅇ</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+		<div id="wrapper">
+			<!-- Main -->
+			<div id="main">
+				<div class="inner">
+					<!-- Header -->
+					<header id="header">
+						<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+							<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+						</form>
+						<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
+							<ul class="icons">
+								<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+							</ul>
+						</form>
+					</header>
+					<!-- Content -->
+                    <script>
+                        function nwindow(){
+                            // const query = JSON.stringify({
+                            //     "teacherID": '<%=query%>' ,
+                            //     "lectureID": parseInt(random),
+                            //     "subject" : input2.value,
+                            //     // 과목 (과목 입력), 오늘날짜, 시간 , 수업ID 
+                            //     "valid":"BOOOOOOM"window
+                            // });
+                            var url="http://google.co.kr/?";
+                            console.log(url)
+                            window.open(url,"","width=400,height=400,left=600");
+                        }
+                    </script>
+					<section>		
+						<header class="main">
+							<h1>여기서 그냥 깜짝뿅 하면서 앱 띄워주는 페이지로 쓰려고..</h1>
+						</header>
+                        <form name="r_form" action="/realtime" method="post" style="margin-left: 10px; " >
+                            <a href="#" class="button primary fit" type="button" onclick="nwindow()" style="align-self: center;">Open Your Class !</a>
+                        </form>
+					</section>	
+				</div>
+			</div>
+			<!-- Sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<!-- Menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>Menu</h2>
+						</header>
+						<ul>
+							<li>
+								<a href="/index" type="submit">Homepage</a>
+							</li>
+							<li>
+								<form action="/element" id="element" name="element"  style="margin: auto;">
+									<a type="submit" onclick="ele_()">Make Class</a>
+									<script>
+										function ele_() {
+											$('#element').submit();
+										}
+									</script>
+								</form>
+							</li>
+							<li><a href="/total">After Class</a></li>
+							<li>		
+								<span class="opener">Statistics</span>		
+								<ul>
+									<li>		<!-- realtime 페이지는 가은. -->
+										<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;  font-weight : bold;">
+											<a type="submit" onclick="ele()">Real-Time</a>
+											<script>
+												function ele() {
+													$('#realtime').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<li>
+										<form action="/history" id="history" name="history"  style="margin: auto;">
+											<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function his() { 
+													$('#history').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<li>
+										<form action="/dailyreport" id="dailyreport" name="dailyreport"  style="margin: auto;">
+											<a type="submit" onclick="day()">Daily Report</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function day() { 
+													$('#dailyreport').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<!--라우터?랑 연결하기--->
+									<li>
+										<form action="/byClass" id="byClass" name="byClass"  style="margin: auto;">
+											<a type="submit" onclick="cla()">By Class</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function cla() { 
+													$('#byClass').submit();
+												}
+											</script>
+										</form>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</nav>		
+					<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; 2021PeopleSpace TeamB. 우리이름나열?. 
+							GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+							Design: <a href="https://html5up.net">HTML5 UP</a>.
+						</p>
+					</footer>			
+				</div>
+			</div>
+		</div>
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+	</body>
+</html>
+
+<!---------------------------------------------------------------------------------------------------------------------- 여기까지 가은 추가 -->

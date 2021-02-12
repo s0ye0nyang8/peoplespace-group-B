@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+
+<title>ERROR - Online Platform BOOM</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" http-equiv="content-type" content="width=device-width, initial-scale=1, user-scalable=no ,text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+					      <!-- Header -->
+						  <header id="header">
+							<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+								<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+							</form>
+							<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
+								<ul class="icons">
+									<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+								</ul>
+							</form>
+						</header>
+                                <div style="margin-top: 50px; text-align: center;">
+                                        <h1><%= message %></h1>
+                                        <h1><%= error.status %></h1>
+                                    </div>
+                                        <!-- <pre><%= error.stack %></pre> -->
+                                </div></div></div></body></html>

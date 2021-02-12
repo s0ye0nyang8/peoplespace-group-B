@@ -1,0 +1,211 @@
+<!---------------------------------------------------------------------------------------------------------------------- 여기서부터 가은 추가 -->
+
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>BOOM Real-Time Statistics</title>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawVisualization);
+
+				function ave(arr) { // 평균 구하는 함수
+					return arr.reduce((pre, cur, i) => i === arr.length - 1 ? (pre + cur) / arr.length : pre + cur ); 
+				}
+
+                function drawVisualization() {
+					var arr = [['Minutes', 'Attention', 'Average']];		// 원래 학생 학명당 보여주려고 한건데 학생 구분을 못하니까..
+																					// 익명의 학생들의 즉각적인 distraction과 지금까지 모든 distraction들의 평균으로 .......근데 이게 의미없는 값 같은데..어..
+					var attendance_arr = [];
+
+					<%for (var i=0; i< rows.length; i++){%>
+						var newarr = [];
+						newarr.push('');
+						newarr.push(<%=rows[i].attendance%>);
+						attendance_arr.push(<%=rows[i].attendance%>);
+						newarr.push(ave(attendance_arr));		
+						arr.push(newarr);
+					<%}%>
+
+					let data = google.visualization.arrayToDataTable(arr);
+
+					var options = {
+						title : 'Degree of Attention',
+						vAxis: {title: 'attention count'},
+						hAxis: {title: 'class duration'},
+						seriesType: 'bars',
+						series: {1: {type: 'line'}}
+					};
+
+					var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+					chart.draw(data, options);
+				}
+				
+        </script>
+		<meta charset="utf-8" />
+		<!--jjeong : 15 초마다 페이지 refresh-->
+		<meta http-equiv="refresh" content="15"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+		<div id="wrapper">
+			<!-- Main -->
+			<div id="main">
+				<div class="inner">
+					<!-- Header -->
+					<header id="header">
+						<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+							<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+						</form>
+						<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
+							<ul class="icons">
+								<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+							</ul>
+						</form>
+					</header>
+					<!-- Content -->
+			
+					<section>		
+						<header class="main">
+							<h1>Real-Time Statistics</h1>
+						</header>
+						<% if (rows.length > 0){%>
+							<!-- <% if (isOpened == false){%>			어떻게 하면 한번만 띄우면서 쿼리도 붙일수있는 곳에서.. 열수있을까..
+								<script>
+									function nwindow(){
+							 
+										var url="http://google.co.kr/?";
+										console.log(url)
+										window.open(url,"","width=400,height=400,left=600");
+									}
+									nwindow();
+									console.log(isOpened);
+								</script>
+							<%}%> -->
+							<hr class="major" />
+							<p>빨간 꺾은선 그래프 : (집중하고있는학생/전체학생)의 평균</p>
+							<p>파란 막대 그래프 : 실시간으로 받아들여오는 (집중하고있는학생)</p>
+							<h2>Teacher : Kim</h2>			<!-- 이름은 디비에 없어서.. 그냥 넣ㅇ었음.. ------------------여기 presenter에서 teacher로 고침.. -->
+							<div class="row">
+								<div class="col-6 col-12-medium">
+									<div class="box">
+										<p>
+											<span class="image left"><img src="images/png/001-teacher.png" alt="" /></span>		<!-- 선생님 소개 ... 선생님 사진도 디비에 없어서 그냥 넣음.. -->
+											
+											<h4>E-mail : <%=rows[0].teacherID%></h4>
+											<h4>LectureID : <%=rows[0].lectureID%></h4>
+											<h4>Subject : <%=rows[0].subject%></h4>
+									
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div id="chart_div" style="width: 100%; height: 100%;"></div>
+							</div>
+						<%}%>
+						<%if (rows.length <= 0){%>
+							<h1>... 진행중인 발표가 없습니다 ...</h1>	
+							<h2>발표가 시작될 때까지 기다려주세요.</h2>	
+						<%}%>
+					</section>	
+				</div>
+			</div>
+			<!-- Sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<!-- Menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>Menu</h2>
+						</header>
+						<ul>
+							<li>
+								<a href="/index" type="submit">Homepage</a>
+							</li>
+							<li>
+								<form action="/element" id="element" name="element"  style="margin: auto;">
+									<a type="submit" onclick="ele_()">Make Class</a>
+									<script>
+										function ele_() {
+											$('#element').submit();
+										}
+									</script>
+								</form>
+							</li>
+							<li><a href="/total">After Class</a></li>
+							<li>		
+								<span class="opener">Statistics</span>		
+								<ul>
+									<li>		<!-- realtime 페이지는 가은. -->
+										<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;  font-weight : bold;">
+											<a type="submit" onclick="ele()">Real-Time</a>
+											<script>
+												function ele() {
+													$('#realtime').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<li>
+										<form action="/history" id="history" name="history"  style="margin: auto;">
+											<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function his() { 
+													$('#history').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<li>
+										<form action="/dailyreport" id="dailyreport" name="dailyreport"  style="margin: auto;">
+											<a type="submit" onclick="day()">Daily Report</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function day() { 
+													$('#dailyreport').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<!--라우터?랑 연결하기--->
+									<li>
+										<form action="/byClass" id="byClass" name="byClass"  style="margin: auto;">
+											<a type="submit" onclick="cla()">By Class</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function cla() { 
+													$('#byClass').submit();
+												}
+											</script>
+										</form>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</nav>		
+					<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; 2021PeopleSpace TeamB. 우리이름나열?. 
+							GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+							Design: <a href="https://html5up.net">HTML5 UP</a>.
+						</p>
+					</footer>			
+				</div>
+			</div>
+		</div>
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+	</body>
+</html>
+
+<!---------------------------------------------------------------------------------------------------------------------- 여기까지 가은 추가 -->
