@@ -39,7 +39,42 @@
 									</header>
 
 									<h2 id="content">This is your classroom!</h2>
+									<!-- 날짜별로 회의의 집중도를 평균을 낼 수 있으면 어떤 날짜의 회의를 봐야할지 알 수 있을 거 같아. 넣었다. 지금은 안 쓰인다.  
+									<html>
+									<head>
+										<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+										<script type="text/javascript">
+										google.charts.load("current", {packages:["calendar"]});
+										google.charts.setOnLoadCallback(drawChart);
 
+									function drawChart() {
+										var dataTable = new google.visualization.DataTable();
+										dataTable.addColumn({ type: 'date', id: 'Date' });
+										dataTable.addColumn({ type: 'number', id: 'Won/Loss' });
+										dataTable.addRows([
+											[ new Date(2012, 3, 13), 37032 ],
+											[ new Date(2012, 3, 14), 38024 ],
+											[ new Date(2012, 3, 15), 38024 ],
+											[ new Date(2012, 3, 16), 38108 ],
+											[ new Date(2012, 3, 17), 38229 ]
+											// Many rows omitted for brevity.
+											]);
+
+										var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
+
+										var options = {
+											title: "Red Sox Attendance",
+											
+										};
+
+										chart.draw(dataTable, options);
+									}
+										</script>
+									</head>
+									<body>
+										<div id="calendar_basic"></div>
+									</body>
+									</html>-->
 									<!-- Buttons -->
 									<div class="col-6 col-12-medium">
 										<ul class="actions fit">
@@ -56,107 +91,100 @@
 											</li>
 										</ul>
 									</div>
-									<!--
-									<li> <a href="#">History</a>
-										<form action="/history" id="history" name="history"  style="margin: auto;" method="get">
-											<a type="submit" onclick="sub()">History</a>
-											<script>
-												function sub() { 
-													$('#history').submit();
-												}
-											</script>
-										</form>
-									</li>
-									-->
-									<!--DATE TABLE-->
+									
+									<!-- 날짜별로 진행된 회의를 보여주는 표 -->
+									<%
+										for(var i=0; i<rows.length; i++) {
+											var string1 = rows[i].start.toDate().toString();
+											var strArray = string1.split(' ');
+											var date = strArray[0]+", "+strArray[1]+"월, "+strArray[2]+"일, "+ strArray[3]+"년";
+											var currDate = strArray[1] + strArray[2];
+											//rows[i]toDate에서 월, 요일을 get 함수를 쓰면 다른 숫자가 나와서 문자열로 처리했다. 
+									%>
 									<table>
-										<thead>
-											<tr>
-												<th>Date</th> <!--요일, 날짜-->
-												<th>Time</th>
-												<th>Meeting</th>
-												<th>Subject</th>												
-											</tr>
-										</thead>
 										<tbody>
-										<%
-											 for(var i=0; i<rows.length; i++) {
-										%>
 											<tr>
-												<!--날짜별로 표를 받으려면 어떻게 할까<td><%=rows.length-i%></td>-->
-												<td><%=rows[i].time.toDate()%></td>
-												<td><%=rows[i].time%></td>
-												<td>name?</td>
+												<%
+													if(i<rows.length-1){
+														if(currDate===prevDate){
+														date ="";
+														}
+													}
+												%>
+												
+												<label id = "demo"><%=date%></label>
+												
+												<td><%=rows[i].start.toDate().getHours().toString()%>:<%=rows[i].start.toDate().getMinutes().toString()%> - <%=rows[i].end.toDate().getHours().toString()%>:<%=rows[i].end.toDate().getMinutes().toString()%></td>
 												<td>
 													<!-- Break data 보내는 작업해야함. 그리고 load 하는 것도-->
 													<div class="col-12">
+														
 														<form name="history" id="history" method="post" action="/history">
 															<select name="demo-category" id="demo-category">
 																<option value=""><%=rows[i].subject%></option>
 																<option value="1">- Category -</option>
-																<option value="1">Mathematics</option>
-																<option value="1">Physical Education</option>
-																<option value="1">Korean</option>
-																<option value="1">Social Studies</option>
-																<option value="1">Music</option>
+																<%
+																	for(var i=0; i<sub.length; i++) {
+																%>
+																<option value="1"><%=sub[i].name%></option>
+																<%
+																	}
+																%>
+																
 															</select>
 														</form>
 													</div>
 												</td>
+												<td><a href="#" class="button fit">Total Gauge</a></td>
 											</tr>
-										<%
-											 }
-										%>
+										
 										</tbody>
 									</table>   
-								<!--
-									<h2>History</h2>
-									<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+									<%
+										var prevDate = strArray[1] + strArray[2];
+											 }
+										%>
+
 									
-									<h2>Category</h2>
-									<div class="box alt">
-										<div class="row gtr-50 gtr-uniform">
-											<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-											<!-- Break --
-											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-											<!-- Break --
-											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-										</div>
-									</div>
+									
+									
+								<!--데일리 평균, 회의들의 평균을 집중도를 보여주는 그래프이다. 아직 쓰지 않는다. 
+									<h4>Attention Gauge</h4>
 
+									
+									<html>
+										<head>
+											<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+											<script type="text/javascript">
+											google.charts.load('current', {'packages':['timeline']});
+											google.charts.setOnLoadCallback(drawChart);
+											function drawChart() {
+												var container = document.getElementById('timeline');
+												var chart = new google.visualization.Timeline(container);
+												var dataTable = new google.visualization.DataTable();
 
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-									<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+												dataTable.addColumn({ type: 'string', id: 'President' });
+												dataTable.addColumn({ type: 'date', id: 'Start' });
+												dataTable.addColumn({ type: 'date', id: 'End' });
+												dataTable.addRows([
+												[ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
+												[ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
+												[ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
 
-									<hr class="major" />
-
-									<h2>Interdum sed dapibus</h2>
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
-
-									<hr class="major" />
-
-									<h2>Magna etiam veroeros</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-									<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
-
-									<hr class="major" />
-
-									<h2>Lorem aliquam bibendum</h2>
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
--->
+												chart.draw(dataTable);
+											}
+											</script>
+										</head>
+										<body>
+											<div id="timeline" style="height: 180px;"></div>
+										</body>
+									</html>-->
 								</section>
 
 						</div>
 					</div> 
+
+				
 				
 				<!-- Sidebar -->
 					<div id="sidebar">
@@ -204,48 +232,7 @@
 									</ul>
 								</nav>
 
-							<!-- Section
-								<section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section> -->
-
-							<!-- Section -->
-								<!-- <section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
-									</ul>
-								</section> -->
-
-							<!-- Footer -->
-								<!-- <footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer> -->
+							
 
 						</div>
 					</div>

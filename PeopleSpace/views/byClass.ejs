@@ -11,6 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 	</head>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<body class="is-preload">
 
 		<!-- Wrapper -->
@@ -56,36 +57,32 @@
 											<li><a href="#" class="button primary fit">By Class</a></li>
 										</ul>
 									</div>
-									
-									<!--DATE TABLE-->
 									<table>
-										<thead>
-											<tr>
-												<th>Category</th> <!--요일, 날짜-->
-												<th>Total gauge</th>
-												<th>delete</th>												
-											</tr>
-										</thead>
-										<tbody>
-										<%
-											 for(var i=0; i<rows.length; i++) {
-										%>
-											<tr>
-											<form method="post" action="delete_categoty">
-												<td><output name="nameInFirebase" value="(<%=rows[i].name %>)"><%=rows[i].name %></output></td>
-												<td><a href="#" class="button fit">Total Gauge</a></td>
+									<!--DATE TABLE-->
+									<thead>
+										<tr>
+											<th>Category</th> <!--요일, 날짜-->
+											<th>Total gauge</th>
+											<th>delete</th>			
+										</tr>
+									</thead>
+									<tbody>
+
+									<% for(var i=0; i<rows.length; i++) { %>
+										<tr>
+											<td><output><%=rows[i].name %></output></td>
+											<td><a href="#" class="button fit">Total Gauge</a></td>
+											<form method="POST" action="/delete_category">
 												<td>
 													<ul class="actions">
-													<input type="submit" value="delete" class="primary" /> <!---onSubmit 쓰기-->
+														<li><button type="submit" name="remove" value="<%= ids[i] %>" class="primary" formaction="/delete_category" >DELETE</button></li> <!---onSubmit 쓰기-->
 													</ul>
 												</td>
 											</form>
-											</tr>
-										<%
-											 }
-										%>
-										</tbody>
-									</table>   
+										</tr>
+									<%}%>
+									</tbody>
+								</table>
 									<h2>Form</h2>
 									<!--<div class="row gtr-uniform">
 										<div class="col-6 col-12-xsmall">
@@ -93,7 +90,7 @@
 										</div>
 										<div class="col-12">
 											<button id = "saveButton" class="primary">+ Add Category</button>
-											<script src="../routes/index.js"></script>
+											<script src="../routes/index.js"></script>`
 										</div>
 									</div>-->
 

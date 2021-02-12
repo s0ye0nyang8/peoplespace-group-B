@@ -44,175 +44,93 @@
 								
 
 							<!-- Content -->
-								<section>
-									<header class="main">
-										<div class="row">
-											<div class="col-4 col-12-medium">
-												<span class="image fit"><img src="images/png/013-certificate.png" alt="" /></span>
-											</div>
-											<div class="col-4 col-12-medium">
-												<h3>Section</h3>
-												<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit.</p>
-											</div>
-											<div class="col-4 col-12-medium">
-												<h3>Date</h3>
-												<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit.</p>
-											</div>
+							<section>
+								<header class="main">
+									<div class="row">
+										<div class="col-4 col-12-medium">
+											<span class="image fit"><img src="images/png/013-certificate.png" alt="" /></span>
 										</div>
-									</header>
-									
-									<div class="row gtr-200">
-										<div class="col-6 col-12-medium">
-											<h4>Dailys of the Week</h4>
-											<ul class="pagination">
-												<li><span class="button">Prev</span></li>
-												<li><a href="#" class="page active">MON</a></li>
-												<li><a href="#" class="page">TUE</a></li>
-												<li><a href="#" class="page">WED</a></li>
-												<li><a href="#" class="page">THU</a></li>
-												<li><a href="#" class="page">FRI</a></li>
-												<li><a href="#" class="page">Weekly</a></li>
-												<li><a href="#" class="button">Next</a></li>
-											</ul>
-											<div class="col-4 col-12-small">
-												<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-												<label for="demo-priority-low">Low</label>
-											</div>
-											<div class="col-4 col-12-small">
-												<input type="radio" id="demo-priority-normal" name="demo-priority">
-												<label for="demo-priority-normal">Normal</label>
-											</div>
-											<div class="col-4 col-12-small">
-												<input type="radio" id="demo-priority-high" name="demo-priority">
-												<label for="demo-priority-high">High</label>
-											</div>
+										<div class="col-4 col-12-medium">
+											<h3>Section</h3>
+											<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit.</p>
 										</div>
-										<div class="col-6 col-12-medium">										
-											<form method="post" action="#">
-												<div class="row gtr-uniform">
-													<!-- Break -->
-													<div class="col-12">
-														<select name="demo-category" id="demo-category">
-															<option value="">- Category -</option>
-															<option value="1">Manufacturing</option>
-															<option value="1">Shipping</option>
-															<option value="1">Administration</option>
-															<option value="1">Human Resources</option>
-														</select>
-													</div>
-													<!-- Break -->
-													<div class="col-12">
-                                                        <input type="textfiled" id="Epilogue" />
-                                                        <button id="saveButton">Save</button>
-														<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-													</div>
-												</div>
-											</form>
+										<div class="col-4 col-12-medium">
+											<h3>Date</h3>
+											<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit.</p>
 										</div>
 									</div>
-
-									<h4>Attention Gauge</h4>
-
-									
-									<html>
-										<head>
-											<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-											<script type="text/javascript">
-											google.charts.load('current', {'packages':['timeline']});
-											google.charts.setOnLoadCallback(drawChart);
-											function drawChart() {
-												var container = document.getElementById('timeline');
-												var chart = new google.visualization.Timeline(container);
-												var dataTable = new google.visualization.DataTable();
-
-												dataTable.addColumn({ type: 'string', id: 'President' });
-												dataTable.addColumn({ type: 'date', id: 'Start' });
-												dataTable.addColumn({ type: 'date', id: 'End' });
-												dataTable.addRows([
-												[ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
-												[ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
-												[ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
-
-												chart.draw(dataTable);
-											}
-											</script>
-										</head>
-										<body>
-											<div id="timeline" style="height: 180px;"></div>
-										</body>
-									</html>
-									
-
-
-									<!-- Content -->
-										<h3 id="content">Section</h3>
-										<p>Praesent ac adipiscing ullamcorper semper ut amet ac risus. Lorem sapien ut odio odio nunc. </p>
-										
-										
-										<html>
-											<head>
-												<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-												<script type="text/javascript">
-												google.charts.load('current', {'packages':['table']});
-												google.charts.setOnLoadCallback(drawTable);
-
-												function drawTable() {
-													var data = new google.visualization.DataTable();
-													data.addColumn('string', 'Name');
-													//data.addColumn('number', 'Salary');
-													//data.addColumn('boolean', 'Full Time Employee');
-													var newrow=[];
-													
-													<%for(var i = 0; i < rows.length; i++){%>
-														data.addRow(<%=rows[i].lectureID%>);
-													<%}%>
-													
-													var table = new google.visualization.Table(document.getElementById('table_div')); //document.getElementById('table_div'
-
-													table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
-												}
-												</script>
-											</head>
-											<body>
-												<div id="table_div"></div>
-											</body>
-										</html>
-
-										<div class="row">
-											<div class="col-6 col-12-small">
-												<h3>Sem turpis amet semper</h3>
-												
-												<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat commodo eu sed ante lacinia. Sapien a lorem in integer ornare praesent commodo adipiscing arcu in massa commodo lorem accumsan at odio massa ac ac. Semper adipiscing varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
-											</div>
-											<div class="col-6 col-12-small">
-												<h3>Magna odio tempus commodo</h3>
-												<p>In arcu accumsan arcu adipiscing accumsan orci ac. Felis id enim aliquet. Accumsan ac integer lobortis commodo ornare aliquet accumsan erat tempus amet porttitor. Ante commodo blandit adipiscing integer semper orci eget. Faucibus commodo adipiscing mi eu nullam accumsan morbi arcu ornare odio mi adipiscing nascetur lacus ac interdum morbi accumsan vis mi accumsan.</p>
-											</div>
-											<!-- Break -->
-											<div class="col-4 col-12-medium">
-												
-												<h3>Interdum sapien gravida</h3>
-
-												<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit.</p>
-											</div>
-											<div class="col-4 col-12-medium">
-												<h3>Section</h3>
-												<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit.</p>
-											</div>
-											<div class="col-4 col-12-medium">
-												<h3>Date</h3>
-												<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit.</p>
-											</div>
+								
+								
+								<div class="row gtr-200">
+									<div class="col-6 col-12-medium">
+										<h4>Dailys of the Week</h4>
+										<ul class="pagination">
+											<li><span class="button">Prev</span></li>
+											<li><a href="#" class="page active">MON</a></li>
+											<li><a href="#" class="page">TUE</a></li>
+											<li><a href="#" class="page">WED</a></li>
+											<li><a href="#" class="page">THU</a></li>
+											<li><a href="#" class="page">FRI</a></li>
+											<li><a href="#" class="page">Weekly</a></li>
+											<li><a href="#" class="button">Next</a></li>
+										</ul>
+										<div class="col-4 col-12-small">
+											<input type="radio" id="demo-priority-low" name="demo-priority" checked>
+											<label for="demo-priority-low">Low</label>
 										</div>
+										<div class="col-4 col-12-small">
+											<input type="radio" id="demo-priority-normal" name="demo-priority">
+											<label for="demo-priority-normal">Normal</label>
+										</div>
+										<div class="col-4 col-12-small">
+											<input type="radio" id="demo-priority-high" name="demo-priority">
+											<label for="demo-priority-high">High</label>
+										</div>
+									</div>
+									<div class="col-6 col-12-medium">										
+										<form method="post" action="#">
+											<div class="row gtr-uniform">
+												<!-- Break -->
+												<div class="col-12">
+													<select name="demo-category" id="demo-category">
+														<option value="">- Category -</option>
+														<option value="1">Manufacturing</option>
+														<option value="1">Shipping</option>
+														<option value="1">Administration</option>
+														<option value="1">Human Resources</option>
+													</select>
+												</div>
+												<!-- Break -->
+												<div class="col-12">
+													<input type="textfiled" id="Epilogue" />
+													<button id="saveButton">Save</button>
+													<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+								</header>
+							
+								<!--표-->
+								<!-- Content -->
+								<h1 >Total Attention Gauge</h1>
+								<h3>You can click the button to see the attention gauge history with charts!</h3>
 
-									<hr class="major" />
-<!--------------------------혜민님 데이터 코드----------------------------------------------------------------------->
+		
+
+								<!--그래프-->
+									
+									
+			<!--------------------------혜민님 데이터 코드--
+							
+								--------------------------------------------------------------------->
+								
 									<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 									<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 									<script type="text/javascript">
 
 										google.charts.load('current', {'packages':['corechart']});
-										google.charts.setOnLoadCallback(drawChart);
 
 										function drawChart() {
 
@@ -225,16 +143,10 @@
 												newarr.push(<%=rows[i].time.toDate().getTime()%>);
 												newarr.push(<%=rows[i].attendance%>);
 												arr.push(newarr);
-												var idx = <%=rows[i].time.toDate().getTime()%>;
-												var url = "<%=rows[i].fileID%>";
-												idx_url.push(idx);
-												idx_url.push(url);
-												urlArr.push(idx_url);
 											<%}%>
 
-
 											var data = google.visualization.arrayToDataTable(arr);
-
+											
 											var options = {
 
 												title: 'Attention Gauge',
@@ -243,432 +155,131 @@
 											};
 
 											var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-											function selectHandler() {
-												var selectedItem = chart.getSelection()[0];
-												if (selectedItem) {
-													var topping = data.getValue(selectedItem.row, 0);
-													var img = document.getElementById("myimg");
-													for(var i = 0; i < urlArr.length; i++){
-														if((urlArr[i][0] === topping) && (urlArr[i][1] != "")){
-															img.src=urlArr[i][1];
-															console.log("img");
-															img.style.display = "block";
-															break;
-														} else{
-															console.log("notimg");
-															img.style.display = "none";
-														}
-													}
-												}
-											}
-
-											google.visualization.events.addListener(chart, 'select', selectHandler);
+											
 											chart.draw(data, options);
-											$(window).resize(function(){
-												drawChart();
-											})
+
+											var x = document.getElementById("curve_chart");
+											if (x.style.display === "none") {
+												x.style.display = "block";
+											} else {
+												x.style.display = "none";
+											}
 										}
 									</script>
-									<section>
-										<header class="main">
-											<h1 align="center">Total Attention Gauge</h1>
-										</header>
-						
-										<div class="blackboard">
-												<span class="image fit">
-													<img src="./images/png/043-blackboard.png">
-												</span>
-											<h2 align="center">Class <%=rows[1].lectureID%></h2>
-											<h3 align="center"><%=rows[1].time.toDate()%></h3>
-											<h4 align="center">Click on the chart to see the inattentives!</h4>
-										</div>
-										<div class="chartwrap">
-											<div id="curve_chart"></div>
-										</div>
-										<div class="imgwrap">
-											<h2 align="center">Moments</h2>
-											<img src="./images/pic01.jpg" id="myimg">
-										</div>
-
-									</section>
+									
 <!--------------------------혜민님 데이터 코드----------------------------------------------------------------------->
-									<hr class="major" />
+								<!--table-->
 
-									<!-- Elements -->
-										<h2 id="elements">Elements</h2>
-										<div class="row gtr-200">
-											<div class="col-6 col-12-medium">
+									<!---<hr class="major" />-->
+								
+									<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+									<script type="text/javascript">
+									google.charts.load('current', {'packages':['table']});
 
-												<!-- Text stuff -->
-													<h3>Text</h3>
-													<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-													This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-													This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>.
-													Finally, this is a <a href="#">link</a>.</p>
-													<hr />
-													<h2>Heading Level 2</h2>
-													<h3>Heading Level 3</h3>
-													<h4>Heading Level 4</h4>
-													<hr />
-													<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
+									function drawTable() {
+										var data = new google.visualization.DataTable();
+										data.addColumn('string', 'Time');
+										data.addColumn('number', 'Attention');
+						
+										
+										<%for(var i = 0; i < rows.length; i++){%>
+											data.addRow(['<%=rows[i].time.toDate().getTime()%>', {v: <%=rows[i].attendance%>}]);
+										<%}%>
+										
 
-												<!-- Lists -->
-													<h3>Lists</h3>
-													<div class="row">
-														<div class="col-6 col-12-small">
+										var table = new google.visualization.Table(document.getElementById('table_div'));
 
-															<h4>Unordered</h4>
-															<ul>
-																<li>Dolor etiam magna etiam.</li>
-																<li>Sagittis lorem eleifend.</li>
-																<li>Felis dolore viverra.</li>
-															</ul>
+										table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
 
-															<h4>Alternate</h4>
-															<ul class="alt">
-																<li>Dolor etiam magna etiam.</li>
-																<li>Sagittis lorem eleifend.</li>
-																<li>Felis feugiat viverra.</li>
-															</ul>
+										var x = document.getElementById("table_div");
+											if (x.style.display === "none") {
+												x.style.display = "block";
+											} else {
+												x.style.display = "none";
+											}
+									}
 
-														</div>
-														<div class="col-6 col-12-small">
+									</script>
+									
+									<!--column-->
+									<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+									<script type="text/javascript">
+									
+										google.charts.load('current', {packages: ['corechart', 'bar']});
+										//google.charts.setOnLoadCallback(drawBasic);
 
-															<h4>Ordered</h4>
-															<ol>
-																<li>Dolor etiam magna etiam.</li>
-																<li>Etiam vel lorem sed viverra.</li>
-																<li>Felis dolore viverra.</li>
-																<li>Dolor etiam magna etiam.</li>
-																<li>Etiam vel lorem sed viverra.</li>
-																<li>Felis dolore viverra.</li>
-															</ol>
+										function drawBasic() {
 
-															<h4>Icons</h4>
-															<ul class="icons">
-																<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-																<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-																<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-																<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-																<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-																<li><a href="#" class="icon brands fa-tumblr"><span class="label">Tumblr</span></a></li>
-															</ul>
+										var data = new google.visualization.DataTable();
+										data.addColumn('timeofday', 'Time of Day');
+										data.addColumn('number', 'Attention Level');
 
-														</div>
-													</div>
-													<h4>Definition</h4>
-													<dl>
-														<dt>Item1</dt>
-														<dd>
-															<p>Lorem ipsum dolor vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Lorem ipsum dolor.</p>
-														</dd>
-														<dt>Item2</dt>
-														<dd>
-															<p>Lorem ipsum dolor vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Lorem ipsum dolor.</p>
-														</dd>
-														<dt>Item3</dt>
-														<dd>
-															<p>Lorem ipsum dolor vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Lorem ipsum dolor.</p>
-														</dd>
-													</dl>
+										<%for(var i = 0; i < rows.length; i++){%>
+											data.addRow([[<%=rows[i].time.toDate().getTime()%>, 0, 0], {v: <%=rows[i].attendance%>}]);
+										<%}%>
 
-													<h4>Actions</h4>
-													<ul class="actions">
-														<li><a href="#" class="button primary">Default</a></li>
-														<li><a href="#" class="button">Default</a></li>
-													</ul>
-													<ul class="actions small">
-														<li><a href="#" class="button primary small">Small</a></li>
-														<li><a href="#" class="button small">Small</a></li>
-													</ul>
-													<div class="row">
-														<div class="col-6 col-12-small">
-															<ul class="actions stacked">
-																<li><a href="#" class="button primary">Default</a></li>
-																<li><a href="#" class="button">Default</a></li>
-															</ul>
-														</div>
-														<div class="col-6 col-12-small">
-															<ul class="actions stacked">
-																<li><a href="#" class="button primary small">Small</a></li>
-																<li><a href="#" class="button small">Small</a></li>
-															</ul>
-														</div>
-														<div class="col-6 col-12-small">
-															<ul class="actions stacked">
-																<li><a href="#" class="button primary fit">Default</a></li>
-																<li><a href="#" class="button fit">Default</a></li>
-															</ul>
-														</div>
-														<div class="col-6 col-12-small">
-															<ul class="actions stacked">
-																<li><a href="#" class="button primary small fit">Small</a></li>
-																<li><a href="#" class="button small fit">Small</a></li>
-															</ul>
-														</div>
-													</div>
+										var options = {
+											title: 'Attention Level Throughout the Class',
+											hAxis: {
+											title: 'Time of Class',
+											format: 'h:mm a',
+											
+											},
+											vAxis: {
+											title: 'Rating (scale of 0-3)'
+											}
+										};
 
-													<h4>Pagination</h4>
-													<ul class="pagination">
-														<li><span class="button disabled">Prev</span></li>
-														<li><a href="#" class="page active">1</a></li>
-														<li><a href="#" class="page">2</a></li>
-														<li><a href="#" class="page">3</a></li>
-														<li><span>&hellip;</span></li>
-														<li><a href="#" class="page">8</a></li>
-														<li><a href="#" class="page">9</a></li>
-														<li><a href="#" class="page">10</a></li>
-														<li><a href="#" class="button">Next</a></li>
-													</ul>
+										var chart = new google.visualization.ColumnChart(
+											document.getElementById('chart_div'));
 
-												<!-- Blockquote -->
-													<h3>Blockquote</h3>
-													<blockquote>Lorem ipsum dolor vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Lorem ipsum dolor. Lorem ipsum dolor vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus.</blockquote>
+										chart.draw(data, options);
+										
+											var x = document.getElementById("chart_div");
+											if (x.style.display === "none") {
+												x.style.display = "block";
+											} else {
+												x.style.display = "none";
+											}
+										}
 
-												<!-- Table -->
-													<h3>Table</h3>
-
-													<h4>Default</h4>
-													<div class="table-wrapper">
-														<table>
-															<thead>
-																<tr>
-																	<th>Name</th>
-																	<th>Description</th>
-																	<th>Price</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>Item1</td>
-																	<td>Ante turpis integer aliquet porttitor.</td>
-																	<td>29.99</td>
-																</tr>
-																<tr>
-																	<td>Item2</td>
-																	<td>Vis ac commodo adipiscing arcu aliquet.</td>
-																	<td>19.99</td>
-																</tr>
-																<tr>
-																	<td>Item3</td>
-																	<td> Morbi faucibus arcu accumsan lorem.</td>
-																	<td>29.99</td>
-																</tr>
-																<tr>
-																	<td>Item4</td>
-																	<td>Vitae integer tempus condimentum.</td>
-																	<td>19.99</td>
-																</tr>
-																<tr>
-																	<td>Item5</td>
-																	<td>Ante turpis integer aliquet porttitor.</td>
-																	<td>29.99</td>
-																</tr>
-															</tbody>
-															<tfoot>
-																<tr>
-																	<td colspan="2"></td>
-																	<td>100.00</td>
-																</tr>
-															</tfoot>
-														</table>
-													</div>
-
-													<h4>Alternate</h4>
-													<div class="table-wrapper">
-														<table class="alt">
-															<thead>
-																<tr>
-																	<th>Name</th>
-																	<th>Description</th>
-																	<th>Price</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>Item1</td>
-																	<td>Ante turpis integer aliquet porttitor.</td>
-																	<td>29.99</td>
-																</tr>
-																<tr>
-																	<td>Item2</td>
-																	<td>Vis ac commodo adipiscing arcu aliquet.</td>
-																	<td>19.99</td>
-																</tr>
-																<tr>
-																	<td>Item3</td>
-																	<td> Morbi faucibus arcu accumsan lorem.</td>
-																	<td>29.99</td>
-																</tr>
-																<tr>
-																	<td>Item4</td>
-																	<td>Vitae integer tempus condimentum.</td>
-																	<td>19.99</td>
-																</tr>
-																<tr>
-																	<td>Item5</td>
-																	<td>Ante turpis integer aliquet porttitor.</td>
-																	<td>29.99</td>
-																</tr>
-															</tbody>
-															<tfoot>
-																<tr>
-																	<td colspan="2"></td>
-																	<td>100.00</td>
-																</tr>
-															</tfoot>
-														</table>
-													</div>
-
+										</script>
+										<section>
+											<button  class="btn btn-danger navbar-btn " onclick="drawChart()">
+												Toggle Graph Chart!
+											</button>
+											
+											<button  class="btn btn-danger navbar-btn" onclick="drawTable()">
+												Toggle Table Chart!
+											</button>
+											
+											<button class="btn btn-danger navbar-btn" onclick="drawBasic()">
+												Toggle Column Chart!
+											</button>
+										</section>
+										<section>
+											
+											<div class = "chartwrap">
+												<div id="curve_chart"></div>
 											</div>
-											<div class="col-6 col-12-medium">
+											<div id="table_div"></div>
+											<div id="chart_div"></div>
 
-												<!-- Buttons -->
-													<h3>Buttons</h3>
-													<ul class="actions">
-														<li><a href="#" class="button primary">Primary</a></li>
-														<li><a href="#" class="button">Default</a></li>
-													</ul>
-													<ul class="actions">
-														<li><a href="#" class="button large">Large</a></li>
-														<li><a href="#" class="button">Default</a></li>
-														<li><a href="#" class="button small">Small</a></li>
-													</ul>
-													<ul class="actions">
-														<li><a href="#" class="button primary large">Large</a></li>
-														<li><a href="#" class="button primary">Default</a></li>
-														<li><a href="#" class="button primary small">Small</a></li>
-													</ul>
-													<ul class="actions fit">
-														<li><a href="#" class="button primary fit">Fit</a></li>
-														<li><a href="#" class="button fit">Fit</a></li>
-													</ul>
-													<ul class="actions fit small">
-														<li><a href="#" class="button primary fit small">Fit + Small</a></li>
-														<li><a href="#" class="button fit small">Fit + Small</a></li>
-													</ul>
-													<ul class="actions">
-														<li><a href="#" class="button primary icon solid fa-search">Icon</a></li>
-														<li><a href="#" class="button icon solid fa-download">Icon</a></li>
-													</ul>
-													<ul class="actions">
-														<li><span class="button primary disabled">Primary</span></li>
-														<li><span class="button disabled">Default</span></li>
-													</ul>
-
-												<!-- Form -->
-													<h3>Form</h3>
-
-													<form method="post" action="#">
-														<div class="row gtr-uniform">
-															<div class="col-6 col-12-xsmall">
-																<input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
-															</div>
-															<div class="col-6 col-12-xsmall">
-																<input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />
-															</div>
-															<!-- Break -->
-															<div class="col-12">
-																<select name="demo-category" id="demo-category">
-																	<option value="">- Category -</option>
-																	<option value="1">Manufacturing</option>
-																	<option value="1">Shipping</option>
-																	<option value="1">Administration</option>
-																	<option value="1">Human Resources</option>
-																</select>
-															</div>
-															<!-- Break -->
-															<div class="col-4 col-12-small">
-																<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-																<label for="demo-priority-low">Low</label>
-															</div>
-															<div class="col-4 col-12-small">
-																<input type="radio" id="demo-priority-normal" name="demo-priority">
-																<label for="demo-priority-normal">Normal</label>
-															</div>
-															<div class="col-4 col-12-small">
-																<input type="radio" id="demo-priority-high" name="demo-priority">
-																<label for="demo-priority-high">High</label>
-															</div>
-															<!-- Break -->
-															<div class="col-6 col-12-small">
-																<input type="checkbox" id="demo-copy" name="demo-copy">
-																<label for="demo-copy">Email me a copy</label>
-															</div>
-															<div class="col-6 col-12-small">
-																<input type="checkbox" id="demo-human" name="demo-human" checked>
-																<label for="demo-human">I am a human</label>
-															</div>
-															<!-- Break -->
-															<div class="col-12">
-																<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-															</div>
-															<!-- Break -->
-															<div class="col-12">
-																<ul class="actions">
-																	<li><input type="submit" value="Send Message" class="primary" /></li>
-																	<li><input type="reset" value="Reset" /></li>
-																</ul>
-															</div>
-														</div>
-													</form>
-
-												<!-- Image -->
-													<h3>Image</h3>
-
-													<h4>Fit</h4>
-													<span class="image fit"><img src="images/pic11.jpg" alt="" /></span>
-													<div class="box alt">
-														<div class="row gtr-50 gtr-uniform">
-															<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-															<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-															<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-															<!-- Break -->
-															<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-															<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-															<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-															<!-- Break -->
-															<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-															<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-															<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-														</div>
-													</div>
-
-													<h4>Left &amp; Right</h4>
-													<p><span class="image left"><img src="images/pic01.jpg" alt="" /></span>Lorem ipsum dolor sit accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-													<p><span class="image right"><img src="images/pic02.jpg" alt="" /></span>Lorem ipsum dolor sit accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-
-												<!-- Box -->
-													<h3>Box</h3>
-													<div class="box">
-														<p>Felis sagittis eget tempus primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Magna sed etiam ante ipsum primis in faucibus vestibulum.</p>
-													</div>
-
-												<!-- Preformatted Code -->
-													<h3>Preformatted</h3>
-													<pre><code>i = 0;
-
-while (!deck.isInOrder()) {
-    print 'Iteration ' + i;
-    deck.shuffle();
-    i++;
-}
-
-print 'It took ' + i + ' iterations to sort the deck.';
-</code></pre>
-
-											</div>
-										</div>
-
+										</section>
 								</section>
-
+											
+										
+								<!--막대형-->
+									
+					
+							
 						</div>
 					</div>
-
-				<!-- Sidebar -->
+								<!-- Sidebar -->
 					<div id="sidebar">
 						<div class="inner">
 
+							
 							<!-- Search -->
 								<section id="search" class="alt">
 									<form method="post" action="#">
@@ -676,7 +287,7 @@ print 'It took ' + i + ' iterations to sort the deck.';
 									</form>
 								</section>
 
-							<!-- Menu -->
+								<!-- Menu -->
 								<nav id="menu">
 									<header class="major">
 										<h2>Menu</h2>
@@ -711,53 +322,12 @@ print 'It took ' + i + ' iterations to sort the deck.';
 									</ul>
 								</nav>
 
-							<!-- Section -->
-								<!-- <section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section> -->
-
-							<!-- Section -->
-								<!-- <section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
-									</ul>
-								</section> -->
-
-							<!-- Footer -->
-								<!-- <footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer> -->
+							
 
 						</div>
 					</div>
-
-			</div>
+							
+		</div>
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
