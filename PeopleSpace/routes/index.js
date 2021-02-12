@@ -241,7 +241,7 @@ router.get('/history', function(req, res, next) {
     return;
   }
     /* 디비에서 정보를 가져온다 history collection에서*/
-    db.collection('people-space').orderBy("time", "desc").get()
+    db.collection('people-space').orderBy("start", "desc").get() //내림차순
       .then((snapshot) => {
           var rows = [];
           snapshot.forEach((doc) => {
@@ -252,6 +252,24 @@ router.get('/history', function(req, res, next) {
           });
           /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
           res.render('history', {rows: rows});
+
+      })
+      .catch((err) => {
+          console.log('Error getting documents', err);
+      });
+    /* 디비에서 정보를 가져온다 history collection에서*/
+    db.collection('subject').get() 
+      .then((snapshot) => {
+          var sub = [];
+          snapshot.forEach((doc) => {
+              /* 가져온 정보 row 라는 배열에 저장 */
+              var childData = doc.data();
+              childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
+              sub.push(childData);
+              console()
+          });
+          /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+          res.render('history', {sub: sub});
 
       })
       .catch((err) => {
@@ -290,14 +308,17 @@ router.get('/byClass', function(req, res, next) {
   /* 디비에서 정보를 가져온다 history collection에서*/
   db.collection("subject").get().then((snapshot) =>{
     var rows = [];
+    var ids = [];
     snapshot.forEach((doc) => {
       var dateData = doc.data();
+      var idData = doc.id;
       dateData.brddate = dateFormat(dateData.brddate, "yyyy-mm-dd");
       rows.push(dateData);
+      ids.push(idData);
       //console.log(`${doc.id} => ${doc.data()}`);
     });
     /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-    res.render('byClass', {rows: rows});
+    res.render('byClass', {rows: rows, ids: ids});
   })
   .catch((err) => {
       console.log('Error getting documents: history', err);
@@ -306,28 +327,7 @@ router.get('/byClass', function(req, res, next) {
 
 
 });
-router.post('/history', function(req, res, next) {
-  if (!fb.auth().currentUser) {
-    res.redirect('fb');
-    return;
-  }
-  // document.getElementById('demo-category').onclick=()=>{
-  //   const select = document.querySelector("select[name='demo-category']")
-  //   const value = select.value;
-  //   const option = select.querySelector(`option[value='${value}']`)
-  //   const text = option.innerText
-  //   console.log(text)
-  // }
-  //문서 어떻게 찾지. 
-  db.collection('history').doc('??????').add({
-    subject: req.body.demo-category
-  })
-  .catch(function(error) {
-    console.log('Error getting documents: subject', error);
-  });
-  
-  res.redirect('history') //에러를 위해서 if나 then, catch 문 안에 넣고 싶음. 
-});
+
 router.post('/byClass', function(req, res, next) {
   if (!fb.auth().currentUser) {
     res.redirect('fb');
@@ -368,23 +368,28 @@ router.post('/byClass', function(req, res, next) {
       console.log('Error getting documents: subject', error);
     });
   }
+
   res.redirect('byClass') //에러를 위해서 if나 then, catch 문 안에 넣고 싶음. 
 });
-router.post('/delete_categoty', function(req, res, next) {
+
+
+router.post('/delete_category', function(req, res, next) {
   if (!fb.auth().currentUser) {
     res.redirect('fb');
     return;
   }
+
+  console.log(req.body.remove);
   //문서 삭제 버튼
-  db.collection("subject").where('name','==',req.body.nameInFirebase).delete().then(function() {
+  db.collection("subject").doc(req.body.remove).delete().then(function() {
     console.log("Document successfully deleted!");
+    res.render('byClass');
   }).catch(function(error) {
       console.error("Error removing document: ", error);
   });
 
-  res.redirect('byClass') //에러를 위해서 if나 then, catch 문 안에 넣고 싶음. 
+  res.redirect('byClass') 
 });
-
 
 /*************************************** */
 router.get('/total', function(req, res, next){
