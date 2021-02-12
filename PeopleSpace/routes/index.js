@@ -119,6 +119,7 @@ router.get('/logOut', function(req, res, next) {
 });
 
 const querystring = require('querystring');    
+const { render } = require('ejs');
 router.get('/element', function(req, res, next) {
   if (!fb.auth().currentUser) {
     res.redirect('loginForm');
@@ -167,6 +168,30 @@ router.get('/realtime', function(req, res, next) {        // realtime 페이지�
     res.redirect('fb');
     return;
 }
+ var now  = new Date();   // 현재 시간          
+   var post = req.body;
+   var start ="";
+  
+   /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로*/
+  //  console.log(post['lectureID']);
+   db.collection('on-air').where('teacherID', '==', fb.auth().currentUser.email).get()
+   .then((snapshot) => {
+     var rows = [];
+     snapshot.forEach((doc) => {
+        /* 가져온 정보 rows 라는 배열에 저장 */
+        var childData = doc.data();
+        childData.brddate = dateFormat(childData.brddate,"yyyy-mm-dd");
+            // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
+             start = childData.start;
+          });
+          /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+          
+        })
+        .catch((err) => {
+            console.log('Error getting documents', err);
+        });
+      
+  
    /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로*/    
    var now  = new Date();   // 현재 시간          
    db.collection('people-space').where('teacherID', '==', fb.auth().currentUser.email).get()  // 어자피 동시에 수업 두개를 할 순 없으니까.. teacherID로 유니크할수있을듯.
@@ -179,15 +204,18 @@ router.get('/realtime', function(req, res, next) {        // realtime 페이지�
           /* 가져온 정보 rows 라는 배열에 저장 */
           var childData = doc.data();
           childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
-          console.log(childData.start)
-          if (childData.start !=null&&(childData.start.toMillis() <= now.getTime() && now.getTime() <= childData.end.toMillis())){    // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
+          
+          if ( childData.start.toString() == start.toString() && now.getTime() <= childData.end.toMillis() ){    // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
                rows.push(childData);
+               console.log(childData);
           }
           
-          // console.log(childData.attendance);
+        
        });
        /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-       res.render('realtime', {rows: rows});
+       res.render('realtime', {rows: rows,
+        user: fb.auth().currentUser.email,
+        start : start});
    })
    .catch((err) => {
        console.log('Error getting documents', err);
@@ -199,33 +227,86 @@ router.post('/realtime', function(req, res, next) {        // realtime 페이지
   if (!fb.auth().currentUser) {
     res.redirect('fb');
     return;
-}
+    }
    /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로*/    
    var now  = new Date();   // 현재 시간          
    var post = req.body;
+   var start ="";
+  
    /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로*/
-   console.log(post['lectureID']);
+  //  console.log(post['lectureID']);
+   db.collection('on-air').where('teacherID', '==', fb.auth().currentUser.email).get()
+   .then((snapshot) => {
+    //  now = dateFormat(now, "yyyy-mm-dd");
+    //  console.log(now);
+     var rows = [];
+     snapshot.forEach((doc) => {
+        /* 가져온 정보 rows 라는 배열에 저장 */
+        var childData = doc.data();
+        childData.brddate = dateFormat(childData.brddate,"yyyy-mm-dd");
+        if(childData.start ==null){
+            var rows = [];
+           
+            res.render('realtime',
+            {rows: rows,
+              user: fb.auth().currentUser.email,
+              start : childData.start
+            });
+           return ;
+        }
+       
+            // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
+             start = childData.start;
+            
+             if (childData.end !=null && now.getTime() > childData.end.toMillis()) {
+              console.log(now,end);
+              var rows = [];
+              // console.log("111111111111.")
+              res.render('realtime',
+               {rows: rows,
+                user: fb.auth().currentUser.email,
+                start : start
+              });
+                   return ;
+            }
+        
+        // console.log(childData.attendance);
+     });
+     /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+     
+  })
+  .catch((err) => {
+      console.log('Error getting documents', err);
+  });
+ 
+  
+
    db.collection('people-space')
-   .where('teacherID', '==', fb.auth().currentUser.email)
-   .where('lectureID','==',post['lectureID']).get() // 어자피 동시에 수업 두개를 할 순 없으니까.. teacherID로 유니크할수있을듯.
+   .where('teacherID', '==', fb.auth().currentUser.email).get()
+    // 어자피 동시에 수업 두개를 할 순 없으니까.. teacherID로 유니크할수있을듯.
    //.orderBy("time", "desc").get() -> orderBy 하면 인덱스 오류가 난다 왜지....
    .then((snapshot) => {
       //  now = dateFormat(now, "yyyy-mm-dd");
       //  console.log(now);
        var rows = [];
+       
        snapshot.forEach((doc) => {
           /* 가져온 정보 rows 라는 배열에 저장 */
           var childData = doc.data();
           childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
-          console.log(childData.start)
+          if ( childData.start.toString() == start.toString() && now.getTime() <= childData.end.toMillis() ) // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
           {    // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
+            
                rows.push(childData);
           }
           
           // console.log(childData.attendance);
        });
        /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-       res.render('realtime', {rows: rows});
+       res.render('realtime', {rows: rows,
+        user: fb.auth().currentUser.email,
+        start : start});
+        return ;
    })
    .catch((err) => {
        console.log('Error getting documents', err);
@@ -311,14 +392,7 @@ router.post('/history', function(req, res, next) {
     res.redirect('fb');
     return;
   }
-  // document.getElementById('demo-category').onclick=()=>{
-  //   const select = document.querySelector("select[name='demo-category']")
-  //   const value = select.value;
-  //   const option = select.querySelector(`option[value='${value}']`)
-  //   const text = option.innerText
-  //   console.log(text)
-  // }
-  //문서 어떻게 찾지. 
+ 
   db.collection('history').doc('??????').add({
     subject: req.body.demo-category
   })
@@ -414,4 +488,34 @@ router.get('/total', function(req, res, next){
 
 });
 
+router.post('/total', function(req, res, next){
+  if(!fb.auth().currentUser){
+      res.redirect('loginForm');
+      return;
+  }
+  var post = req.body;
+  
+  console.log(post["start"]);
+  console.log("s");
+  //var imgName = req.query.imgName;
+  //var file = firebaseAdmin.storage().bucket().file(imgName);
+  /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로*/
+  db.collection('people-space').orderBy("time", "desc").get()
+      .then((snapshot) => {
+          var rows = [];
+          snapshot.forEach((doc) => {
+              /* 가져온 정보 row 라는 배열에 저장 */
+              var childData = doc.data();
+              childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
+              rows.push(childData);
+          });
+          /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+          res.render('total_statistics', {rows: rows});
+
+      })
+      .catch((err) => {
+          console.log('Error getting documents', err);
+      });
+
+});
 module.exports = router;

@@ -89,6 +89,7 @@
 										<h2>Presenter : Kim</h2>			<!-- 이름은 디비에 없어서.. 그냥 넣ㅇ었음.. -->
 
 										<div class="row">
+											
 											<div class="col-6 col-12-medium">
 												<div class="box">
 													<p>
@@ -118,11 +119,52 @@
 										<div class="row">
 											<div id="chart_div" style="width: 100%; height: 100%;"></div>
 										</div>
+										<script>
+											console.log("kkkk",'<%=rows%>')
+											</script>
 									<%}%>
 									<%if (rows.length <= 0){%>
-										<h1>... 진행중인 발표가 없습니다 ...</h1>	
-										<h2>발표가 시작될 때까지 기다려주세요.</h2>	
-									<%}%>
+
+										<h2>If you want to see the result of your Class</h2>
+										<h2>Please press the BUTTON below !</h2>
+										<span class="image object" >
+										<img style="position: relative;  background-size :10%" src="finger.png" alt="" />
+									</span>
+										<form method="POST" action="/total">
+											<td>
+												<ul class="actions">
+													
+											
+													<li><button type="submit" name="start" value="<%=start%>" class="primary" formaction="/total" >Move to Total Statistics</button></li> <!---onSubmit 쓰기-->
+												</ul>
+											</td>
+										</form>
+										<!-- <form name="r_form" action="/total" method="post" style="margin-left: 10px; " > -->
+											<!-- <input tid="sStatusType" ype="text" name="id" value="check()" size="30" style="color:dimgray;" maxlength="120" readonly> -->
+											<!-- <a href="#" class="button primary fit" type="button" onclick="nwindow()" style="width: 50%;">Open Your Class !</a> -->
+											 <!-- window.open('http://google.co.kr/?'); -->
+									  <!-- </form> -->
+									     <!-- <script>
+											
+											if(<%=rows.length%> <=0){
+												// document.location.href = '/total';
+												console.log("hhh",'<%=user%>')
+												
+
+											}
+												
+									  </script> -->
+										<%}%>
+										<!-- <span class="image object" >
+										<img style="width: 50%;height: 30%;" src="pic.jpg" alt="" />
+									</span> -->
+
+										<!-- <h1>... 진행중인 발표가 없습니다 ...</h1>
+										<div style=" text-align: center; margin-bottom: 10px;" >
+									
+										</div>	
+										<h2>... 발표가 시작될 때까지 기다려주세요.</h2>	 -->
+									
 
 								</section>	
 						</div>
