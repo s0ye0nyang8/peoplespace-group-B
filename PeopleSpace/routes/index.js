@@ -8,13 +8,13 @@ var dateFormat = require('dateformat');
 const dotenv = require('dotenv')
   dotenv.config()
     var firebaseConfig = {
-      apiKey:   process.env.FIREBASE_API_KEY,
-      authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      storageBucket:process.env.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.FIREBASE_MESSD_ID,
-      appId: process.env.FIREBASE_APP_ID,
-      measurementId:process.env.FIREBASE_MEASUREMENT_ID
+        apiKey:   process.env.FIREBASE_API_KEY,
+        authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        storageBucket:process.env.FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.FIREBASE_MESSD_ID,
+        appId: process.env.FIREBASE_APP_ID,
+        measurementId:process.env.FIREBASE_MEASUREMENT_ID
     };
     /* Initialize Firebase*/
    fb.initializeApp(firebaseConfig);
@@ -180,7 +180,7 @@ router.get('/realtime', function(req, res, next) {        // realtime 페이지�
           var childData = doc.data();
           childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
           console.log(childData.start)
-          if (childData.start !=null&&(childData.start.toMillis() <= now.getTime() && now.getTime() <= childData.end.toMillis())){    // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
+          if (childData.start !=null && (childData.start.toMillis() <= now.getTime() && now.getTime() <= childData.end.toMillis())){    // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
                rows.push(childData);
           }
           
@@ -241,162 +241,63 @@ router.get('/history', function(req, res, next) {
     return;
   }
     /* 디비에서 정보를 가져온다 history collection에서*/
-    db.collection('people-space').orderBy("time", "desc").get()
-      .then((snapshot) => {
-          var rows = [];
-          snapshot.forEach((doc) => {
-              /* 가져온 정보 row 라는 배열에 저장 */
-              var childData = doc.data();
-              childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
-              rows.push(childData);
-          });
-          /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-          res.render('history', {rows: rows});
+    db.collection("history").get().then((snapshot) =>{
+      var rows = [];
+      snapshot.forEach((doc) => {
+        var dateData = doc.data();
+        dateData.brddate = dateFormat(dateData.brddate, "yyyy-mm-dd");
+        rows.push(dateData);
 
-      })
-      .catch((err) => {
-          console.log('Error getting documents', err);
+        //console.log( dateData.brddate);
       });
+      /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+      res.render('history', {rows: rows});
+    })
+    .catch((err) => {
+        console.log('Error getting documents: history', err);
+    });
 });
 router.get('/dailyreport', function(req, res, next) {
   if (!fb.auth().currentUser) {
     res.redirect('fb');
     return;
   }
-  db.collection('people-space').orderBy("time", "desc").get()
-      .then((snapshot) => {
-          var rows = [];
-          snapshot.forEach((doc) => {
-              /* 가져온 정보 row 라는 배열에 저장 */
-              var childData = doc.data();
-              childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
-              rows.push(childData);
-          });
-          /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-          res.render('dailyreport', {rows: rows});
-
-      })
-      .catch((err) => {
-          console.log('Error getting documents', err);
-      });
+  
+  res.render('dailyreport')
 });
-
+//tmp~~~~~~~~~~
 router.get('/byClass', function(req, res, next) {
   if (!fb.auth().currentUser) {
     res.redirect('fb');
     return;
   }
-  
-  /* 디비에서 정보를 가져온다 history collection에서*/
-  db.collection("subject").get().then((snapshot) =>{
-    var rows = [];
-    snapshot.forEach((doc) => {
-      var dateData = doc.data();
-      dateData.brddate = dateFormat(dateData.brddate, "yyyy-mm-dd");
-      rows.push(dateData);
-      //console.log(`${doc.id} => ${doc.data()}`);
-    });
-    /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-    res.render('byClass', {rows: rows});
-  })
-  .catch((err) => {
-      console.log('Error getting documents: history', err);
-      process.exit()
-  });
-
-
-});
-router.post('/history', function(req, res, next) {
-  if (!fb.auth().currentUser) {
-    res.redirect('fb');
-    return;
-  }
-  // document.getElementById('demo-category').onclick=()=>{
-  //   const select = document.querySelector("select[name='demo-category']")
-  //   const value = select.value;
-  //   const option = select.querySelector(`option[value='${value}']`)
-  //   const text = option.innerText
-  //   console.log(text)
-  // }
-  //문서 어떻게 찾지. 
-  db.collection('history').doc('??????').add({
-    subject: req.body.demo-category
-  })
-  .catch(function(error) {
-    console.log('Error getting documents: subject', error);
-  });
-  
-  res.redirect('history') //에러를 위해서 if나 then, catch 문 안에 넣고 싶음. 
-});
-router.post('/byClass', function(req, res, next) {
-  if (!fb.auth().currentUser) {
-    res.redirect('fb');
-    return;
-  }
-  /*중복 코드라서 다른 방법이 없을까*/
   var rows = [];
-  db.collection("subject").get().then((snapshot) =>{
+  db.collection("history").get().then((snapshot) =>{
     snapshot.forEach((doc) => {
       var dateData = doc.data();
       dateData.brddate = dateFormat(dateData.brddate, "yyyy-mm-dd");
       rows.push(dateData);
-      //console.log(`${doc.id} => ${doc.data()}`);
+      
     });
-    /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-    res.render('byClass', {rows: rows});
-  })
-  .catch((err) => {
-      console.log('Error getting documents: history', err);
-      process.exit()
   });
-  if (req.body.subject == ""){
-    return;
-  }
-  let flag = false;
-  //중복 이름 이 코드로 해결 못함. 
-  for(var i=0; i<rows.length; i++) {
-    if (rows[i].name == req.body.subject){
-        flag = true;
-    }
-  }
-  if (flag != true){
-    //문서 추가-자동생성 ID로  
-    db.collection('subject').add({
-      name: req.body.subject
-    })
-    .catch(function(error) {
-      console.log('Error getting documents: subject', error);
-    });
-  }
-  res.redirect('byClass') //에러를 위해서 if나 then, catch 문 안에 넣고 싶음. 
-});
-router.post('/delete_categoty', function(req, res, next) {
-  if (!fb.auth().currentUser) {
-    res.redirect('fb');
-    return;
-  }
-  //문서 삭제 버튼
-  db.collection("subject").where('name','==',req.body.nameInFirebase).delete().then(function() {
-    console.log("Document successfully deleted!");
-  }).catch(function(error) {
-      console.error("Error removing document: ", error);
-  });
+  res.render('byClass', {rows: rows});
 
-  res.redirect('byClass') //에러를 위해서 if나 then, catch 문 안에 넣고 싶음. 
 });
-
 
 /*************************************** */
-router.get('/total', function(req, res, next){
+//realtime에서 teacherID와 start time을 post로 받아옴.
+router.post('/total', function(req, res, next){
   if(!fb.auth().currentUser){
       res.redirect('loginForm');
       return;
   }
-  //var imgName = req.query.imgName;
-  //var file = firebaseAdmin.storage().bucket().file(imgName);
-  /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로*/
-  db.collection('people-space').orderBy("time", "desc").get()
-      .then((snapshot) => {
+  var post = req.body.start;
+  console.log(post);
+  /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로, 받아온 teacherID와 start time이 일치하는 정보들만*/
+  db.collection('people-space')
+      .where('teacherID', '==', fb.auth().currentUser.email)
+      .where('start', '==', post['start'])
+      .get().then((snapshot) => {
           var rows = [];
           snapshot.forEach((doc) => {
               /* 가져온 정보 row 라는 배열에 저장 */
@@ -412,6 +313,9 @@ router.get('/total', function(req, res, next){
           console.log('Error getting documents', err);
       });
 
+
 });
+
+
 
 module.exports = router;

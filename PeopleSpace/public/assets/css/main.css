@@ -1021,21 +1021,23 @@ header.main > :last-child {
 .chartwrap{
   display: inline-block;
   width:80%;
-  margin:0;
+
 }
 .imgwrap{
+  border-top: solid 5px #B4CAE2;
   display: inline-block;
-  width: 80%;
+  width: 100%;
 }
 #curve_chart{
   float: right;
   width: 80%;
   height: 500px;
+  padding-bottom: 10px;
 }
 
 #myimg{
-  display: none;
-  float: right;
+  display: block;
+  margin: 0px auto;
   width: 50%;
   height: 50%;
 }

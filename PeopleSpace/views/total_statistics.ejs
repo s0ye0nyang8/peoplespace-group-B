@@ -16,13 +16,15 @@
             var arr = [['Time', 'Attention']];
             var urlArr = [];
 
+
             <%for(var i = 0; i < rows.length; i++){%>
                 var newarr = [];
                 var idx_url = [];
-                newarr.push(<%=rows[i].time.toDate().getTime()%>);
+                console.log("<%=rows[i].teacherID%>");
+                newarr.push(<%=rows[i].time.toDate().getHours().toString()%> + ":" + <%=rows[i].time.toDate().getMinutes().toString()%> + ":" + <%=rows[i].time.toDate().getSeconds().toString()%>);
                 newarr.push(<%=rows[i].attendance%>);
                 arr.push(newarr);
-                var idx = <%=rows[i].time.toDate().getTime()%>;
+                var idx = <%=rows[i].time.toDate().getHours().toString()%> + ":" + <%=rows[i].time.toDate().getMinutes().toString()%> + ":" + <%=rows[i].time.toDate().getSeconds().toString()%>;
                 var url = "<%=rows[i].fileID%>";
                 idx_url.push(idx);
                 idx_url.push(url);
@@ -48,11 +50,11 @@
                     for(var i = 0; i < urlArr.length; i++){
                         if((urlArr[i][0] === topping) && (urlArr[i][1] != "")){
                             img.src=urlArr[i][1];
-                            console.log("img");
+
                             img.style.display = "block";
                             break;
                         } else{
-                            console.log("notimg");
+
                             img.style.display = "none";
                         }
                     }
@@ -77,7 +79,9 @@
 								<header id="header">
 									<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
                                         <a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+
                                         </form>
+									<h2 align="center">Total Attention Gauge</h2>
 									<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
 										<ul class="icons">
 											<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
@@ -88,15 +92,15 @@
             <!-- content -->
             <section>
                 <header class="main">
-                    <h1 align="center">Total Attention Gauge</h1>
+
                 </header>
 
                 <div class="blackboard">
+
                         <span class="image fit">
                             <img src="./images/png/043-blackboard.png">
                         </span>
-                    <h2 align="center">Class <%=rows[1].lectureID%></h2>
-                    <h3 align="center"><%=rows[1].time.toDate()%></h3>
+
                     <h4 align="center">Click on the chart to see the inattentives!</h4>
                 </div>
                 <div class="chartwrap">
