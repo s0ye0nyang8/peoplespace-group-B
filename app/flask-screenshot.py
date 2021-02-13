@@ -17,6 +17,7 @@ from flask import Flask, request, make_response
 from flask import render_template
 import pyautogui
 
+import time
 from time import gmtime, strftime
 from threading import Event, Thread
 
@@ -25,6 +26,8 @@ from firebase_admin import firestore
 from firebase_admin import credentials
 from firebase_admin import initialize_app
 from firebase_admin import storage
+
+from firebase import *
 import pyrebase
 import sys, os
 import tempfile
@@ -34,28 +37,23 @@ from fastai.tabular import *
 import numpy as np
 import os
 import pickle
+
 from models_func import *
+from sam_models_func import *
 
 import firebase_admin
 from firebase_admin import credentials
 
 from flask import redirect
 
-anno_train = Path('annotation/_annotations.coco.json')
-
-with open(anno_train) as f:
-    train_json = json.load(f)
 
 cwd = os.getcwd()
 path = cwd + '/'
-model = load_learner(path, 'test.pkl')
-img = open_image('test.jpg')
+model = load_learner(path, 'sam_final_onlyface.pkl')
 
-# Err/ new predict 함수 :  y = newreconstruct(ds.y, _pred, x) if has_arg(ds.y.reconstruct, 'x') else ds.y.reconstruct(_pred)
-bboxes, labels, scores= newpredict(model,img,train_json)
-
+img_path = cwd + '/test_images'
 #peoplespace-test-firebase-adminsdk-dawk1-a7fad79476
-cred = credentials.Certificate('boom-b900b-firebase-adminsdk-s6iqg-c78a8cd251.json')
+cred = credentials.Certificate('boom-b900b-firebase-adminsdk-gjau1-e75591bd71.json')
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -127,9 +125,20 @@ def stop():
         return "Not running"
 
 
-# 기본 idex 페이지 
+userInfo = {}
+
+# 기본 idex 페이지
 @app.route('/')
 def index():
+    # global userInfo
+    # values = request.values
+    # userInfo = {
+    #     "end" : values["end"],
+    #     "subject" : values["subject"],
+    #     "teacherID" : values["teacherID"],
+    #     "start" : values["start"],
+    #     "stuNum" : values["stuNum"]
+    # }
     return render_template('index.html')
 
 
@@ -139,33 +148,55 @@ def redirect_web_team():
     return redirect("https://www.naver.com")
 
 
+@app.route('/create/<first_name>/<last_name>')
+def create(first_name=None, last_name=None):
+  return 'Hello ' + first_name + ',' + last_name
+
+global detect_image
 def capture():
     myScreenshot = pyautogui.screenshot()
     filename = strftime("%Y%m%d%H%M%S", gmtime())+'.png'
-    myScreenshot.save(filename)
-    upload(filename)
+    global detect_image
+    detect_image = filename
+    # myScreenshot.save(filename)
+    myScreenshot.save(img_path + '/' + filename)
+    upload(img_path + '/' + filename)
     temp = tempfile.NamedTemporaryFile(delete=False)
+
+
+def attentiongauge():
+    # bboxes, labels, scores = newpredict(model,img,train_json)
+    
+    bbox, label = predict(img_path, model)
+ 
+    rv_path = img_path + '/' + detect_image
+    os.remove(rv_path)
+
+    lb = label == "front"
+    if len(label) == 0 :
+        print("None face detection")
+    else :
+        # return len(lb)/user["stuNum"] *100
+        return len(label)/user["stuNum"] *100
 
 
 n = 0
 
-
 def upload(filename):
-    #bucket = storage.bucket()
-    #blob = bucket.blob(filename)
-    #blob.upload_from_filename(filename)
     storage.child(filename).put(filename)
 
     url = storage.child(filename).get_url(user['idToken'])
     print(url)
+    gauge = attentiongauge()
 
     global n
-    doc_ref = db.collection(u'screenshots').document(u'{}'.format(n))
+    doc_ref = db.collection(u'screenshots').document('user2')
     doc_ref.set({
-        u'{}'.format(filename): url
-    })
+            u"attention": gauge,
+            u"createdAt": time.strftime('%c', time.localtime(time.time())),
+            u"creatorId": userInfo["teacherID"],
+        })
     n += 1
-    #db.child().push({"screenshot": url})
 
 
 if __name__ == "__main__":

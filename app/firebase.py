@@ -19,7 +19,7 @@ firebaseConfig = {
     "measurementId": "G-Y087ST1ZNH"
 }
 
-cred = credentials.Certificate('boom-b900b-firebase-adminsdk-gjau1-58f8a07aa5.json')
+cred = credentials.Certificate('boom-b900b-firebase-adminsdk-gjau1-e75591bd71.json')
 firebase_admin.initialize_app(cred)
 fbase = pyrebase.initialize_app(firebaseConfig)
 auth = fbase.auth()
