@@ -16,6 +16,7 @@ import pickle
 from models_func import *
 from flask import redirect
 
+
 anno_train = Path('annotation/_annotations.coco.json')
 
 with open(anno_train) as f:
@@ -24,10 +25,6 @@ with open(anno_train) as f:
 cwd = os.getcwd()
 path = cwd + '/'
 model = load_learner(path, 'model-v50.pkl')
-img = open_image('test.jpg')
-
-# Err/ new predict 함수 :  y = newreconstruct(ds.y, _pred, x) if has_arg(ds.y.reconstruct, 'x') else ds.y.reconstruct(_pred)
-bboxes, labels, scores= newpredict(model,img,train_json)
 # dir = db.reference()
 
 n = 0
@@ -73,12 +70,23 @@ def stop():
         return "Stopped"
     else:
         return "Not running"
-
+    
+userInfo = {}
 
 # 기본 idex 페이지 
-@app.route('/')
+@app.route('/<end>/<subject>/<teacherID>/<start>/<stuNum>')
+# @app.route('/')
 def index():
+    global userInfo
+    userInfo = {
+    "end" = end
+    "subject" =subject
+    "teacherID" = teacherID
+    "start" = start
+    "stuNum" = stuNum
+    }
     return render_template('index.html')
+
 
 
 # 웹 팀 리다이렉트 
@@ -95,7 +103,11 @@ def capture():
     temp = tempfile.NamedTemporaryFile(delete=False)
 
 
-def attentiongauge(): return 80
+def attentiongauge(): 
+    img = open_image('test.jpg')
+    # Err/ new predict 함수 :  y = newreconstruct(ds.y, _pred, x) if has_arg(ds.y.reconstruct, 'x') else ds.y.reconstruct(_pred)
+    bboxes, labels, scores = newpredict(model,img,train_json)
+    return gauge
 
 def upload(filename):
 #     bucket = storage.bucket()
@@ -107,11 +119,11 @@ def upload(filename):
     gauge = attentiongauge()
     
     global n
-    doc_ref = db.collection(u'screenshots').document('user2')
+    doc_ref = db.collection(u'screenshots').document()
     doc_ref.set({
             u"attention": gauge,
             u"createdAt": time.strftime('%c', time.localtime(time.time())),      
-            u"creatorId": "",
+            u"creatorId": userInfo["teacherID"],
         })
     n += 1
     database.child().push(doc_ref)

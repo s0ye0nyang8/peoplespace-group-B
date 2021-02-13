@@ -23,11 +23,12 @@ cred = credentials.Certificate('C:/Users/selmo/Desktop/people_space/repo/flaskap
 firebase_admin.initialize_app(cred)
 fbase = pyrebase.initialize_app(firebaseConfig)
 auth = fbase.auth()
+
 # print(auth.currentUser)
 database = fbase.database()
 db = firestore.client()
 storage = fbase.storage()
 
-email = "sanghwaann@gmail.com"
-password = "sanghwa0618"
+email = "a@a.com"
+password = "aaaaaa"
 user = auth.sign_in_with_email_and_password(email, password)
