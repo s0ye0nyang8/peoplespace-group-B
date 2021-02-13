@@ -15,12 +15,13 @@
             <%for(var i = 0; i < rows.length; i++){%>
                 var newarr = [];
                 var idx_url = [];
-                console.log("<%=rows[i].teacherID%>");
+                // console.log("<%=rows[i].teacherID%>");
                 newarr.push(<%=rows[i].time.toDate().getHours().toString()%> + ":" + <%=rows[i].time.toDate().getMinutes().toString()%> + ":" + <%=rows[i].time.toDate().getSeconds().toString()%>);
                 newarr.push(<%=rows[i].attendance%>);
                 arr.push(newarr);
+
                 var idx = <%=rows[i].time.toDate().getHours().toString()%> + ":" + <%=rows[i].time.toDate().getMinutes().toString()%> + ":" + <%=rows[i].time.toDate().getSeconds().toString()%>;
-                var url = "<%=rows[i].fileID%>";
+                var url = '<%=rows[i].fileID%>' ;
                 idx_url.push(idx);
                 idx_url.push(url);
                 urlArr.push(idx_url);
@@ -52,7 +53,7 @@
             chart.draw(data, options);
             $(window).resize(function(){
                 drawChart();
-            })
+            });
         }
     </script>
 

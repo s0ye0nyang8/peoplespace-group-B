@@ -376,10 +376,7 @@ router.post('/makeclass', function(req,res,next){ // makeclass에서 입력된 �
     end: saveEnd
   })
   .then(function(docRef) {
-    // console.log("디비에 들어가나?");   // 들어간다.
-    // window.open이 뷰에서는 되는데 여기서는 안된다. 그래서 realtime에서 해보려고 했는데, realtime은 리프레시 되기 때문에.. 안된다... ㅠㅜ 
-    // 여기에서 다른 방법으로 열어야 할 것 같다.
-    // elements.ejs에서 submit을 누르면 액션으로 하면 되겠다.
+    
     res.redirect('realtime');           // realtime 페이지로 리다이렉션 해준다.
   })
   .catch(function(error) {
@@ -535,35 +532,82 @@ router.get('/total', function(req, res, next){
   //var imgName = req.query.imgName;
   //var file = firebaseAdmin.storage().bucket().file(imgName);
   /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로*/
-  db.collection('people-space').orderBy("time", "desc").get()
-      .then((snapshot) => {
-          var rows = [];
-          snapshot.forEach((doc) => {
-              /* 가져온 정보 row 라는 배열에 저장 */
-              var childData = doc.data();
-              childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
-              rows.push(childData);
-          });
-          /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-          res.render('total_statistics', {rows: rows});
-
-      })
-      .catch((err) => {
-          console.log('Error getting documents', err);
+  var start ="";
+  /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로, 받아온 teacherID와 start time이 일치하는 정보들만*/
+  db.collection('people-space').where('teacherID', '==', fb.auth().currentUser.email).orderBy("start", "asc")
+      .get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          /* 가져온 정보 row 라는 배열에 저장 */
+          var childData = doc.data();
+          childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
+          start = childData.start;
+          console.log(start);
       });
+          db.collection('people-space')
+          .where('teacherID', '==', fb.auth().currentUser.email)
+          .where('start', '==', start)
+          .get().then((snapshot) => {
+              var rows = [];
+              snapshot.forEach((doc) => {
+                  /* 가져온 정보 row 라는 배열에 저장 */
+                  var childData = doc.data();
+                  childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
+                  rows.push(childData);
+              });
+              /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+              res.render('total_statistics', {rows: rows});
+
+          })
+          .catch((err) => {
+              console.log('Error getting documents', err);
+          });
+    }) .catch((err) => {
+      console.log('Error getting documents', err);
+  });
+   //.get()
+ 
+  
+
+  // db.collection('people-space').orderBy("time", "desc").get()
+  //     .then((snapshot) => {
+  //         var rows = [];
+  //         snapshot.forEach((doc) => {
+  //             /* 가져온 정보 row 라는 배열에 저장 */
+  //             var childData = doc.data();
+  //             childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
+  //             rows.push(childData);
+  //         });
+  //         /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+  //         res.render('total_statistics', {rows: rows});
+
+  //     })
+  //     .catch((err) => {
+  //         console.log('Error getting documents', err);
+  //     });
 
 });
 router.post('/total', function(req, res, next){
+  
   if(!fb.auth().currentUser){
       res.redirect('loginForm');
       return;
   }
   var post = req.body;
-  console.log(post);
+  // console.log(post);
+  var start ="";
   /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로, 받아온 teacherID와 start time이 일치하는 정보들만*/
-  db.collection('people-space')
+  db.collection('people-space').orderBy("time", "asc").where('teacherID', '==', fb.auth().currentUser.email)
+      .get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          /* 가져온 정보 row 라는 배열에 저장 */
+          var childData = doc.data();
+          childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
+          start = childData.start;
+          console.log(start);
+      });
+      db.collection('people-space')
       .where('teacherID', '==', fb.auth().currentUser.email)
-      .where('start', '==', post['start'])
+      .where('start', '==', start)
       .get().then((snapshot) => {
           var rows = [];
           snapshot.forEach((doc) => {
@@ -579,6 +623,9 @@ router.post('/total', function(req, res, next){
       .catch((err) => {
           console.log('Error getting documents', err);
       });
+      });
+   //.get()
+  
 
 
 });
