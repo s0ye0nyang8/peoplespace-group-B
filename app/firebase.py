@@ -23,6 +23,7 @@ cred = credentials.Certificate('boom-b900b-firebase-adminsdk-gjau1-e75591bd71.js
 firebase_admin.initialize_app(cred)
 fbase = pyrebase.initialize_app(firebaseConfig)
 auth = fbase.auth()
+
 # print(auth.currentUser)
 database = fbase.database()
 db = firestore.client()
