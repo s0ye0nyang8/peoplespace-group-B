@@ -217,6 +217,26 @@ router.get('/realtime', function(req, res, next) {        // realtime 페이지�
             }
           });
           /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+             // 현재 시간          
+          db.collection('people-space').where('teacherID', '==', fb.auth().currentUser.email).get()  // 어자피 동시에 수업 두개를 할 순 없으니까.. teacherID로 유니크할수있을듯.
+          .then((snapshot) => {
+              var rows = [];
+              snapshot.forEach((doc) => {
+                 /* 가져온 정보 rows 라는 배열에 저장 */
+                 var childData = doc.data();
+                 childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
+                 if ( childData.start!=null && childData.start.toString() == start.toString() && now.getTime() <= childData.end.toMillis() ){    // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
+                      rows.push(childData);
+                 }
+                
+              });
+              res.render('realtime', {rows: rows,
+               user: fb.auth().currentUser.email,
+               start : start});
+          })
+          .catch((err) => {
+              console.log('Error getting documents', err);
+          });
           
         })
         .catch((err) => {
@@ -225,35 +245,7 @@ router.get('/realtime', function(req, res, next) {        // realtime 페이지�
       
   
    /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로*/    
-   var now  = new Date();   // 현재 시간          
-   db.collection('people-space').where('teacherID', '==', fb.auth().currentUser.email).get()  // 어자피 동시에 수업 두개를 할 순 없으니까.. teacherID로 유니크할수있을듯.
-   //.orderBy("time", "desc").get() -> orderBy 하면 인덱스 오류가 난다 왜지....
-   .then((snapshot) => {
-      //  now = dateFormat(now, "yyyy-mm-dd");
-      //  console.log(now);
-       var rows = [];
-       snapshot.forEach((doc) => {
-          /* 가져온 정보 rows 라는 배열에 저장 */
-          var childData = doc.data();
-          childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
-          console.log(childData.start);
-          console.log(start.toString());
-          if ( childData.start!=null && childData.start.toString() == start.toString() && now.getTime().toString() <= childData.end.toMillis().toString() ){    // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
-               rows.push(childData);
-             
-               console.log(childData);
-          }
-         
-       });
-       /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-      //  console.log(rows);
-       res.render('realtime', {rows: rows,
-        user: fb.auth().currentUser.email,
-        start : start});
-   })
-   .catch((err) => {
-       console.log('Error getting documents', err);
-   });
+  
   
 });
 //jjeong -> 이렇게 해도 되게찌..?
