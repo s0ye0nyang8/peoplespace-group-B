@@ -241,62 +241,80 @@ router.get('/history', function(req, res, next) {
     return;
   }
     /* 디비에서 정보를 가져온다 history collection에서*/
-    db.collection('people-space').orderBy("start", "desc").get() //내림차순
+    db.collection('people-space')
+    .where('teacherID', '==', fb.auth().currentUser.email)
+    .orderBy("start", "desc").get() //where orderby 같이 쓰려면 색인 추가해줘얗.ㅁ 
       .then((snapshot) => {
-          var rows = [];
+          var rows = []; var ids = [];
+          var start, tempStart;
           snapshot.forEach((doc) => {
               /* 가져온 정보 row 라는 배열에 저장 */
               var childData = doc.data();
+              var idData = doc.id;
+              start = childData.start.toMillis(); //변환이 precisely 하진 않음
               childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
-              rows.push(childData);
+              if(tempStart != start){
+                console.log('다른 수업입니까?', start, tempStart);
+                rows.push(childData);
+                ids.push(idData);
+              }
+              tempStart = start;
           });
+         
           /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-          res.render('history', {rows: rows});
+          res.render('history', {rows: rows, ids:ids});
 
       })
       .catch((err) => {
           console.log('Error getting documents', err);
       });
-    /* 디비에서 정보를 가져온다 history collection에서*/
-    db.collection('subject').get() 
-      .then((snapshot) => {
-          var sub = [];
-          snapshot.forEach((doc) => {
-              /* 가져온 정보 row 라는 배열에 저장 */
-              var childData = doc.data();
-              childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
-              sub.push(childData);
-              console()
-          });
-          /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-          res.render('history', {sub: sub});
-
-      })
-      .catch((err) => {
-          console.log('Error getting documents', err);
-      });
+   
 });
-router.get('/dailyreport', function(req, res, next) {
+
+router.post('/dailyreport', function(req, res, next) {
   if (!fb.auth().currentUser) {
     res.redirect('fb');
     return;
   }
-  db.collection('people-space').orderBy("time", "desc").get()
-      .then((snapshot) => {
-          var rows = [];
-          snapshot.forEach((doc) => {
-              /* 가져온 정보 row 라는 배열에 저장 */
-              var childData = doc.data();
-              childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
-              rows.push(childData);
-          });
-          /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-          res.render('dailyreport', {rows: rows});
+  var post = req.body;
+  console.log(post);
 
-      })
-      .catch((err) => {
-          console.log('Error getting documents', err);
-      });
+  db.collection('people-space')
+  .doc(post['totalGauge'])
+  .get().then(function(doc) {
+    if (doc.exists) {
+      var aClass = [];
+      aClass = doc.data();
+      console.log("Document data:", doc.data());
+
+      db.collection('people-space')
+      .where('teacherID', '==', fb.auth().currentUser.email)
+      .where('start', '==', aClass.start)
+      .orderBy("time", "desc")
+      .get()
+          .then((snapshot) => {
+              var rows = [];
+              snapshot.forEach((doc) => {
+                  /* 가져온 정보 row 라는 배열에 저장 */
+                  var childData = doc.data();
+                  childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
+                  rows.push(childData);
+              });
+              /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+              res.render('dailyreport', {rows: rows});
+
+          })
+          .catch((err) => {
+              console.log('Error getting documents', err);
+          });
+
+    } else {
+        console.log("No such document!");
+    }
+  }).catch(function(error) {
+      console.error("Error getting document: ", error);
+  });
+  
 });
 
 router.get('/byClass', function(req, res, next) {
@@ -324,8 +342,6 @@ router.get('/byClass', function(req, res, next) {
       console.log('Error getting documents: history', err);
       process.exit()
   });
-
-
 });
 
 router.post('/byClass', function(req, res, next) {
@@ -372,6 +388,55 @@ router.post('/byClass', function(req, res, next) {
   res.redirect('byClass') //에러를 위해서 if나 then, catch 문 안에 넣고 싶음. 
 });
 
+router.post('/classroom', function(req, res, next) {
+  if (!fb.auth().currentUser) {
+    res.redirect('fb');
+    return;
+  }
+  var post = req.body;
+  console.log(post);
+
+  db.collection('people-space')
+  .where('teacherID', '==', fb.auth().currentUser.email)
+  .where('subject', '==', post['subject'])
+  .orderBy("start", "desc")
+  .get()
+      .then((snapshot) => {
+          var rows = [];
+          var ids = [];
+          var attentionOfClass=[]; //수업의 평균
+          var attentions = []; //평균 모음
+          var start, tempStart;
+          snapshot.forEach((doc) => {
+              /* 가져온 정보 row 라는 배열에 저장 */
+              var childData = doc.data();
+              var idData = doc.id;
+              start = childData.start.toMillis(); //변환이 precisely 하진 않음
+              childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
+              attentionOfClass.push(childData.attendance);
+              if(tempStart != start){
+                console.log('다른 수업입니까?', start, tempStart);
+                rows.push(childData);
+                ids.push(idData);
+                //수업별 집중도 평균
+                const result = attentionOfClass.reduce(function add(sum, currValue) {
+                  return sum + currValue;
+                }, 0);
+                const average = result / attentionOfClass.length;
+                attentions.push(average); //수업의 평균
+                attentionOfClass=[]; //초기화
+                attentionOfClass.push(childData.attendance); //다시 넣기
+              }
+              tempStart = start;
+          });
+          console.log(attentions);
+          /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+          res.render('classroom', {rows: rows, ids: ids, attentions:attentions});
+      })
+      .catch((err) => {
+          console.log('Error getting documents', err);
+      });
+});
 
 router.post('/delete_category', function(req, res, next) {
   if (!fb.auth().currentUser) {
