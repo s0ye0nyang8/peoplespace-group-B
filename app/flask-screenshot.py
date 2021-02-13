@@ -74,16 +74,16 @@ def stop():
 userInfo = {}
 
 # 기본 idex 페이지 
-@app.route('/<end>/<subject>/<teacherID>/<start>/<stuNum>')
-# @app.route('/')
+@app.route('/')
 def index():
     global userInfo
+    values = request.values
     userInfo = {
-    "end" = end
-    "subject" =subject
-    "teacherID" = teacherID
-    "start" = start
-    "stuNum" = stuNum
+        "end" : values["end"],
+        "subject" : values["subject"],
+        "teacherID" : values["teacherID"],
+        "start" : values["start"],
+        "stuNum" : values["stuNum"]
     }
     return render_template('index.html')
 
@@ -118,7 +118,7 @@ def upload(filename):
     url = storage.child(filename).get_url(user['idToken'])
 #     print(url)
     gauge = attentiongauge()
-    
+    global user
     global n
     doc_ref = db.collection(u'screenshots').document()
     doc_ref.set({
