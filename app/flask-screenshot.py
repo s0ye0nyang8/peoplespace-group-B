@@ -71,20 +71,23 @@ def stop():
         return "Not running"
 
 
-userInfo = {}
+global userInfo
 
 # 기본 idex 페이지
 @app.route('/')
 def index():
     global userInfo
-    values = request.values
-    userInfo = {
-        "end" : values["end"],
-        "subject" : values["subject"],
-        "teacherID" : values["teacherID"],
-        "start" : values["start"],
-        "stuNum" : values["stuNum"]
-    }
+    if request.method == 'GET':
+        print()
+    else :
+        values = request.values
+        userInfo = {
+            "end" : values["end"],
+            "subject" : values["subject"],
+            "teacherID" : values["teacherID"],
+            "start" : values["start"],
+            "stuNum" : values["stuNum"]
+        }
     return render_template('index.html')
 
 
@@ -132,10 +135,13 @@ def upload(filename):
 #     blob = bucket.blob(filename)
 #     blob.upload_from_filename(filename)
 #     storage.child(filename).put(filename)
+
+    global user
+    global n
     url = storage.child(filename).get_url(user['idToken'])
 #     print(url)
     gauge = attentiongauge()
-    global n
+    
     doc_ref = db.collection(u'screenshots').document()
     doc_ref.set({
             u"attention": gauge,
