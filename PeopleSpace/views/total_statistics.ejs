@@ -95,8 +95,9 @@
                         <span class="image fit">
                             <img src="./images/png/043-blackboard.png">
                         </span>
-                    <h2 align="center">Class <%=rows[1].lectureID%></h2>
-                    <h3 align="center"><%=rows[1].time.toDate()%></h3>
+                    <h2 align="center">Class <%=rows[0].lectureID%></h2>
+		    <h4 align="center"><%=rows[0].time.toDate().getFullYear().toString()%>/<%=rows[0].time.toDate().getMonth().toString()%>/<%=rows[0].time.toDate().getDay().toString()%></h4>
+                    
                     <h4 align="center">Click on the chart to see the inattentives!</h4>
                 </div>
                 <div class="chartwrap">
