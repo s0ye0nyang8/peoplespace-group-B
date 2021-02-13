@@ -19,7 +19,7 @@
 				}
 
                 function drawVisualization() {
-					var arr = [['Minutes', 'Distractions', 'Total Average']];		// 원래 학생 학명당 보여주려고 한건데 학생 구분을 못하니까..
+					var arr = [['Minutes', 'Attention', 'Total Average']];		// 원래 학생 학명당 보여주려고 한건데 학생 구분을 못하니까..
 																					// 익명의 학생들의 즉각적인 distraction과 지금까지 모든 distraction들의 평균으로 .......근데 이게 의미없는 값 같은데..어..
 					var attendance_arr = [];
 
@@ -35,8 +35,8 @@
 					let data = google.visualization.arrayToDataTable(arr);
 
 					var options = {
-						title : 'Degree of Distraction',
-						vAxis: {title: 'distraction count'},
+						title : 'Degree of Attention',
+						vAxis: {title: 'attention count'},
 						hAxis: {title: 'class duration'},
 						seriesType: 'bars',
 						series: {1: {type: 'line'}}
@@ -67,8 +67,11 @@
 							<header id="header">
 								<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
 									<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
-								    </form>
-								<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
+									</form> 
+									<dl  style="margin-left: 10%;">
+										<h1>Real-Time</h1>
+									</dl>
+								<form name="l_form" action="/logOut" method="get"  >
 									<ul class="icons">
 										<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
 									</ul>
@@ -78,15 +81,15 @@
 							<!-- Content -->
 								<section>		
 									<header class="main">
-                                        <h1>Real-Time Statistics</h1>
+                                        <h1>Class Statistics</h1>
 									</header>
 
-									<% if (rows.length > 0){%>
+									<% if (start != null){%>
 										<!-- Content -->
-										<hr class="major" />
-										<p>빨간 꺾은선 그래프 : 발표에 대한 전체적인 집중도 평균</p>
+										<!-- <hr class="major" /> -->
+										<!-- <p>빨간 꺾은선 그래프 : 발표에 대한 전체적인 집중도 평균</p>
 										<p>파란 막대 그래프 : 실시간으로 받아들여오는 모든 학생에 대한 집중도 정보</p>
-										<h2>Presenter : Kim</h2>			<!-- 이름은 디비에 없어서.. 그냥 넣ㅇ었음.. -->
+										<h2>Presenter : Kim</h2>			 -->
 
 										<div class="row">
 											
@@ -94,10 +97,11 @@
 												<div class="box">
 													<p>
 														<span class="image left"><img src="images/teacher.png" alt="" /></span>		<!-- 선생님 소개 ... 선생님 사진도 디비에 없어서 그냥 넣음.. -->
-														
+														<%if (rows.length > 0){%>
 														<h4>E-mail : <%=rows[0].teacherID%></h4>
-														<h4>LectureID : <%=rows[0].lectureID%></h4>
+														<!-- <h4>LectureID : <%=rows[0].lectureID%></h4> -->
 														<h4>Subject : <%=rows[0].subject%></h4>
+														<%}%>
 													</p>
 													<!-- <nav id="menu">
 														<ul>
@@ -116,14 +120,16 @@
 												</div>
 											</div>
 										</div>
+										
 										<div class="row">
 											<div id="chart_div" style="width: 100%; height: 100%;"></div>
 										</div>
 										<script>
-											console.log("kkkk",'<%=rows%>')
+											console.log("kkkk"+'<%=rows%>')
 											</script>
+										
 									<%}%>
-									<%if (rows.length <= 0){%>
+									<%if (start ==null){%>
 
 										<h2>If you want to see the result of your Class</h2>
 										<h2>Please press the BUTTON below !</h2>
@@ -175,9 +181,9 @@
 
 							<!-- Search -->
 								<section id="search" class="alt">
-									<form method="post" action="#">
+									<!-- <form method="post" action="#">
 										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
+									</form> -->
 								</section>
 
 							<!-- Menu -->
@@ -272,7 +278,13 @@
 										
 								</ul>
 							</nav>
-
+							<!-- Footer -->
+							<footer id="footer">
+								<p class="copyright">&copy; 2021PeopleSpace TeamB. BOOM. 
+									GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+									Design: <a href="https://html5up.net">HTML5 UP</a>.
+								</p>
+							</footer>	
 							<!-- Section -->
 							
 						</div>

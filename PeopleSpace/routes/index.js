@@ -79,7 +79,7 @@ router.post('/generic', function(req, res, next) {
     return;
 }
 var post = req.body;
-console.log(post['lectureID']);
+// console.log(post['lectureID']);
    /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로*/
    db.collection('people-space')
    .where('teacherID', '==', fb.auth().currentUser.email)
@@ -124,9 +124,27 @@ router.get('/element', function(req, res, next) {
   if (!fb.auth().currentUser) {
     res.redirect('loginForm');
     return;
-} 
+}  
+var start =0;
+  db.collection('on-air').where('teacherID', '==', fb.auth().currentUser.email).get()
+  .then((snapshot) => {
+    
+    snapshot.forEach((doc) => {
+      /* 가져온 정보 rows 라는 배열에 저장 */
+      var childData = doc.data();
+      childData.brddate = dateFormat(childData.brddate,"yyyy-mm-dd");
+          // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
+            if( childData.start!=null)
+                  start = 1;
+        });
+        /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+        
+      })
+      .catch((err) => {
+          console.log('Error getting documents', err);
+      });
   var teacher = fb.auth().currentUser.email;
-  res.render('elements', {query: teacher});
+  res.render('elements', {query: teacher , start:start});
   
 });
 
@@ -183,6 +201,20 @@ router.get('/realtime', function(req, res, next) {        // realtime 페이지�
         childData.brddate = dateFormat(childData.brddate,"yyyy-mm-dd");
             // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
              start = childData.start;
+            //  start = childData.start;
+            
+             if (childData.end !=null && now.getTime() > childData.end.toMillis()) {
+              // console.log(now,end);
+              var rows = [];
+              start = null;
+              // console.log("111111111111.")
+              res.render('realtime',
+               {rows: rows,
+                user: fb.auth().currentUser.email,
+                start : start
+              });
+                   return ;
+            }
           });
           /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
           
@@ -204,15 +236,17 @@ router.get('/realtime', function(req, res, next) {        // realtime 페이지�
           /* 가져온 정보 rows 라는 배열에 저장 */
           var childData = doc.data();
           childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
-          
-          if ( childData.start.toString() == start.toString() && now.getTime() <= childData.end.toMillis() ){    // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
+          console.log(childData.start);
+          console.log(start.toString());
+          if ( childData.start!=null && childData.start.toString() == start.toString() && now.getTime().toString() <= childData.end.toMillis().toString() ){    // 지금. 현재. 진행중인 수업만 차트로 나타낼거니까!
                rows.push(childData);
+             
                console.log(childData);
           }
-          
-        
+         
        });
        /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
+      //  console.log(rows);
        res.render('realtime', {rows: rows,
         user: fb.auth().currentUser.email,
         start : start});
@@ -246,7 +280,7 @@ router.post('/realtime', function(req, res, next) {        // realtime 페이지
         childData.brddate = dateFormat(childData.brddate,"yyyy-mm-dd");
         if(childData.start ==null){
             var rows = [];
-           
+            start = null;
             res.render('realtime',
             {rows: rows,
               user: fb.auth().currentUser.email,
@@ -259,8 +293,9 @@ router.post('/realtime', function(req, res, next) {        // realtime 페이지
              start = childData.start;
             
              if (childData.end !=null && now.getTime() > childData.end.toMillis()) {
-              console.log(now,end);
+              // console.log(now,end);
               var rows = [];
+              start = null;
               // console.log("111111111111.")
               res.render('realtime',
                {rows: rows,
@@ -314,6 +349,43 @@ router.post('/realtime', function(req, res, next) {        // realtime 페이지
   
 });
 
+router.post('/makeclass', function(req,res,next){ // makeclass에서 입력된 값을 디비에 넣는다.
+  if (!fb.auth().currentUser) {
+    res.redirect('fb');
+    return;
+  }
+// time으로 입력받은 start와 end를 timestamp 형식으로 고쳐준다.
+  var tmpStart = req.body.start;
+  var tmpEnd = req.body.end;
+  var today = new Date;
+  var year = today.getFullYear();
+  var month = today.getMonth();   
+  month = parseInt(month) + 1;
+  var date = today.getDate();
+  var sec = ":00";
+  var tmp1 = year + "-" + month + "-" + date + " " + tmpStart + sec;
+  var tmp2 = year + "-" + month + "-" + date + " " + tmpEnd + sec;
+  var saveStart = new Date(tmp1);
+  var saveEnd = new Date(tmp2);
+
+  db.collection("on-air").add({     // 디비에 넣는다. 문서 이름은 랜덤이다. 
+    subject: req.body.subject,
+    teacherID: fb.auth().currentUser.email,
+    stdNum: parseInt(req.body.stdNum),    // 숫자 안치면 Nan 들어감.
+    start: saveStart,   
+    end: saveEnd
+  })
+  .then(function(docRef) {
+    // console.log("디비에 들어가나?");   // 들어간다.
+    // window.open이 뷰에서는 되는데 여기서는 안된다. 그래서 realtime에서 해보려고 했는데, realtime은 리프레시 되기 때문에.. 안된다... ㅠㅜ 
+    // 여기에서 다른 방법으로 열어야 할 것 같다.
+    // elements.ejs에서 submit을 누르면 액션으로 하면 되겠다.
+    res.redirect('realtime');           // realtime 페이지로 리다이렉션 해준다.
+  })
+  .catch(function(error) {
+    console.error("Error adding document: ", error);
+  });
+});
 /***************************************************************************************************************************************** 여기까지 가은 추가 */
 /***민주 추가*****************************/
 router.get('/history', function(req, res, next) {
@@ -322,7 +394,7 @@ router.get('/history', function(req, res, next) {
     return;
   }
     /* 디비에서 정보를 가져온다 history collection에서*/
-    db.collection('people-space').orderBy("time", "desc").get()
+    db.collection('people-space').orderBy("start", "desc").get() //내림차순
       .then((snapshot) => {
           var rows = [];
           snapshot.forEach((doc) => {
@@ -331,6 +403,7 @@ router.get('/history', function(req, res, next) {
               childData.brddate = dateFormat(childData.brddate, "yyyy-mm-dd");
               rows.push(childData);
           });
+         
           /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
           res.render('history', {rows: rows});
 
@@ -338,6 +411,7 @@ router.get('/history', function(req, res, next) {
       .catch((err) => {
           console.log('Error getting documents', err);
       });
+   
 });
 router.get('/dailyreport', function(req, res, next) {
   if (!fb.auth().currentUser) {
@@ -371,37 +445,24 @@ router.get('/byClass', function(req, res, next) {
   /* 디비에서 정보를 가져온다 history collection에서*/
   db.collection("subject").get().then((snapshot) =>{
     var rows = [];
+    var ids = [];
     snapshot.forEach((doc) => {
       var dateData = doc.data();
+      var idData = doc.id;
       dateData.brddate = dateFormat(dateData.brddate, "yyyy-mm-dd");
       rows.push(dateData);
+      ids.push(idData);
       //console.log(`${doc.id} => ${doc.data()}`);
     });
     /* 정보를 가져갈 페이지로 각 배열(row)을 보내나 */
-    res.render('byClass', {rows: rows});
+    res.render('byClass', {rows: rows, ids: ids});
   })
   .catch((err) => {
       console.log('Error getting documents: history', err);
       process.exit()
   });
-
-
 });
-router.post('/history', function(req, res, next) {
-  if (!fb.auth().currentUser) {
-    res.redirect('fb');
-    return;
-  }
- 
-  db.collection('history').doc('??????').add({
-    subject: req.body.demo-category
-  })
-  .catch(function(error) {
-    console.log('Error getting documents: subject', error);
-  });
-  
-  res.redirect('history') //에러를 위해서 if나 then, catch 문 안에 넣고 싶음. 
-});
+
 router.post('/byClass', function(req, res, next) {
   if (!fb.auth().currentUser) {
     res.redirect('fb');
@@ -442,23 +503,28 @@ router.post('/byClass', function(req, res, next) {
       console.log('Error getting documents: subject', error);
     });
   }
+
   res.redirect('byClass') //에러를 위해서 if나 then, catch 문 안에 넣고 싶음. 
 });
-router.post('/delete_categoty', function(req, res, next) {
+
+
+router.post('/delete_category', function(req, res, next) {
   if (!fb.auth().currentUser) {
     res.redirect('fb');
     return;
   }
+
+  console.log(req.body.remove);
   //문서 삭제 버튼
-  db.collection("subject").where('name','==',req.body.nameInFirebase).delete().then(function() {
+  db.collection("subject").doc(req.body.remove).delete().then(function() {
     console.log("Document successfully deleted!");
+    res.render('byClass');
   }).catch(function(error) {
       console.error("Error removing document: ", error);
   });
 
-  res.redirect('byClass') //에러를 위해서 if나 then, catch 문 안에 넣고 싶음. 
+  res.redirect('byClass') 
 });
-
 
 /*************************************** */
 router.get('/total', function(req, res, next){
@@ -487,21 +553,18 @@ router.get('/total', function(req, res, next){
       });
 
 });
-
 router.post('/total', function(req, res, next){
   if(!fb.auth().currentUser){
       res.redirect('loginForm');
       return;
   }
   var post = req.body;
-  
-  console.log(post["start"]);
-  console.log("s");
-  //var imgName = req.query.imgName;
-  //var file = firebaseAdmin.storage().bucket().file(imgName);
-  /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로*/
-  db.collection('people-space').orderBy("time", "desc").get()
-      .then((snapshot) => {
+  console.log(post);
+  /* 디비에서 정보를 가져온다 people-space 테이블에서  "time", "desc" 정렬로, 받아온 teacherID와 start time이 일치하는 정보들만*/
+  db.collection('people-space')
+      .where('teacherID', '==', fb.auth().currentUser.email)
+      .where('start', '==', post['start'])
+      .get().then((snapshot) => {
           var rows = [];
           snapshot.forEach((doc) => {
               /* 가져온 정보 row 라는 배열에 저장 */
@@ -516,6 +579,7 @@ router.post('/total', function(req, res, next){
       .catch((err) => {
           console.log('Error getting documents', err);
       });
+
 
 });
 module.exports = router;

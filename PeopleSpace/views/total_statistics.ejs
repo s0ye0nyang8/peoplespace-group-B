@@ -7,38 +7,30 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
-
         function drawChart() {
-
             var arr = [['Time', 'Attention']];
             var urlArr = [];
-
             <%for(var i = 0; i < rows.length; i++){%>
                 var newarr = [];
                 var idx_url = [];
-                newarr.push(<%=rows[i].time.toDate().getTime()%>);
+                console.log("<%=rows[i].teacherID%>");
+                newarr.push(<%=rows[i].time.toDate().getHours().toString()%> + ":" + <%=rows[i].time.toDate().getMinutes().toString()%> + ":" + <%=rows[i].time.toDate().getSeconds().toString()%>);
                 newarr.push(<%=rows[i].attendance%>);
                 arr.push(newarr);
-                var idx = <%=rows[i].time.toDate().getTime()%>;
+                var idx = <%=rows[i].time.toDate().getHours().toString()%> + ":" + <%=rows[i].time.toDate().getMinutes().toString()%> + ":" + <%=rows[i].time.toDate().getSeconds().toString()%>;
                 var url = "<%=rows[i].fileID%>";
                 idx_url.push(idx);
                 idx_url.push(url);
                 urlArr.push(idx_url);
             <%}%>
-
-
             var data = google.visualization.arrayToDataTable(arr);
-
             var options = {
-
                 title: 'Attention Gauge',
                 curveType: 'function',
                 legend: { position: 'bottom' }
             };
-
             var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
             function selectHandler() {
                 var selectedItem = chart.getSelection()[0];
@@ -48,17 +40,14 @@
                     for(var i = 0; i < urlArr.length; i++){
                         if((urlArr[i][0] === topping) && (urlArr[i][1] != "")){
                             img.src=urlArr[i][1];
-                            console.log("img");
                             img.style.display = "block";
                             break;
                         } else{
-                            console.log("notimg");
                             img.style.display = "none";
                         }
                     }
                 }
             }
-
             google.visualization.events.addListener(chart, 'select', selectHandler);
             chart.draw(data, options);
             $(window).resize(function(){
@@ -77,8 +66,10 @@
 								<header id="header">
 									<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
                                         <a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+
                                         </form>
-									<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
+									<h1 align="center">Total Gauge</h1>
+									<form name="l_form" action="/logOut" method="get"  >
 										<ul class="icons">
 											<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
 										</ul>
@@ -88,15 +79,15 @@
             <!-- content -->
             <section>
                 <header class="main">
-                    <h1 align="center">Total Attention Gauge</h1>
+
                 </header>
 
                 <div class="blackboard">
+
                         <span class="image fit">
                             <img src="./images/png/043-blackboard.png">
                         </span>
-                    <h2 align="center">Class <%=rows[1].lectureID%></h2>
-                    <h3 align="center"><%=rows[1].time.toDate()%></h3>
+
                     <h4 align="center">Click on the chart to see the inattentives!</h4>
                 </div>
                 <div class="chartwrap">
@@ -119,9 +110,9 @@
 
             <!-- Search -->
             <section id="search" class="alt">
-                <form method="post" action="#">
+                <!-- <form method="post" action="#">
                     <input type="text" name="query" id="query" placeholder="Search" />
-                </form>
+                </form> -->
             </section>
 
             <!-- Menu -->
@@ -218,10 +209,13 @@
 								</nav>
 
             <!-- Footer -->
-            <footer id="footer">
-                <p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-            </footer>
-
+            <!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; 2021PeopleSpace TeamB. BOOM. 
+							GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+							Design: <a href="https://html5up.net">HTML5 UP</a>.
+						</p>
+					</footer>	
         </div>
     </div>
 

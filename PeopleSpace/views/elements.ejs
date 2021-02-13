@@ -4,262 +4,143 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
+<!--------------------------------------------------------------------------------------------------------- Make Class 페이지 -->
 <html>
 	<head>
-		<title>Elements - Editorial by HTML5 UP</title>
+		<title>BOOM Make Class</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 	</head>
 	<body class="is-preload">
-
 		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-
-							<!-- Header -->
-							<header id="header">
-								<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
-									<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
-									</form>
-								<form name="l_form" action="/logOut" method="get" style="margin-left: 10px;" >
-									<ul class="icons">
-										<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
-									</ul>
-								</form>
-								
-							</header>
-
-							<!-- Content -->
-								<section>
-									<div style=" text-align: center;">
-									<header class="main">
-										<h1>Make Class</h1>
-									</header>
-								</div>
-									<div style=" text-align: center; margin-bottom: 10px;" >
-									<span class="image object" >
-										<!-- <img src="pic10.jpg" alt="" /> -->
-										<img style="width: 50%;height: 30%;" src="pic10.jpg" alt="" />
-									</span>
-								</div>
-									<!-- Content -->
-									<div style=" text-align: center;">
-									<form name="r_form" action="/realtime" method="post" style="margin-left: 10px; " >
-										   <!-- <input tid="sStatusType" ype="text" name="id" value="check()" size="30" style="color:dimgray;" maxlength="120" readonly> -->
-										   <a href="#" class="button primary fit" type="button" onclick="nwindow()" style="width: 50%;">Open Your Class !</a>
-											<!-- window.open('http://google.co.kr/?'); -->
-									</form>
-								</div>
+		<div id="wrapper">
+			<!-- Main -->
+			<div id="main">
+				<div class="inner">
+					<!-- Header -->
+					<header id="header">
+						<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+							<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+						</form>
+						<header  style="margin-left: 10%;" class="main">
+							<h1>Make Class</h1>		<!-- 페이지 제목 형식 맞췄습니다. -->
+						</header>	
+						<form name="l_form" action="/logOut" method="get" >
+							<ul class="icons">
+								<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+							</ul>
+						</form>
+					</header>
+					<!-- Content -->
+					<!-- 수업을 열기 전에, 수업에 관한 정보를 입력하고, 디비로 그 정보를 보내주어야 한다.-->
+					<section>	
+						<h3>Put your class information.</h3>
+						<form action="/makeclass" method="post">		<!-- 입력받은 값을 /makeclass 로 전한다. index.js의 router에서 확인할수있다.-->
+							<%var today = new Date().toDateString();%>
+							<h4>Date : <%=today%></h4>	<!-- 날짜는 당일로 고정. -->
+							<input type="text" name="subject" placeholder="Enter subject", style="color:dimgray; margin-top: 20px; height: 50px; width: 500px; align-self: center;">
+							<input type="text" name="stdNum" placeholder="Enter number of students", style="color:dimgray; margin-top: 20px; height: 50px; width: 500px; align-self: center;">
+							<!-- <input type="text" name="date" disabled placeholder="<%=today%>", style="color:rgb(0, 0, 0); margin-top: 20px; height: 50px; width: 500px; align-self: center;"> -->
+							<!-- 이건 다른 항목들이랑 디자인 맞춰본건데 사용자가 쓸때 착각할수있을것 같아서 그냥 원래대로 하는게 나을것 같다. -->
+							<input type="time" name="start" placeholder="Enter the class starts", style="color:dimgray; margin-top: 20px; height: 50px; width: 500px; align-self: center;">
+							<input type="time" name="end" placeholder="Enter the class end", style="color:dimgray; margin-top: 20px; height: 50px; width: 500px; align-self: center;">
+							<input type="submit" value="Submit", style="color:dimgray; margin-top: 20px; height: 50px; width: 500px; height: 50px; width: 500px; align-self: center;">
+						</form>
+					</section> 
+				</div>
+			</div>
+			<!-- Sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+					<section id="search" class="alt">
+						<!-- <form method="post" action="#">
+							<input type="text" name="query" id="query" placeholder="Search" />
+						</form> -->
+					</section>
+					<!-- Menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>Menu</h2>
+						</header>
+						<ul>
+							<li>
+								<a href="/index" type="submit" >Homepage</a>
+							</li>
+							<li>
+								<form action="/element" id="element" name="element"  style="margin: auto;  font-weight : bold;">
+									<a type="submit" onclick="ele_()">Make Class</a>
 									<script>
-										var input1 = document.createElement('input');
-										var input2 = document.createElement('input');
-										var random = Math.random()*(10^'<%=query.length%>');
-										random =parseInt(random);
-										function check(){
-											input1.setAttribute("name", "lectureID");
-											input1.setAttribute("class","button disabled");
-											input1.setAttribute("type", "text");
-											input1.setAttribute("style", "color:dimgray ; margin-top : 20px; height : 50px ; width : 500px align-self: center;");
-											tmp =random;
-											
-											input2.setAttribute("onfocus","this.value='';");
-											input2.setAttribute("value","Write your Subject");
-											input2.setAttribute("name", "subjectID");
-											input2.setAttribute("type", "text");
-											input2.setAttribute("style", "color:dimgray ; margin-top : 20px; align-self: center;");
-											
-											
-											input1.setAttribute("value", "your lecture ID is : "+tmp);
-											return tmp;
-										}
-										 check();
-										 r_form.appendChild(input1);
-										 r_form.appendChild(input2);
-										function nwindow(){
-											
-												const query = JSON.stringify({
-													"teacherID": '<%=query%>' ,
-													"lectureID": parseInt(random),
-													"subject" : input2.value,
-													// 과목 (과목 입력), 오늘날짜, 시간 , 수업ID 
-													"valid":"BOOOOOOM"
-												});
-											var url="http://google.co.kr/?"+JSON.stringify(query);
-											console.log(url)
-											window.open(url,"","width=400,height=400,left=600");
-											
-											r_form.submit();
+										function ele_() {
+											$('#element').submit();
 										}
 									</script>
-								
-								
-		
-						</div>
-					</div>
-
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
-
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-
-							<!-- Menu -->
-							<nav id="menu">
-								<header class="major">
-									<h2>Menu</h2>
-								</header>
+								</form>
+							</li>
+							<li><a href="/total">After Class</a></li>
+							<li>		
+								<span class="opener">Statistics</span>		
 								<ul>
-									<li>
-										<a href="/index" type="submit" >Homepage</a>
-									<!-- <li> 
-										<form action="/generic" id="generic" name="generic" style="margin: auto;">
-										<a type="submit" onclick="gen()">Generic</a>
-										<script>
-											function gen() {
-												$('#generic').submit();
-											}
-										</script>
-										</form> -->
-									</li>
-									<li>
-										<form action="/element" id="element" name="element"  style="margin: auto;  font-weight : bold;">
-											<a type="submit" onclick="ele_()">Make Class</a>
+									<li>		<!-- realtime 페이지는 가은. -->
+										<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;">
+											<a type="submit" onclick="ele()">Real-Time</a>
 											<script>
-												function ele_() {
-													$('#element').submit();
+												function ele() {
+													$('#realtime').submit();
 												}
 											</script>
-											</form>
-									
+										</form>
+									</li>
 									<li>
-										<li><a href="/total">After Class</a></li>
-										<li>		
-											<span class="opener">Statistics</span>		
-											<ul>
-												<!-- history나 realtime이나 통계라는 공통된 .. 카테고리 같아서.. 이렇게 했음. history 페이지는 민주님. -->
-												<!-- <li>		
-													
-													<form action="/history" id="history" name="history"  style="margin: auto;">		
-														<a type="submit" onclick="ele()">History</a>
-														<script>
-															function ele() {
-																$('#history').submit();		
-															}
-														</script>
-													</form>
-												</li> -->
-												<li>		<!-- realtime 페이지는 가은. -->
-													<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;">
-														<a type="submit" onclick="ele()">Real-Time</a>
-														<script>
-															function ele() {
-																$('#realtime').submit();
-															}
-														</script>
-													</form>
-												</li>
-												
-													<li> <!--<a href="#">History</a>-->
-														<form action="/history" id="history" name="history"  style="margin: auto;">
-															<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
-															<script>
-																function his() { 
-																	$('#history').submit();
-																}
-															</script>
-														</form>
-													</li>
-													<li>
-														<form action="/dailyreport" id="dailyreport" name="dailyreport"  style="margin: auto;">
-															<a type="submit" onclick="day()">Daily Report</a> <!--ele를 바꿔야할 듯-->
-															<script>
-																function day() { 
-																	$('#dailyreport').submit();
-																}
-															</script>
-														</form>
-													</li>
-													<!--라우터?랑 연결하기--->
-													<li>
-														<form action="/byClass" id="byClass" name="byClass"  style="margin: auto;">
-															<a type="submit" onclick="cla()">By Class</a> <!--ele를 바꿔야할 듯-->
-															<script>
-																function cla() { 
-																	$('#byClass').submit();
-																}
-															</script>
-														</form>
-													</li>
-											</ul>
-										</li>
-										
+										<form action="/history" id="history" name="history"  style="margin: auto;">
+											<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function his() { 
+													$('#history').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<li>
+										<form action="/dailyreport" id="dailyreport" name="dailyreport"  style="margin: auto;">
+											<a type="submit" onclick="day()">Daily Report</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function day() { 
+													$('#dailyreport').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<!--라우터?랑 연결하기--->
+									<li>
+										<form action="/byClass" id="byClass" name="byClass"  style="margin: auto;">
+											<a type="submit" onclick="cla()">By Class</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function cla() { 
+													$('#byClass').submit();
+												}
+											</script>
+										</form>
+									</li>
 								</ul>
-							</nav>
-
-
-							<!-- Section -->
-								<!-- <section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section> -->
-
-							<!-- Section -->
-								<!-- <section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
-									</ul>
-								</section> -->
-
-							<!-- Footer -->
-								<!-- <footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer> -->
-
-						</div>
-					</div>
-
+							</li>
+						</ul>
+					</nav>
+					<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; 2021PeopleSpace TeamB. BOOM?. 
+							GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+							Design: <a href="https://html5up.net">HTML5 UP</a>.
+						</p>
+					</footer>	
+				</div>
 			</div>
-
+		</div>
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
 	</body>
 </html>
