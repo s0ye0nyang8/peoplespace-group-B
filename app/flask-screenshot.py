@@ -107,7 +107,8 @@ def attentiongauge():
     img = open_image('test.jpg')
     # Err/ new predict 함수 :  y = newreconstruct(ds.y, _pred, x) if has_arg(ds.y.reconstruct, 'x') else ds.y.reconstruct(_pred)
     bboxes, labels, scores = newpredict(model,img,train_json)
-    return gauge
+    lb = labels == "front"
+    return len(lb)/user[stuNum] *100 
 
 def upload(filename):
 #     bucket = storage.bucket()
