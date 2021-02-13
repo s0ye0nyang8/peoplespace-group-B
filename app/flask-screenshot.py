@@ -88,6 +88,7 @@ def index():
             "start" : values["start"],
             "stuNum" : values["stuNum"]
         }
+
     return render_template('index.html')
 
 
@@ -120,12 +121,14 @@ def attentiongauge():
     rv_path = img_path + '/' + detect_image
     os.remove(rv_path)
 
-    lb = label == "front"
-    if len(label) == 0 :
-        print("None face detection")
-    else :
-        # return len(lb)/user["stuNum"] *100
-        return len(label)/user["stuNum"] *100
+    # lb = label == "front"
+    front_num = 0
+    for i in range(0, len(label)):
+        if(label[i] == "front") :
+            front_num += 1
+
+    return front_num
+
 
 
 global user
