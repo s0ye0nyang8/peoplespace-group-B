@@ -160,3 +160,6 @@ Chart
 <!--GOOGLE CHART API-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 ```
+
+### deployed web address
+-> https://final-9ac8a.firebaseapp.com
