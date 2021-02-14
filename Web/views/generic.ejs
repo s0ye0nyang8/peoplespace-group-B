@@ -1,0 +1,148 @@
+<!--------------------------혜민님 데이터 코드----------------------------------------------------------------------->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+		var arr = [['Time', 'Attention']];
+		var urlArr = [];
+		<%for(var i = 0; i < rows.length; i++){%>
+			var newarr = [];
+			var idx_url = [];
+			newarr.push(<%=rows[i].time.toDate().getTime()%>);
+			newarr.push(<%=rows[i].attendance%>);
+			arr.push(newarr);
+			var idx = <%=rows[i].time.toDate().getTime()%>;
+			var url = "<%=rows[i].fileID%>";
+			idx_url.push(idx);
+			idx_url.push(url);
+			urlArr.push(idx_url);
+		<%}%>
+	google.charts.load('current', {'packages':['corechart']});
+	function area(){
+		google.charts.setOnLoadCallback(areaChart);
+	}
+	function curve(){
+	   google.charts.setOnLoadCallback(curveChart);
+	}
+	function pie(){
+		google.charts.setOnLoadCallback(pieChart);
+	}
+	function areaChart(){
+			var data = google.visualization.arrayToDataTable(arr);
+			var options = {
+				title:'Attention Gauge',
+				backgroundColor: '',
+			hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+			vAxis: {minValue: 0}
+			};
+			var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+			chart.draw(data, options);
+	}
+	function pieChart(){
+			var data = new google.visualization.DataTable();
+			var attend = [0,0,0];
+			
+			for(var i = 0; i < urlArr.length; i++){
+				// console.log(arr[i][1]);
+					attend[arr[i][1]-1]++;
+			}
+			//console.log(attend);
+			data.addColumn('string', 'Topping');
+			data.addColumn('number', 'Slices');
+			data.addRows([
+			['level 1', attend[0]],
+			['level 2', attend[1]],
+			['level 3', attend[2]]
+			]);
+			var options = {
+				title:'Attention Gauge',
+				backgroundColor: '',
+				
+				legend: { position: 'bottom' }
+			};
+			var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+			chart.draw(data, options);
+	}
+	function curveChart() {
+			var data = google.visualization.arrayToDataTable(arr);
+			var options = {
+				
+				backgroundColor:  '',
+			
+				title: 'Attention Gauge',
+				curveType: 'function',
+				lineWidth: 8,
+				colors: ['#e2431e', '#d3362d', '#e7711b',
+	'#e49307', '#e49307', '#b9c246'],
+				legend: { position: 'bottom' }
+			};
+			var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+			function selectHandler() {
+				var selectedItem = chart.getSelection()[0];
+				if (selectedItem) {
+					var topping = data.getValue(selectedItem.row, 0);
+					var img = document.getElementById("myimg");
+					for(var i = 0; i < urlArr.length; i++){
+						if((urlArr[i][0] === topping) && (urlArr[i][1] != "")){
+							img.src=urlArr[i][1];
+							console.log("img");
+							img.style.display = "block";
+							break;
+						} else{
+							console.log("notimg");
+							img.style.display = "none";
+						}
+					}
+				}
+			}
+			google.visualization.events.addListener(chart, 'select', selectHandler);
+			chart.draw(data, options);
+			$(window).resize(function(){
+				drawChart();
+			})
+	}
+</script>
+<section>
+	<header class="main">
+		<h1 align="center">Total Attention Gauge</h1>
+	</header>
+	<div>
+	<div class="wrap blackboard">
+			<span class="image fit">
+				<img src="./images/png/043-blackboard.png">
+			</span>
+		<h2 align="center">Class <%=rows[1].lectureID%></h2>
+		<h3 align="center"><%=rows[1].time.toDate()%></h3>
+		<h4 align="center">Click on the chart to see the inattentives!</h4>
+	</div>
+	<div class="wrap chartwrap">
+		
+		<div class="button_wrap" style="text-align: center;">
+			<div  class="button" onclick="curve()"  style="margin-left: 150px;" >Linear Chart</div>
+			<div   class="button" onclick="pie()" style="margin-left: 10px;">Pie Chart</div>
+			<div  class="button" onclick="area()"  style="margin-left: 10px;">Area Chart</div>
+		</div>
+		<div    style="height:100%; margin-left: 100px; margin-top:10px ;  margin-bottom: 20px;"id="chart_div"></div>
+	</div>
+	<script>
+		function equalHeights( $objs )
+		{
+		var highest = 0;
+		$objs.each(function() {
+			thisHeight = $(this).height();
+			if(thisHeight > highest ) {
+			highest = thisHeight;
+			}
+		});
+		$objs.height( highest );
+		}
+		$(function(){
+			//setTimeout(function(){
+				equalHeights( $(".wrap") );
+			//}, 2000);
+		});
+	</script>
+</div>
+	
+
+</section>
+<!--------------------------혜민님 데이터 코드----------------------------------------------------------------------->

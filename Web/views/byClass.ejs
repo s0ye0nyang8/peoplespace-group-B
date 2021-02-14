@@ -1,0 +1,249 @@
+<!DOCTYPE HTML>
+<!--
+   Editorial by HTML5 UP
+   html5up.net | @ajlkn
+   Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+   <head>
+      <title>Generic - Editorial by HTML5 UP</title>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+      <link rel="stylesheet" href="assets/css/main.css" />
+   </head>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <body class="is-preload">
+
+      <!-- Wrapper -->
+         <div id="wrapper">
+
+            <!-- Main -->
+               <div id="main">
+                  <div class="inner">
+
+                        <!-- Header -->
+                        <header id="header">
+                           <form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+                           <a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+                           </form>
+                           <header style="margin-left: 10%;" class="main">
+                              <h1>By Class</h1>      <!-- 페이지 제목 형식 맞췄습니다. -->
+                           </header>   
+                           <form name="l_form" action="/logOut" method="get"  >
+                              <ul class="icons">
+                                 <a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+                              </ul>
+                           </form>
+                           
+                        </header>
+                        
+   
+                     <!-- Content -->
+                        <section>
+                           <header class="main">
+                              <h1>Hi, <%=teacher%></h1>
+                           </header>
+
+                        
+                           <h2 id="content">This is your classroom!</h2>
+
+                           <!-- Buttons -->
+                           <div class="col-6 col-12-medium">
+                              <ul class="actions fit">
+                                 <li> 
+                                    <form class="button fit" action="/history" id="history" name="history" style="margin: auto;">
+                                       <a type="submit" onclick="sub()">BY DATE</a>
+                                       <script>
+                                          function sub() { 
+                                             $('#history').submit();
+                                          }
+                                       </script>
+                                    </form>
+                                 </li>
+                                 <li><a href="#" class="button primary fit">By Class</a></li>
+                              </ul>
+                           </div>
+                           <table>
+                           <!--DATE TABLE-->
+                           <thead>
+                              <tr>
+                                 <th>Category</th> <!--요일, 날짜-->
+                                 <th>Total gauge</th>
+                                 <th>delete</th>         
+                              </tr>
+                           </thead>
+                           <tbody>
+
+                           <% for(var i=0; i<rows.length; i++) { %>
+                              <tr>
+                                 <td><output><%=rows[i].name %></output></td>
+                                 <span>
+                                 <form method="POST" action="/classroom">
+                                    <td align:right style="text-align:right;">
+                                       <ul class="actions">
+                                          <li><button type="submit" name="subject" value="<%= rows[i].name %>" class="button fit" formaction="/classroom">🐚💜 Classroom</button></li> 
+                                       </ul>
+                                    </td>
+                                 </form>
+                                 <form method="POST" action="/delete_category">
+                                    <td style="text-align:right;">
+                                       <ul class="actions">
+                                          <li><button type="submit" name="remove" value="<%= ids[i] %>" class="button primary" formaction="/delete_category" >DELETE</button></li> <!---onSubmit 쓰기-->
+                                       </ul>
+                                    </td>
+                                 </form></span>
+                              </tr>
+                           <%}%>
+                           </tbody>
+                        </table>
+                           <h2>Form</h2>
+                           <!--<div class="row gtr-uniform">
+                              <div class="col-6 col-12-xsmall">
+                                 <input type="textfiled" id="subject" placeholder="Category Name" />
+                              </div>
+                              <div class="col-12">
+                                 <button id = "saveButton" class="primary">+ Add Category</button>
+                                 <script src="../routes/index.js"></script>`
+                              </div>
+                           </div>-->
+
+                           <form method="post" action="#">
+                              <div class="row gtr-uniform">
+                                 <div class="col-6 col-12-xsmall">
+                                    <input type="text" name="subject" placeholder="Category Name" />
+                                 </div>
+                                 <ul class="actions">
+                                    <li><input type="submit" value=" + Add Category" class="primary" /></li>
+                                 </ul>
+                              </div>
+                           </form>
+                        <!--
+                           <h2>History</h2>
+                           <span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+                           
+                           <h2>Category</h2>
+                           <div class="box alt">
+                              <div class="row gtr-50 gtr-uniform">
+                                 <div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
+                                 <div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
+                                 <div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+                                 <!-- Break --
+                                 <div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+                                 <div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
+                                 <div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
+                                 <!-- Break --
+                                 <div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
+                                 <div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+                                 <div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
+                              </div>
+                           </div>
+
+
+                           <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
+                           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+                           <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+
+                           <hr class="major" />
+
+                           <h2>Interdum sed dapibus</h2>
+                           <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
+                           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+
+                           <hr class="major" />
+
+                           <h2>Magna etiam veroeros</h2>
+                           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+                           <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+
+                           <hr class="major" />
+
+                           <h2>Lorem aliquam bibendum</h2>
+                           <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
+                           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+-->
+                        </section>
+                     
+                  </div>
+               </div> 
+            
+            <!-- Sidebar -->
+               <div id="sidebar">
+                  <div class="inner">
+
+                     <!-- Search -->
+                        <section id="search" class="alt">
+                           <!-- <form method="post" action="#">
+                              <input type="text" name="query" id="query" placeholder="Search" />
+                           </form> -->
+                        </section>
+<!-- Menu -->
+<nav id="menu">
+   <header class="major">
+      <h2>Menu</h2>
+   </header>
+   <ul>
+      <li>
+         <a href="/index" type="submit" >Homepage</a>
+      </li>
+      <li>
+         <form action="/element" id="element" name="element"  style="margin: auto; ">
+            <a type="submit" onclick="ele_()">Make Class</a>
+            <script>
+               function ele_() {
+                  $('#element').submit();
+               }
+            </script>
+         </form>
+      </li>
+      <li><a href="/total">After Class</a></li>
+      <li>      
+         <span class="opener">Statistics</span>      
+         <ul>
+            <li>      <!-- realtime 페이지는 가은. -->
+               <form action="/realtime" id="realtime" name="realtime"  style="margin: auto;">
+                  <a type="submit" onclick="ele()">Real-Time</a>
+                  <script>
+                     function ele() {
+                        $('#realtime').submit();
+                     }
+                  </script>
+               </form>
+            </li>
+            <li>
+               <form action="/history" id="history" name="history"  style="margin: auto;">
+                  <a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+                  <script>
+                     function his() { 
+                        $('#history').submit();
+                     }
+                  </script>
+               </form>
+            </li>
+            
+            
+         </ul>
+      </li>
+   </ul>
+</nav>
+<!-- Footer -->
+<footer id="footer">
+   <p class="copyright">&copy; 2021PeopleSpace TeamB. BOOM?. 
+      GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+      Design: <a href="https://html5up.net">HTML5 UP</a>.
+   </p>
+</footer>   
+
+                  </div>
+               </div>
+
+         </div>
+
+      <!-- Scripts -->
+         <script src="assets/js/jquery.min.js"></script>
+         <script src="assets/js/browser.min.js"></script>
+         <script src="assets/js/breakpoints.min.js"></script>
+         <script src="assets/js/util.js"></script>
+         <script src="assets/js/main.js"></script>
+
+   </body>
+</html>

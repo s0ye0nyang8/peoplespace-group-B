@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<!--
+   Editorial by HTML5 UP
+   html5up.net | @ajlkn
+   Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+   <head>
+      <title>Generic - Editorial by HTML5 UP</title>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+      <link rel="stylesheet" href="assets/css/main.css" />
+   </head>
+   <body class="is-preload">
+
+      <!-- Wrapper -->
+         <div id="wrapper">
+
+            <!-- Main -->
+               <div id="main">
+                  <div class="inner">
+
+                        <!-- Header -->
+                        <header id="header">
+                           <form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+                           <a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+                           </form>
+                           <dl  style="margin-left: 10%;">
+                              <h1>By Class</h1> <!--Analyze라고 할까?-->
+                           </dl>
+                           <form name="l_form" action="/logOut" method="get"  >
+                              <ul class="icons">
+                                 <a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+                              </ul>
+                           </form>
+                           
+                        </header>
+
+
+                     <!-- Content -->
+                     <% if (rows.length != 0){%>
+                        <section>
+                           <header class="main">
+                              <h1>Classroom <%=rows[0].subject%> 🌌</h1>
+                           </header>
+
+                           <h2 id="content">This is your academy! 멋진 문구</h2>
+                           
+                           <!-- Buttons -->
+                           <div class="col-6 col-12-medium">
+                              <ul class="actions fit">
+                                 <li> 
+                                    <form class="button fit" action="/history" id="history" name="history" style="margin: auto;">
+                                       <a type="submit" onclick="sub()">BY DATE</a>
+                                       <script>
+                                          function sub() { 
+                                             $('#history').submit();
+                                          }
+                                       </script>
+                                    </form>
+                                 </li>
+                                 <li>
+                                    <form class="button fit" action="/byClass" id="byClass" name="byClass" style="margin: auto;">
+                                       <a type="submit" onclick="cla()">By Class</a>
+                                       <script>
+                                          function cla() { 
+                                             $('#byClass').submit();
+                                          }
+                                       </script>
+                                    </form>
+                                 </li>
+                              </ul>
+                           </div>
+                           
+                           <html>
+                           <head>
+                              <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                              <script type="text/javascript">
+                              google.charts.load("current", {packages:["calendar"]});
+                              google.charts.setOnLoadCallback(drawChart);
+
+                           function drawChart() {
+                              var dataTable = new google.visualization.DataTable();
+                              dataTable.addColumn({ type: 'date', id: 'Date' });
+                              dataTable.addColumn({ type: 'number', id: 'Attention' });
+                              
+                                        <%for(var i = 0; i < attentions.length; i++){
+                                            var string1 = rows[i].start.toDate().toString();
+                                            var strArray = string1.split(' ');
+                                        %>
+                                            dataTable.addRow([ new Date(Number(<%=strArray[3]%>), <%=rows[i].start.toDate().getMonth()%>, Number(<%=strArray[2]%>)), <%=attentions[i]%>]);
+
+                                        <%}%>
+
+                              var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
+                              var options = {
+                                 title: "Attentions in the year",
+                                 
+                              };
+
+                              chart.draw(dataTable, options);
+                           }
+                              </script>
+                           </head>
+                           <body>
+                              <div class="aln-center">
+                              <div id="calendar_basic"></div>
+                              </div>
+                           </body>
+                           </html>
+                           <!-- 날짜별로 진행된 회의를 보여주는 표 -->
+                           <%
+                              for(var i=0; i<rows.length; i++) {
+                                 var string1 = rows[i].start.toDate().toString();
+                                 var strArray = string1.split(' ');
+                                 var date = strArray[0]+", "+strArray[1]+"월, "+strArray[2]+"일, "+ strArray[3]+"년";
+                                 var currDate = strArray[1] + strArray[2];
+                                 //rows[i]toDate에서 월, 요일을 get 함수를 쓰면 다른 숫자가 나와서 문자열로 처리했다. 
+                           %>
+                           <table>
+                              <tbody>
+                                 <tr>
+                                    <%
+                                       if(i<rows.length-1){
+                                          if(currDate===prevDate){
+                                          date ="";
+                                          }
+                                       }
+                                    %>
+                                    
+                                    <label id = "demo"><%=date%></label>
+                                    
+                                    <td><%=rows[i].start.toDate().getHours().toString()%>:<%=rows[i].start.toDate().getMinutes().toString()%> - <%=rows[i].end.toDate().getHours().toString()%>:<%=rows[i].end.toDate().getMinutes().toString()%></td>
+                                    
+                                    <form method="POST" action="/dailyreport">
+                                    <td>
+                                       <ul class="actions">
+                                          <li>
+                                             <button type="submit" name="totalGauge" value="<%= ids[i] %>" class="button fit" formaction="/dailyreport" >
+                                                Total Gauge
+                                             </button>
+                                          </li>
+                                       </ul>
+                                    </td>
+                                 </form>
+                                 </tr>
+                              
+                              </tbody>
+                           </table>   
+                           <%
+                              var prevDate = strArray[1] + strArray[2];
+                                  }
+                              %>
+
+                           
+                           
+                           
+                        <!--데일리 평균, 회의들의 평균을 집중도를 보여주는 그래프이다. 아직 쓰지 않는다. 
+                           <h4>Attention Gauge</h4>
+
+                           
+                           <html>
+                              <head>
+                                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                 <script type="text/javascript">
+                                 google.charts.load('current', {'packages':['timeline']});
+                                 google.charts.setOnLoadCallback(drawChart);
+                                 function drawChart() {
+                                    var container = document.getElementById('timeline');
+                                    var chart = new google.visualization.Timeline(container);
+                                    var dataTable = new google.visualization.DataTable();
+
+                                    dataTable.addColumn({ type: 'string', id: 'President' });
+                                    dataTable.addColumn({ type: 'date', id: 'Start' });
+                                    dataTable.addColumn({ type: 'date', id: 'End' });
+                                    dataTable.addRows([
+                                    [ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
+                                    [ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
+                                    [ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
+
+                                    chart.draw(dataTable);
+                                 }
+                                 </script>
+                              </head>
+                              <body>
+                                 <div id="timeline" style="height: 180px;"></div>
+                              </body>
+                           </html>-->
+                        </section>
+                        <%}%>
+
+                        <% if (rows.length == 0){%>
+                           <section>
+                              <h1> 🏁 There are no <%=subject%> classes.</h1>
+                              <h2> ⬅ On the History page, you can set the subject category for the class.</h2>
+                           </section>
+                        <%}%>
+
+                  </div>
+               </div> 
+
+            
+            
+            <!-- Sidebar -->
+               <div id="sidebar">
+                  <div class="inner">
+
+                     <!-- Search -->
+                        <section id="search" class="alt">
+                           <!-- <form method="post" action="#">
+                              <input type="text" name="query" id="query" placeholder="Search" />
+                           </form> -->
+                        </section>
+
+                     <!-- Menu -->
+               <nav id="menu">
+                  <header class="major">
+                     <h2>Menu</h2>
+                  </header>
+                  <ul>
+                     <li>
+                        <a href="/index" type="submit" >Homepage</a>
+                     </li>
+                     <li>
+                        <form action="/element" id="element" name="element"  style="margin: auto; ">
+                           <a type="submit" onclick="ele_()">Make Class</a>
+                           <script>
+                              function ele_() {
+                                 $('#element').submit();
+                              }
+                           </script>
+                        </form>
+                     </li>
+                     <li><a href="/total">After Class</a></li>
+                     <li>      
+                        <span class="opener">Statistics</span>      
+                        <ul>
+                           <li>      <!-- realtime 페이지는 가은. -->
+                              <form action="/realtime" id="realtime" name="realtime"  style="margin: auto;">
+                                 <a type="submit" onclick="ele()">Real-Time</a>
+                                 <script>
+                                    function ele() {
+                                       $('#realtime').submit();
+                                    }
+                                 </script>
+                              </form>
+                           </li>
+                           <li>
+                              <form action="/history" id="history" name="history"  style=" font-weight : bold; margin: auto;">
+                                 <a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+                                 <script>
+                                    function his() { 
+                                       $('#history').submit();
+                                    }
+                                 </script>
+                              </form>
+                           </li>
+                           
+                        </ul>
+                     </li>
+                  </ul>
+               </nav>
+               <!-- Footer -->
+               <footer id="footer">
+                  <p class="copyright">&copy; 2021PeopleSpace TeamB. BOOM?. 
+                     GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+                     Design: <a href="https://html5up.net">HTML5 UP</a>.
+                  </p>
+               </footer>   
+                     
+
+                  </div>
+               </div>
+
+         </div>
+
+      <!-- Scripts -->
+         <script src="assets/js/jquery.min.js"></script>
+         <script src="assets/js/browser.min.js"></script>
+         <script src="assets/js/breakpoints.min.js"></script>
+         <script src="assets/js/util.js"></script>
+         <script src="assets/js/main.js"></script>
+
+   </body>
+</html>

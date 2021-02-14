@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+
+<!--jjeong: 아래의 여기서부터 ~여기까지는 통일되는 기본 웹 형식 복붙 하면 된다-->
+<!--jjeong : ~~~~~~~~~~여기서부터~~~~~~~~~~~~~--> 
+<title>Online Platform BOOM</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" http-equiv="content-type" content="width=device-width, initial-scale=1, user-scalable=no ,text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+	<body class="is-preload">
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/8.2.7/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="/__/firebase/8.2.7/firebase-analytics.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+		<!-- Wrapper -->
+			<div id="wrapper">
+              
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<!-- Header -->
+								<header id="header">
+                                    <form name="form0" action="/" method="get"  >
+                                        <!-- <div style="text-align: center; margin-top: 30px"> -->
+                                            <a href="#" onclick="form0.submit()" class="logo"><strong>Online Platform</strong> BOOM</a>
+                                            <!-- <a href="#" class="button big" style="background-color: ghostwhite;" onclick="form0.submit()">Sign UP</a> -->
+                                                <!-- </div> -->
+                                    </form>
+                                    <!-- <a href="index.ejs" class="logo"><strong>Online Platform</strong> BOOM</a> -->
+                                    <div class="logo" style="text-align: center; font-size: xx-large"> <strong>SIGN UP to BOOM </strong></div>
+									<ul class="icons">
+										<!-- <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li> -->
+									</ul>
+								</header>
+
+<!--jjeong : ~~~~~~~~~~여기까지~~~~~~~~~~~~~--> 
+                            <!--jjeong: form 을 이용하면 원하는 정보를 원하는 url로 보낼수 있다 ~ 참고 하면 좋을듯~-->
+                            <form name="form1" method="post" action="/signup" style="margin-top: 50px;">
+                                <div class="logo" style="text-align: center; font-size: xx-large"><strong>The ID format must be email.</strong></div>
+                                <div class="logo" style="text-align: center; font-size: xx-large"><strong>The Password must be at least 6 digits long.</strong></div>
+                                <table border="1" style="width:800px ; margin: auto; text-align: center; margin-top: 80px;">
+                                    <caption></caption>
+                                    <colgroup>
+                                        <col width='15%' />
+                                        <col width='*%' />
+                               
+                                <tbody>
+                                    <tr>
+                                        <td>Email Address</td>
+                                        <td><input type="text" name="new_email" size="30" style="color:dimgray; " maxlength="120"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Password</td>
+                                        <td><input type="password" name="new_pw_1" size="30" style="color:dimgray;" maxlength="120"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Repeat Password</td>
+                                        <td><input type="password" name="new_pw_2" size="30" style="color:dimgray;" maxlength="120"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                
+                                <div style="text-align: center; margin-top: 50px">
+                                <a href="#" class="button big" type="submit" style="background-color: ghostwhite;" onclick="form1.submit()" >Submit</a>
+                                </div>
+                            </form>
+                            <!-- Footer -->
+                            <footer style="text-align: center; margin-top: 30px;" id="footer">
+                                <p class="copyright">&copy; 2021PeopleSpace TeamB. BOOM. 
+                                    GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+                                    Design: <a href="https://html5up.net">HTML5 UP</a>.
+                                </p>
+                            </footer>	
+                                   
+                            
+     
+						</div></div></div></body>	</html>
+	
+

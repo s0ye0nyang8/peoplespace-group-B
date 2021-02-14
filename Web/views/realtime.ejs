@@ -1,0 +1,295 @@
+<!---------------------------------------------------------------------------------------------------------------------- 여기서부터 가은 추가 -->
+
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+    <!--Load the AJAX API-->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawVisualization);
+
+				function ave(arr) { // 평균 구하는 함수
+					return arr.reduce((pre, cur, i) => i === arr.length - 1 ? (pre + cur) / arr.length : pre + cur ); 
+				}
+
+                function drawVisualization() {
+					var arr = [['Minutes', 'Attention', 'Total Average']];		// 원래 학생 학명당 보여주려고 한건데 학생 구분을 못하니까..
+																					// 익명의 학생들의 즉각적인 distraction과 지금까지 모든 distraction들의 평균으로 .......근데 이게 의미없는 값 같은데..어..
+					var attendance_arr = [];
+
+					<%for (var i=0; i< rows.length; i++){%>
+						var newarr = [];
+						newarr.push('');
+						newarr.push(<%=rows[i].attendance%>);
+						attendance_arr.push(<%=rows[i].attendance%>);
+						newarr.push(ave(attendance_arr));		
+						arr.push(newarr);
+					<%}%>
+
+					let data = google.visualization.arrayToDataTable(arr);
+
+					var options = {
+						title : 'Degree of Attention',
+						vAxis: {title: 'attention count'},
+						hAxis: {title: 'class duration'},
+						seriesType: 'bars',
+						series: {1: {type: 'line'}}
+					};
+
+					var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+					chart.draw(data, options);
+				}
+				
+        </script>
+		<title>Elements - Editorial by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<!--jjeong : 15 초마다 페이지 refresh-->
+		<meta http-equiv="refresh" content="15"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/8.2.7/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="/__/firebase/8.2.7/firebase-analytics.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+							<header id="header">
+								<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+									<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+									</form> 
+									<dl  style="margin-left: 10%;">
+										<h1>Real-Time</h1>
+									</dl>
+								<form name="l_form" action="/logOut" method="get"  >
+									<ul class="icons">
+										<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+									</ul>
+								</form>
+								
+							</header>
+							<!-- Content -->
+								<section>		
+									<header class="main">
+                                        <h1>Class Statistics</h1>
+									</header>
+				
+									<% if (start != null){%>
+										<!-- Content -->
+										<!-- <hr class="major" /> -->
+										<!-- <p>빨간 꺾은선 그래프 : 발표에 대한 전체적인 집중도 평균</p>
+										<p>파란 막대 그래프 : 실시간으로 받아들여오는 모든 학생에 대한 집중도 정보</p>
+										<h2>Presenter : Kim</h2>			 -->
+
+										<div class="row">
+											
+											<div class="col-6 col-12-medium">
+												<div class="box">
+
+													<p>
+														<span class="image left"><img src="images/teacher.png" alt="" /></span>		<!-- 선생님 소개 ... 선생님 사진도 디비에 없어서 그냥 넣음.. -->
+														<%if (rows.length > 0){%>
+														<h4>E-mail : <%=rows[0].teacherID%></h4>
+														<!-- <h4>LectureID : <%=rows[0].lectureID%></h4> -->
+														<h4>Subject : <%=rows[0].subject%></h4>
+														<%}%>
+													</p>
+													
+													<!-- <nav id="menu">
+														<ul>
+															<li>
+																<span class="opener">Students</span>		
+																<ul>
+																	 여기에는 수업듣는 학생들 목록 ---------------------------- 이것도 이제 디비에서 불러와서 선생님의 학생들로 넣어야 합니다.
+																	<li><a href="#">Kim</a></li>
+																	<li><a href="#">Lee</a></li>
+																	<li><a href="#">Park</a></li>
+																	<li><a href="#">Choi</a></li>
+																</ul>
+															</li>
+														</ul>
+													</nav> -->
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div id="chart_div" style="width: 100%; height: 100%;"></div>
+										</div>
+										<script>
+											console.log("kkkk"+'<%=rows%>')
+											</script>
+										
+									<%}%>
+									<%if (start ==null){%>
+
+										<h2>If you want to see the result of your Class</h2>
+										<h2>Please press the BUTTON below !</h2>
+										<span class="image object" >
+										<img style="position: relative;  background-size :10%" src="finger.png" alt="" />
+									</span>
+										<form method="POST" action="/total">
+											<td>
+												<ul class="actions">
+													
+											
+													<li><button type="submit" name="start" value="<%=start%>" class="primary" formaction="/total" >Move to Total Statistics</button></li> <!---onSubmit 쓰기-->
+												</ul>
+											</td>
+										</form>
+										<!-- <form name="r_form" action="/total" method="post" style="margin-left: 10px; " > -->
+											<!-- <input tid="sStatusType" ype="text" name="id" value="check()" size="30" style="color:dimgray;" maxlength="120" readonly> -->
+											<!-- <a href="#" class="button primary fit" type="button" onclick="nwindow()" style="width: 50%;">Open Your Class !</a> -->
+											 <!-- window.open('http://google.co.kr/?'); -->
+									  <!-- </form> -->
+									     <!-- <script>
+											
+											if(<%=rows.length%> <=0){
+												// document.location.href = '/total';
+												console.log("hhh",'<%=user%>')
+												
+
+											}
+												
+									  </script> -->
+										<%}%>
+										<!-- <span class="image object" >
+										<img style="width: 50%;height: 30%;" src="pic.jpg" alt="" />
+									</span> -->
+
+										<!-- <h1>... 진행중인 발표가 없습니다 ...</h1>
+										<div style=" text-align: center; margin-bottom: 10px;" >
+									
+										</div>	
+										<h2>... 발표가 시작될 때까지 기다려주세요.</h2>	 -->
+									
+
+								</section>	
+						</div>
+					</div>
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<!-- <form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form> -->
+								</section>
+
+							<!-- Menu -->
+							<!-- Menu -->
+							<nav id="menu">
+								<header class="major">
+									<h2>Menu</h2>
+								</header>
+								<ul>
+									<li>
+										<a href="/index" type="submit">Homepage</a>
+									<!-- <li> 
+										<form action="/generic" id="generic" name="generic" style="margin: auto;">
+										<a type="submit" onclick="gen()">Generic</a>
+										<script>
+											function gen() {
+												$('#generic').submit();
+											}
+										</script>
+										</form> -->
+									</li>
+									<li>
+										<form action="/element" id="element" name="element"  style="margin: auto;">
+											<a type="submit" onclick="ele_()">Make Class</a>
+											<script>
+												function ele_() {
+													$('#element').submit();
+												}
+											</script>
+											</form>
+									
+									<li>
+										<li><a href="/total">After Class</a></li>
+										<li>		
+											<span class="opener">Statistics</span>		
+											<ul>
+														<!-- history나 realtime이나 통계라는 공통된 .. 카테고리 같아서.. 이렇게 했음. history 페이지는 민주님. -->
+														<!-- <li>
+													<form action="/history" id="history" name="history"  style="margin: auto;">		
+														<a type="submit" onclick="ele()">History</a>
+														<script>
+															function ele() {
+																$('#history').submit();		
+															}
+														</script>
+													</form>
+												</li> -->
+												<li>		<!-- realtime 페이지는 가은. -->
+													<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;  font-weight : bold;">
+														<a type="submit" onclick="ele()">Real-Time</a>
+														<script>
+															function ele() {
+																$('#realtime').submit();
+															}
+														</script>
+													</form>
+												</li>
+												
+													<li> <!--<a href="#">History</a>-->
+														<form action="/history" id="history" name="history"  style="margin: auto;">
+															<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+															<script>
+																function his() { 
+																	$('#history').submit();
+																}
+															</script>
+														</form>
+													</li>
+													
+											</ul>
+										</li>
+										
+								</ul>
+							</nav>
+							<!-- Footer -->
+							<footer id="footer">
+								<p class="copyright">&copy; 2021PeopleSpace TeamB. BOOM. 
+									GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+									Design: <a href="https://html5up.net">HTML5 UP</a>.
+								</p>
+							</footer>	
+							<!-- Section -->
+							
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
+<!---------------------------------------------------------------------------------------------------------------------- 여기까지 가은 추가 -->

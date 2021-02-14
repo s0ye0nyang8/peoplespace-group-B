@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var arr = [['Time', 'Attention']];
+            var urlArr = [];
+            <%for(var i = 0; i < rows.length; i++){%>
+                var newarr = [];
+                var idx_url = [];
+                // console.log("<%=rows[i].teacherID%>");
+                newarr.push(<%=rows[i].time.toDate().getHours().toString()%> + ":" + <%=rows[i].time.toDate().getMinutes().toString()%> + ":" + <%=rows[i].time.toDate().getSeconds().toString()%>);
+                newarr.push(<%=rows[i].attendance%>);
+                arr.push(newarr);
+
+                var idx = <%=rows[i].time.toDate().getHours().toString()%> + ":" + <%=rows[i].time.toDate().getMinutes().toString()%> + ":" + <%=rows[i].time.toDate().getSeconds().toString()%>;
+                var url = '<%=rows[i].fileID%>' ;
+                idx_url.push(idx);
+                idx_url.push(url);
+                urlArr.push(idx_url);
+            <%}%>
+            var data = google.visualization.arrayToDataTable(arr);
+            var options = {
+                title: 'Attention Gauge',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+            function selectHandler() {
+                var selectedItem = chart.getSelection()[0];
+                if (selectedItem) {
+                    var topping = data.getValue(selectedItem.row, 0);
+                    var img = document.getElementById("myimg");
+                    for(var i = 0; i < urlArr.length; i++){
+                        if((urlArr[i][0] === topping) && (urlArr[i][1] != "")){
+                            img.src=urlArr[i][1];
+                            img.style.display = "block";
+                            break;
+                        } else{
+                            img.style.display = "none";
+                        }
+                    }
+                }
+            }
+            google.visualization.events.addListener(chart, 'select', selectHandler);
+            chart.draw(data, options);
+            $(window).resize(function(){
+                drawChart();
+            });
+        }
+    </script>
+
+</head>
+<body class="is-preload">
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/8.2.7/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="/__/firebase/8.2.7/firebase-analytics.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+<div id="wrapper">
+    <div id="main">
+        <div class="inner">
+            <!-- Header -->
+            <!-- Header -->
+								<header id="header">
+									<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+                                        <a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+
+                                        </form>
+									<h1 align="center">Total Gauge</h1>
+									<form name="l_form" action="/logOut" method="get"  >
+										<ul class="icons">
+											<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+										</ul>
+									</form>
+									
+								</header>
+            <!-- content -->
+            <section>
+                <header class="main">
+
+                </header>
+
+                <div class="blackboard">
+
+                        <span class="image fit">
+                            <img src="./images/png/043-blackboard.png">
+                        </span>
+                        <h2 align="center">Class <%=rows[0].lectureID%></h2>
+                        <h4 align="center"><%=(rows[0].start.toDate().getFullYear()).toString()%>/<%=(rows[0].start.toDate().getMonth()+1).toString()%>/<%=(rows[0].start.toDate().getDate()).toString()%></h4>
+                    <h4 align="center">Click on the chart to see the inattentives!</h4>
+                </div>
+                <div class="chartwrap">
+                    <div id="curve_chart"></div>
+                </div>
+                <div class="imgwrap">
+                    <h2 align="center">Moments</h2>
+                    <img src="./images/pic01.jpg" id="myimg">
+                </div>
+
+            </section>
+        </div>
+    </div>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="inner">
+
+            <!-- Search -->
+            <section id="search" class="alt">
+                <!-- <form method="post" action="#">
+                    <input type="text" name="query" id="query" placeholder="Search" />
+                </form> -->
+            </section>
+
+            <!-- Menu -->
+           <!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li>
+											<a href="/index" type="submit" >Homepage</a>
+										<!-- <li> 
+											<form action="/generic" id="generic" name="generic" style="margin: auto;">
+											<a type="submit" onclick="gen()">Generic</a>
+											<script>
+												function gen() {
+													$('#generic').submit();
+												}
+											</script>
+											</form> -->
+										</li>
+										<li>
+											<form action="/element" id="element" name="element"  style="margin: auto;">
+												<a type="submit" onclick="ele_()">Make Class</a>
+												<script>
+													function ele_() {
+														$('#element').submit();
+													}
+												</script>
+												</form>
+										
+										<li>
+											<li><a href="/total" style=" font-weight : bold;">After Class</a></li>
+											<li>		
+												<span class="opener">Statistics</span>		
+												<ul>
+                                                        <!-- history나 realtime이나 통계라는 공통된 .. 카테고리 같아서.. 이렇게 했음. history 페이지는 민주님. -->
+                                                        <!-- <li>
+														<form action="/history" id="history" name="history"  style="margin: auto;">		
+															<a type="submit" onclick="ele()">History</a>
+															<script>
+																function ele() {
+																	$('#history').submit();		
+																}
+															</script>
+														</form>
+													</li> -->
+													<li>		<!-- realtime 페이지는 가은. -->
+														<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;">
+															<a type="submit" onclick="ele()">Real-Time</a>
+															<script>
+																function ele() {
+																	$('#realtime').submit();
+																}
+															</script>
+														</form>
+													</li>
+													
+														<li> <!--<a href="#">History</a>-->
+															<form action="/history" id="history" name="history"  style="margin: auto;">
+																<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+																<script>
+																	function his() { 
+																		$('#history').submit();
+																	}
+																</script>
+															</form>
+														</li>
+														
+												</ul>
+											</li>
+											
+									</ul>
+								</nav>
+
+            <!-- Footer -->
+            <!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; 2021PeopleSpace TeamB. BOOM. 
+							GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+							Design: <a href="https://html5up.net">HTML5 UP</a>.
+						</p>
+					</footer>	
+        </div>
+    </div>
+
+</div>
+</div>
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
