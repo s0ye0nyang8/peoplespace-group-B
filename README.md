@@ -159,10 +159,10 @@ when the application terminates, the user will be automatically redirected to th
 
 ### DB Usage
 
-Class information
+Class information 
 
 - class id
-- class start time
+- class start,end time
 
 Chart
 
@@ -170,6 +170,24 @@ Chart
 - attention gague
 - fileID (url to screenshot)
 
+## table information
+1. class now working - table_name : on-air
+  subject  (string)
+  teacherID : user’s id (string)
+  start  (timestamp)
+  end : when to end  (timestamp)
+  stuNum : total number of student  (number)
+
+2. every class info - table_name : people-space
+  subject (string)
+  teacherID  (string)
+  start  (timestamp)
+  end  (timestamp)
+  stuNum  (number)
+  attendance  (number)
+  fileID : picture of that time (string)
+  time : time when picture is taken (timestamp)
+  
 ## **history.ejs**
 
 - Previous classes are sorted by date. If you take the link connected to each class, you can see the statistics of class concentration in a chart.
