@@ -35,6 +35,15 @@ In BooM App page you can use these functions :
 - Analyze video conference meetings' attention figure
 
 
+# Run
+
+To run our app page code you should type a command like below : 
+
+```
+python flask-screenshot.py
+```
+
+
 ## flask-screenshot.py
 
 - This file is script for overall features of app team.
@@ -79,11 +88,6 @@ OR
 ```jsx
 npm start
 ```
-
-Or If you want to run the app code ( python code )
-
-```
-python flask-screenshot.py
 ```
 
 # Code
