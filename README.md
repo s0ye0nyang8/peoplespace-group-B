@@ -98,7 +98,7 @@ FIREBASE_MEASUREMENT_ID =  xxxxx
 - Used google charts to represent the data.
 - If the calss has not started yet, not the chart but the message comes up.
 
-## elements.ejs → makeclas 페이지에 대한 .ejs인데, 이름이 일케 돼있음.
+## elements.ejs (It's about makeclas with different name)
 
 - Enter the information of a class here. (information : subject, number of students, when the class starts, when the clas end)
 - This information goes go "/makeclass".
