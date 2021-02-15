@@ -155,8 +155,33 @@ when the application terminates, the user will be automatically redirected to th
 2. if you put your mouse on the chart, you can click the point and see the screenshot taken by the application.
 
 ---
+  
+## **history.ejs**
 
-### DB Usage
+- Previous classes are sorted by date. If you take the link connected to each class, you can see the statistics of class concentration in a chart.
+- Retrieve the document from the'people-space' collection from firestore. Users can only view their currently logged-in class, not other users' classes.
+
+## byClass.ejs
+
+- It has a function that can be seen in the to do list app. Classes were grouped and categorized by subject. Classrooms are created for each subject.
+- You can add/delete documents from the subject collection in firestore. Each document has a subject name, name.
+
+## classroom.ejs
+
+- When you enter the classroom created by subject, you can see classes sorted by group and date. Like the history page, you can check the total gauge chart for each class.
+- firestore에는 사용자 당 하나의 컬랙션을 가지는 것이 아니다.
+
+## dailyreport.ejs
+
+- This is a page that moves when you press the total gauge button located in each class column on the'/history' and'/byClass' pages.
+- Use the Google Chart API for concentration statistics. You can toggle between line, table, bar, pie, and area charts.
+
+```jsx
+<!--GOOGLE CHART API-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+```
+
+## DB Usage
 
 Class information 
 
@@ -188,31 +213,6 @@ Chart
  - attendance  (number)
  - fileID : picture of that time (string)
  - time : time when picture is taken (timestamp)
-  
-## **history.ejs**
-
-- Previous classes are sorted by date. If you take the link connected to each class, you can see the statistics of class concentration in a chart.
-- Retrieve the document from the'people-space' collection from firestore. Users can only view their currently logged-in class, not other users' classes.
-
-## byClass.ejs
-
-- It has a function that can be seen in the to do list app. Classes were grouped and categorized by subject. Classrooms are created for each subject.
-- You can add/delete documents from the subject collection in firestore. Each document has a subject name, name.
-
-## classroom.ejs
-
-- When you enter the classroom created by subject, you can see classes sorted by group and date. Like the history page, you can check the total gauge chart for each class.
-- firestore에는 사용자 당 하나의 컬랙션을 가지는 것이 아니다.
-
-## dailyreport.ejs
-
-- This is a page that moves when you press the total gauge button located in each class column on the'/history' and'/byClass' pages.
-- Use the Google Chart API for concentration statistics. You can toggle between line, table, bar, pie, and area charts.
-
-```jsx
-<!--GOOGLE CHART API-->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-```
-
-### deployed web address
+ 
+## deployed web address
 -> https://final-9ac8a.firebaseapp.com
