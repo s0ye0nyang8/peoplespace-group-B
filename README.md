@@ -1,6 +1,5 @@
 # README
 
-Status: In progress
 
 # Welcome to BooM
 
@@ -28,20 +27,6 @@ Status: In progress
 - flask - 
 - pyautogui - 
 - fast.ai - v1.0.61
-
-## .env
-
-Before using firebase to your nodeJS you need to make .env file with your firebase keys in.
-
-```jsx
-FIREBASE_API_KEY = xxxxx
-FIREBASE_AUTH_DOMAIN = xxxxx
-FIREBASE_PROJECT_ID = xxxxx
-FIREBASE_STORAGE_BUCKET = xxxxx
-FIREBASE_MESSD_ID = xxxxx
-FIREBASE_APP_ID =  xxxxx
-FIREBASE_MEASUREMENT_ID =  xxxxx
-```
 
 # About Boom Webpage
 
@@ -74,6 +59,20 @@ python flask-screenshot.py
 ```
 
 # Code
+
+## .env
+
+Before using firebase to your nodeJS you need to make .env file with your firebase keys in.
+
+```jsx
+FIREBASE_API_KEY = xxxxx
+FIREBASE_AUTH_DOMAIN = xxxxx
+FIREBASE_PROJECT_ID = xxxxx
+FIREBASE_STORAGE_BUCKET = xxxxx
+FIREBASE_MESSD_ID = xxxxx
+FIREBASE_APP_ID =  xxxxx
+FIREBASE_MEASUREMENT_ID =  xxxxx
+```
 
 ## Index.js
 
