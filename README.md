@@ -173,22 +173,22 @@ Chart
 ## table information
 1. class now working - table_name : on-air
 
-  subject  (string)
-  teacherID : user’s id (string)
-  start  (timestamp)
-  end : when to end  (timestamp)
-  stuNum : total number of student  (number)
+ - subject  (string)
+ - teacherID : user’s id (string)
+ - start  (timestamp)
+ - end : when to end  (timestamp)
+ - stuNum : total number of student  (number)
 
 2. every class info - table_name : people-space
 
-  subject (string)
-  teacherID  (string)
-  start  (timestamp)
-  end  (timestamp)
-  stuNum  (number)
-  attendance  (number)
-  fileID : picture of that time (string)
-  time : time when picture is taken (timestamp)
+ - subject (string)
+ - teacherID  (string)
+ - start  (timestamp)
+ - end  (timestamp)
+ - stuNum  (number)
+ - attendance  (number)
+ - fileID : picture of that time (string)
+ - time : time when picture is taken (timestamp)
   
 ## **history.ejs**
 
