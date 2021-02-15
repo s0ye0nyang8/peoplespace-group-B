@@ -24,11 +24,16 @@
 - Hosting
 
 ## For load & run model realted code  
-- flask - 
-- pyautogui - 
+- flask - v1.1.2
+- pyautogui - v0.9.52
 - fast.ai - v1.0.61
 
 # About Boom App page
+
+In BooM App page you can use these functions :
+
+- Analyze video conference meetings' attention figure
+
 
 ## flask-screenshot.py
 
@@ -49,7 +54,6 @@
 
 - After click the start button, users have to wait on this page if they want to analyze their meeting. 
 - If you want to stop analyzing it, you can just click the stop button and go back to the previous page.
-
 
 
 
@@ -77,7 +81,6 @@ npm start
 ```
 
 Or If you want to run the app code ( python code )
-python flask-screenshot.py
 
 ```
 python flask-screenshot.py
