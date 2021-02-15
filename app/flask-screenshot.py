@@ -18,15 +18,16 @@ from flask import redirect
 from models_func import *
 from sam_models_func import *
 
-
-
 cwd = os.getcwd()
 path = cwd + '/'
+torch.cuda.empty_cache()
 model = load_learner(path, 'sam_final_onlyface.pkl')
 
 n = 0
 
 img_path = cwd + '/test_images'
+
+
 
 def call_repeatedly(interval, func, *args):
     stopped = Event()
@@ -41,10 +42,40 @@ app = Flask(__name__)
 capture_thread_stop = None
 
 
+# 로컬 폴더 이미지 프리딕트 
+def local_attentiongauge():
+    bbox, label = predict(img_path, model)
+    print(label)
+    global user
+    global n
+
+    labels_list = []
+    for k in range(0, len(label)):
+        # lb = label == "front"
+        front_num = 0
+        for i in range(0, len(label[k])):
+            if(label[k][i] == "front") :
+                front_num += 1
+                
+                url = storage.child(k).get_url(user['idToken'])
+                doc_ref = db.collection(u'screenshots').document()
+                doc_ref.set({
+                        u"attention": front_num,
+                        u"createdAt": time.strftime('%c', time.localtime(time.time())),      
+                        u"creatorId": userInfo["teacherID"],
+                    })
+                n += 1
+                database.child().push(doc_ref)
+
+    return 0
+
+
+
 # start 버튼 클릭
 @app.route('/start/')
 def start_page():
-    start()
+    #start()
+    local_attentiongauge()
     return render_template('capturing.html')
 
 def start():
@@ -58,7 +89,7 @@ def start():
 # stop 버튼 클릭 
 @app.route('/stop/')
 def turn_to_index():
-     stop()
+     #stop()
      return render_template('index.html')
 
 def stop():
@@ -115,7 +146,6 @@ def capture():
 
 def attentiongauge():
     # bboxes, labels, scores = newpredict(model,img,train_json)
-    
     bbox, label = predict(img_path, model)
  
     rv_path = img_path + '/' + detect_image
@@ -128,7 +158,6 @@ def attentiongauge():
             front_num += 1
 
     return front_num
-
 
 
 global user
