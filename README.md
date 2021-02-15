@@ -172,6 +172,7 @@ Chart
 
 ## table information
 1. class now working - table_name : on-air
+
   subject  (string)
   teacherID : user’s id (string)
   start  (timestamp)
@@ -179,6 +180,7 @@ Chart
   stuNum : total number of student  (number)
 
 2. every class info - table_name : people-space
+
   subject (string)
   teacherID  (string)
   start  (timestamp)
