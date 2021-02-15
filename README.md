@@ -24,6 +24,11 @@ Status: In progress
 - Firestore
 - Hosting
 
+## For load & run model realted code  
+- flask - 
+- pyautogui - 
+- fast.ai - v1.0.61
+
 ## .env
 
 Before using firebase to your nodeJS you need to make .env file with your firebase keys in.
@@ -59,6 +64,13 @@ OR
 
 ```jsx
 npm start
+```
+
+Or If you want to run the app code ( python code )
+python flask-screenshot.py
+
+```
+python flask-screenshot.py
 ```
 
 # Code
@@ -107,6 +119,28 @@ ID has to be email format and Password has to be over 6 character.
 - This page gets userID as input and send this information to app with randomly generated classID and some inputs form user. Then apps stores information to database based on this informations.
 
 ## Total_statistics.ejs
+
+
+## flask-screenshot.py
+
+- This file is script for overall features of app team.
+- We take some screen shots of clients' display, and analayze the attention figures of video conference meetings by loading our learnde model for detecting attention status.
+- After calculate the figures, it sends them to our firebase database so our clients can see them through the graphs. 
+
+## sam_models_func.py
+
+- There are customized  predict function for our model, so you can import this file for module on the flask-screenshot.py file and use it for prediction.
+- It will return the result of detecting attention status, for labels. 
+
+## index.html
+
+- Users can click the start button on this page to start analyze their video conference meeting. 
+
+## capturing.html
+
+- After click the start button, users have to wait on this page if they want to analyze their meeting. 
+- If you want to stop analyzing it, you can just click the stop button and go back to the previous page.
+
 
 ### Enter
 
