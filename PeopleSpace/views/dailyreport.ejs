@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="css/main.css" />
 		
 
-        <!--firebase, firestore 라이브러리-->>
+        <!--firebase, firestore 라이브러리-->
 		<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
 	</head>
@@ -24,73 +24,41 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-
-							<!-- Header -->
-								<header id="header">
-									<a href="index.html" class="logo"><strong>BOOM</strong> by Group B</a>
-									<dl>
-										<h1>Daily Report</h1>
-									</dl>
-									
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-									</ul>
-								</header>
-
-								
-
+					<!-- Header -->
+					<header id="header">
+						<form name="h_form" action="/index" method="get" style="margin-left: 10px;" >
+						<a href="#" class="logo" onclick="h_form.submit()"><strong>Online Platform</strong> BOOM</a>
+						</form>
+						<dl  >
+							<h1>Daily Report</h1>
+						</dl>
+						<form name="l_form" action="/logOut" method="get"  >
+							<ul class="icons">
+								<a href="#" class="logo" onclick="l_form.submit()">Log Out</a>
+							</ul>
+						</form>
+						
+					</header>
 							<!-- Content -->
 							<section>
 								<header class="main">
 									<div class="row">
 										<div class="col-4 col-12-medium">
-											<span class="image fit"><img src="images/png/013-certificate.png" alt="" /></span>
+											<!--<span class="image fit"><img src="images/png/013-certificate.png" alt="" /></span>-->
 										</div>
-										<div class="col-4 col-12-medium">
+										
+										</div></header>
+
+										<!-- <div class="col-4 col-12-medium">
 											<h3>Section</h3>
 											<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit.</p>
 										</div>
 										<div class="col-4 col-12-medium">
 											<h3>Date</h3>
 											<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit.</p>
-										</div>
+										</div> 
 									</div>
 								
-								
-								<div class="row gtr-200">
-									<div class="col-6 col-12-medium">
-										<h4>Dailys of the Week</h4>
-										<ul class="pagination">
-											<li><span class="button">Prev</span></li>
-											<li><a href="#" class="page active">MON</a></li>
-											<li><a href="#" class="page">TUE</a></li>
-											<li><a href="#" class="page">WED</a></li>
-											<li><a href="#" class="page">THU</a></li>
-											<li><a href="#" class="page">FRI</a></li>
-											<li><a href="#" class="page">Weekly</a></li>
-											<li><a href="#" class="button">Next</a></li>
-										</ul>
-										<div class="col-4 col-12-small">
-											<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-											<label for="demo-priority-low">Low</label>
-										</div>
-										<div class="col-4 col-12-small">
-											<input type="radio" id="demo-priority-normal" name="demo-priority">
-											<label for="demo-priority-normal">Normal</label>
-										</div>
-										<div class="col-4 col-12-small">
-											<input type="radio" id="demo-priority-high" name="demo-priority">
-											<label for="demo-priority-high">High</label>
-										</div>
-									</div>
-									<div class="col-6 col-12-medium">										
-										<form method="post" action="#">
-											<div class="row gtr-uniform">
-												<!-- Break -->
 												<div class="col-12">
 													<select name="demo-category" id="demo-category">
 														<option value="">- Category -</option>
@@ -100,7 +68,7 @@
 														<option value="1">Human Resources</option>
 													</select>
 												</div>
-												<!-- Break -->
+												
 												<div class="col-12">
 													<input type="textfiled" id="Epilogue" />
 													<button id="saveButton">Save</button>
@@ -111,111 +79,147 @@
 									</div>
 								</div>
 								</header>
-							
+							 -->
 								<!--표-->
 								<!-- Content -->
-								<h1 >Total Attention Gauge</h1>
-								<h3>You can click the button to see the attention gauge history with charts!</h3>
+								<!-- <h1 >Total Attention Gauge</h1>
+								<h3>You can click the button to see the attention gauge history with charts!</h3> -->
 
-		
-
-								<!--그래프-->
-									
-									
-			<!--------------------------혜민님 데이터 코드--
-							
-								--------------------------------------------------------------------->
-								
-									<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-									<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-									<script type="text/javascript">
-
-										google.charts.load('current', {'packages':['corechart']});
-
-										function drawChart() {
-
-											var arr = [['Time', 'Attention']];
-											var urlArr = [];
-
-											<%for(var i = 0; i < rows.length; i++){%>
-												var newarr = [];
-												var idx_url = [];
-												newarr.push(<%=rows[i].time.toDate().getTime()%>);
-												newarr.push(<%=rows[i].attendance%>);
-												arr.push(newarr);
-											<%}%>
-
+							<!--Charts-->
+								<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+								<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+								<script type="text/javascript">
+										var arr = [['Time', 'Attention']];
+										var urlArr = [];
+										var max_att = 0;
+										<%for(var i = 0; i < rows.length; i++){%>
+											var newarr = [];
+											var idx_url = [];
+											newarr.push(<%=rows[i].time.toDate().getHours().toString()%> + ":" + <%=rows[i].time.toDate().getMinutes().toString()%> + ":" + <%=rows[i].time.toDate().getSeconds().toString()%>);
+											newarr.push(<%=rows[i].attendance%>);
+											arr.push(newarr);
+											var idx = <%=rows[i].time.toDate().getTime()%>;
+											var url = "<%=rows[i].fileID%>";
+											idx_url.push(idx);
+											idx_url.push(url);
+											urlArr.push(idx_url);
+											if (<%=rows[i].attendance%> > max_att){
+												max_att = <%=rows[i].attendance%>
+											}
+										<%}%>
+									google.charts.load('current', {'packages':['corechart']});
+									function area(){
+										google.charts.setOnLoadCallback(areaChart);
+									}
+									function curve(){
+									google.charts.setOnLoadCallback(curveChart);
+									}
+									function pie(){
+										google.charts.setOnLoadCallback(pieChart);
+									}
+									function table(){
+									google.charts.setOnLoadCallback(tableChart);
+									}
+									function column(){
+										google.charts.setOnLoadCallback(columnChart);
+									}
+									function areaChart(){
 											var data = google.visualization.arrayToDataTable(arr);
+											var options = {
+												title:'Attention Gauge',
+												backgroundColor: '',
+											hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+											vAxis: {minValue: 0}
+											};
+											var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+											chart.draw(data, options);
+									}
+									function pieChart(){
+											var data = new google.visualization.DataTable();
+											var attend=[];
+											//console.log("맥스", max_att);
+											for(var i = 0; i <= max_att; i++){
+												attend.push(0);
+											}
+											console.log("attend", attend);
+											for(var i = 1; i <= urlArr.length; i++){
+												console.log("배열", arr[i][1]);
+												attend[arr[i][1]]++;
+											}
+											console.log(attend);
+											data.addColumn('string', 'Topping');
+											data.addColumn('number', 'Slices');
+											//attend
+											for(var i = 0; i <= max_att; i++){
+												console.log(i);
+												//console.log("여기", attend[i], `level ${i}`, attend.length);
+												data.addRow([`level ${i}`, attend[i]]);
+											}
 											
 											var options = {
-
-												title: 'Attention Gauge',
-												curveType: 'function',
+												title:'Attention Gauge',
+												backgroundColor: '',
+												
 												legend: { position: 'bottom' }
 											};
-
-											var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-											
+											var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 											chart.draw(data, options);
-
-											var x = document.getElementById("curve_chart");
-											if (x.style.display === "none") {
-												x.style.display = "block";
-											} else {
-												x.style.display = "none";
+									}
+									function curveChart() {
+											var data = google.visualization.arrayToDataTable(arr);
+											var options = {			
+												backgroundColor:  '',	
+												title: 'Attention Gauge',
+												curveType: 'function',
+												lineWidth: 8,
+												colors: ['#e2431e', '#d3362d', '#e7711b',
+									'#e49307', '#e49307', '#b9c246'],
+												legend: { position: 'bottom' }
+											};
+											var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+											function selectHandler() {
+												var selectedItem = chart.getSelection()[0];
+												if (selectedItem) {
+													var topping = data.getValue(selectedItem.row, 0);
+													var img = document.getElementById("myimg");
+													for(var i = 0; i < urlArr.length; i++){
+														if((urlArr[i][0] === topping) && (urlArr[i][1] != "")){
+															img.src=urlArr[i][1];
+															console.log("img");
+															img.style.display = "block";
+															break;
+														} else{
+															console.log("notimg");
+															img.style.display = "none";
+														}
+													}
+												}
 											}
-										}
-									</script>
-									
-<!--------------------------혜민님 데이터 코드----------------------------------------------------------------------->
-								<!--table-->
-
-									<!---<hr class="major" />-->
-								
-									<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-									<script type="text/javascript">
+											google.visualization.events.addListener(chart, 'select', selectHandler);
+											chart.draw(data, options);
+											
+									}
 									google.charts.load('current', {'packages':['table']});
-
-									function drawTable() {
+									function tableChart() {
 										var data = new google.visualization.DataTable();
 										data.addColumn('string', 'Time');
 										data.addColumn('number', 'Attention');
-						
-										
+
 										<%for(var i = 0; i < rows.length; i++){%>
-											data.addRow(['<%=rows[i].time.toDate().getTime()%>', {v: <%=rows[i].attendance%>}]);
+											data.addRow(['<%=rows[i].time.toDate().getHours().toString()%>:<%=rows[i].time.toDate().getMinutes().toString()%>:<%=rows[i].time.toDate().getSeconds().toString()%>', {v: <%=rows[i].attendance%>}]);
 										<%}%>
-										
 
-										var table = new google.visualization.Table(document.getElementById('table_div'));
-
+										var table = new google.visualization.Table(document.getElementById('chart_div'));
 										table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
-
-										var x = document.getElementById("table_div");
-											if (x.style.display === "none") {
-												x.style.display = "block";
-											} else {
-												x.style.display = "none";
-											}
 									}
-
-									</script>
-									
-									<!--column-->
-									<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-									<script type="text/javascript">
-									
-										google.charts.load('current', {packages: ['corechart', 'bar']});
-										//google.charts.setOnLoadCallback(drawBasic);
-
-										function drawBasic() {
-
+									google.charts.load('current', {packages: ['corechart', 'bar']});
+									function columnChart() {
 										var data = new google.visualization.DataTable();
-										data.addColumn('timeofday', 'Time of Day');
+										data.addColumn('string', 'Time');
 										data.addColumn('number', 'Attention Level');
 
 										<%for(var i = 0; i < rows.length; i++){%>
-											data.addRow([[<%=rows[i].time.toDate().getTime()%>, 0, 0], {v: <%=rows[i].attendance%>}]);
+											data.addRow(['<%=rows[i].time.toDate().getHours().toString()%>:<%=rows[i].time.toDate().getMinutes().toString()%>:<%=rows[i].time.toDate().getSeconds().toString()%>', {v: <%=rows[i].attendance%>}]);
 										<%}%>
 
 										var options = {
@@ -223,104 +227,206 @@
 											hAxis: {
 											title: 'Time of Class',
 											format: 'h:mm a',
-											
 											},
 											vAxis: {
 											title: 'Rating (scale of 0-3)'
 											}
 										};
-
 										var chart = new google.visualization.ColumnChart(
 											document.getElementById('chart_div'));
-
 										chart.draw(data, options);
+									}
+								</script>
+
+								<section>
+									<header class="main">
+										<h1 align="center">Total Attention Gauge</h1>
 										
-											var x = document.getElementById("chart_div");
-											if (x.style.display === "none") {
-												x.style.display = "block";
-											} else {
-												x.style.display = "none";
+										<h3  align="center">You can click the button to see the attention gauge history with charts!</h3>
+										<!--집중도 계산방법 가이드-->
+										<script>
+											window.onload = function() {
+										 
+											function onClick() {
+												document.querySelector('.modal_wrap').style.display ='block';
+												document.querySelector('.black_bg').style.display ='block';
+											}   
+											function offClick() {
+												document.querySelector('.modal_wrap').style.display ='none';
+												document.querySelector('.black_bg').style.display ='none';
 											}
-										}
+										 
+											document.getElementById('guide_popup').addEventListener('click', onClick);
+											document.querySelector('.modal_close').addEventListener('click', offClick);
+										 
+										};
+										</script>							
+										<button type = "button large" id ="guide_popup"><h2>🔍What does the charts show?</h2></button> 
+										<div class="black_bg"></div>
+										<div class="modal_wrap">
+											<div class="modal_close">
+												<a href="#">close</a>
+												<div><!--가이드 내용-->
+													
+													<h2>How to calculate Attention Gauge with BOOM</h2>
+														
+													
+													
+													<div class="row gtr-200">
+														<div class="col-6 col-12-medium">
+			
+															<!-- Image -->
+															<h3>Classroom Behavior</h3>
+			
+															<div class="box alt">
+																<div class="row gtr-50 gtr-uniform">
+																	<div class="col-4"><span class="image fit"><img src="images/guide/pic09.jpg" alt="" /></span></div>
+																	<div class="col-4" sytle="height:10px;"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_164022501.jpg" alt="" /></span></div>
+																	<div class="col-4"><span class="image fit"><img src="images/guide/pic10.jpg" alt="" /></span></div>
+																	<!-- Break -->
+																	<div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162005353.jpg" alt="" /></span></div>
+																	<div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162006399.jpg" alt="" /></span></div>
+																	<div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162006109.jpg" alt="" /></span></div>
+																	<!-- Break -->
+																	<div class="col-4"><span class="image fit"><img src="images/guide/pic06.jpg" alt="" /></span></div>
+																	<div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162005709.jpg" alt="" /></span></div>
+																	<div class="col-4"><span class="image fit"><img src="images/guide/pic05.jpg" alt="" /></span></div>
+																
+																</div>
+															</div>
+															
+			
+														</div>
+														<div class="col-6 col-12-medium">
+			
 
-										</script>
-										<section>
-											<button  class="btn btn-danger navbar-btn " onclick="drawChart()">
-												Toggle Graph Chart!
-											</button>
-											
-											<button  class="btn btn-danger navbar-btn" onclick="drawTable()">
-												Toggle Table Chart!
-											</button>
-											
-											<button class="btn btn-danger navbar-btn" onclick="drawBasic()">
-												Toggle Column Chart!
-											</button>
-										</section>
-										<section>
-											
-											<div class = "chartwrap">
-												<div id="curve_chart"></div>
+																<h4>Front</h4>
+																<p><span class="image left"><img src="images/guide/KakaoTalk_20210214_162006399.jpg" alt="" /></span>When students focus in the classroom, the behavior they see is to look ahead. When students open their eyes and do not sleep, it can be said that they are focused. Therefore, we can analyze that students' faces and eyes are focused when they are looking ahead.</p>
+																<hr />
+																
+															<!-- Box -->
+																<h3>Numbers on the chart</h3>
+																<div class="box">
+																	<p>(The number of students looking ahead) * 100(%) </p>
+																	<hr />
+																	<p>(Total number of students)</p>
+																</div>
+			
+														</div>
+													</div>
+												</div>
 											</div>
-											<div id="table_div"></div>
-											<div id="chart_div"></div>
-
-										</section>
-								</section>
-											
-										
-								<!--막대형-->
+										</div>
+									</header>
+									<div>
+									<hr />
+									<div class="row aln-center" >
+										<div class="wrap chartwrap">
+											<div class="button_wrap" style="text-align: center;">
+												<div  class="button" onclick="curve()">Linear Chart</div>
+												<div  class="button" onclick="pie()" style="margin-left: 10px;">Pie Chart</div>
+												<div  class="button" onclick="area()"  style="margin-left: 10px;">Area Chart</div>
+												<div  class="button" onclick="table()"  style="margin-left: 10px;">Table Chart</div>
+												<div  class="button" onclick="column()"  style="margin-left: 10px;">Column Chart</div>
+											</div>
+											<div style="text-align: center;"id="chart_div"></div> 
+										</div>
+										<script>
+											function equalHeights( $objs )
+											{
+											var highest = 0;
+											$objs.each(function() {
+												thisHeight = $(this).height();
+												if(thisHeight > highest ) {
+												highest = thisHeight;
+												}
+											});
+											$objs.height( highest );
+											}
+											$(function(){
+												//setTimeout(function(){ height:100%; margin-left: 100px; margin-top:10px ;  margin-bottom: 20px;
+													equalHeights( $(".wrap") );
+												//}, 2000);
+											});
+										</script>
+									</div>
+								</div>
 									
-					
-							
+								</section>
+
+							</section>
+																
 						</div>
 					</div>
-								<!-- Sidebar -->
+
+
+					<!-- Sidebar -->
 					<div id="sidebar">
 						<div class="inner">
 
 							
 							<!-- Search -->
 								<section id="search" class="alt">
-									<form method="post" action="#">
+									<!-- <form method="post" action="#">
 										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
+									</form> -->
 								</section>
 
 								<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="generic.html">Generic</a></li>
-										<li><a href="elements.html">Elements</a></li>
-										<li>
-											<span class="opener">Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li>
-											<span class="opener">Another Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
-									</ul>
-								</nav>
+					<nav id="menu">
+						<header class="major">
+							<h2>Menu</h2>
+						</header>
+						<ul>
+							<li>
+								<a href="/index" type="submit" >Homepage</a>
+							</li>
+							<li>
+								<form action="/element" id="element" name="element"  style="margin: auto; ">
+									<a type="submit" onclick="ele_()">Make Class</a>
+									<script>
+										function ele_() {
+											$('#element').submit();
+										}
+									</script>
+								</form>
+							</li>
+							<li><a href="/total">After Class</a></li>
+							<li>		
+								<span class="opener">Statistics</span>		
+								<ul>
+									<li>		<!-- realtime 페이지는 가은. -->
+										<form action="/realtime" id="realtime" name="realtime"  style="margin: auto;">
+											<a type="submit" onclick="ele()">Real-Time</a>
+											<script>
+												function ele() {
+													$('#realtime').submit();
+												}
+											</script>
+										</form>
+									</li>
+									<li>
+										<form action="/history" id="history" name="history"  style="margin: auto;">
+											<a type="submit" onclick="his()">History</a> <!--ele를 바꿔야할 듯-->
+											<script>
+												function his() { 
+													$('#history').submit();
+												}
+											</script>
+										</form>
+									</li>
+								
+								</ul>
+							</li>
+						</ul>
+					</nav>
+					<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; 2021PeopleSpace TeamB. BOOM?. 
+							GitHub Source: <a href="https://github.com/s0ye0nyang/peoplespace-group-B">GitHub</a>. 
+							Design: <a href="https://html5up.net">HTML5 UP</a>.
+						</p>
+					</footer>	
 
 							
 
