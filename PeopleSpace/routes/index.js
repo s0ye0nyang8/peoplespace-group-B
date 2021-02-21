@@ -290,7 +290,7 @@ router.post('/dailyreport', function(req, res, next) {
       db.collection('people-space')
       .where('teacherID', '==', fb.auth().currentUser.email)
       .where('start', '==', aClass.start)
-      .orderBy("time", "desc")
+      .orderBy("time", "asc")
       .get()
           .then((snapshot) => {
               var rows = [];
