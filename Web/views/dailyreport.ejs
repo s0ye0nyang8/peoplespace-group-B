@@ -94,6 +94,7 @@
                         <script type="text/javascript">
                               var arr = [['Time', 'Attention']];
                               var urlArr = [];
+                              var max_att = 0;
                               <%for(var i = 0; i < rows.length; i++){%>
                                  var newarr = [];
                                  var idx_url = [];
@@ -105,6 +106,9 @@
                                  idx_url.push(idx);
                                  idx_url.push(url);
                                  urlArr.push(idx_url);
+                                 if (<%=rows[i].attendance%> > max_att){
+												max_att = <%=rows[i].attendance%>
+											}
                               <%}%>
                            google.charts.load('current', {'packages':['corechart']});
                            function area(){
@@ -135,20 +139,23 @@
                            }
                            function pieChart(){
                                  var data = new google.visualization.DataTable();
-                                 var attend = [0,0,0];
+                                 var attend=[];
                                  
-                                 for(var i = 0; i < urlArr.length; i++){
-                                    // console.log(arr[i][1]);
-                                       attend[arr[i][1]-1]++;
-                                 }
+                                 for(var i = 0; i <= max_att; i++){
+												attend.push(0);
+											}
                                  //console.log(attend);
+                                 for(var i = 1; i <= urlArr.length; i++){
+												console.log("배열", arr[i][1]);
+												attend[arr[i][1]]++;
+											}
                                  data.addColumn('string', 'Topping');
                                  data.addColumn('number', 'Slices');
-                                 data.addRows([
-                                 ['level 1', attend[0]],
-                                 ['level 2', attend[1]],
-                                 ['level 3', attend[2]]
-                                 ]);
+                                 for(var i = 0; i <= max_att; i++){
+												console.log(i);
+												//console.log("여기", attend[i], `level ${i}`, attend.length);
+												data.addRow([`level ${i}`, attend[i]]);
+											}
                                  var options = {
                                     title:'Attention Gauge',
                                     backgroundColor: '',
@@ -190,9 +197,7 @@
                                  }
                                  google.visualization.events.addListener(chart, 'select', selectHandler);
                                  chart.draw(data, options);
-                                 $(window).resize(function(){
-                                    drawChart();
-                                 })
+                                
                            }
                            google.charts.load('current', {'packages':['table']});
                            function tableChart() {
@@ -210,12 +215,12 @@
                            google.charts.load('current', {packages: ['corechart', 'bar']});
                            function columnChart() {
                               var data = new google.visualization.DataTable();
-                              data.addColumn('timeofday', 'Time of Day');
-                              data.addColumn('number', 'Attention Level');
+                              data.addColumn('string', 'Time');
+										data.addColumn('number', 'Attention Level');
 
                               <%for(var i = 0; i < rows.length; i++){%>
-                                 data.addRow([[<%=rows[i].time.toDate().getTime()%>, 0, 0], {v: <%=rows[i].attendance%>}]);
-                              <%}%>
+											data.addRow(['<%=rows[i].time.toDate().getHours().toString()%>:<%=rows[i].time.toDate().getMinutes().toString()%>:<%=rows[i].time.toDate().getSeconds().toString()%>', {v: <%=rows[i].attendance%>}]);
+										<%}%>
 
                               var options = {
                                  title: 'Attention Level Throughout the Class',
@@ -263,50 +268,63 @@
                                     <a href="#">close</a>
                                     <div><!--가이드 내용-->
                                        <h2>How to calculate Attention Gauge with BOOM</h2>
-                                       <h3>Image</h3>
-
-                                       <h4>Classroom Behavior</h4>
-                                       <div class="box alt">
-                                          <div class="row gtr-50 gtr-uniform">
-                                             <div class="col-4"><span class="image fit"><img src="images/pic08.jpg" alt="" /></span></div>
-                                             <div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_164022501.jpg" alt="" /></span></div>
-                                             <div class="col-4"><span class="image fit"><img src="images/pic10.jpg" alt="" /></span></div>
-                                             <!-- Break -->
-                                             <div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162005353.jpg" alt="" /></span></div>
-                                             <div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162006399.jpg" alt="" /></span></div>
-                                             <div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162006109.jpg" alt="" /></span></div>
-                                             <!-- Break -->
-                                             <div class="col-4"><span class="image fit"><img src="images/pic09.jpg" alt="" /></span></div>
-                                             <div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162005709.jpg" alt="" /></span></div>
-                                             <div class="col-4"><span class="image fit"><img src="images/pic08.jpg" alt="" /></span></div>
-                                          </div>
-                                       </div>
-
-                                       <h4>Front</h4>
-                                       <p><span class="image left"><img src="images/guide/KakaoTalk_20210214_162006399.jpg" alt="" /></span>When students focus in the classroom, the behavior they see is to look ahead. When students open their eyes and do not sleep, it can be said that they are focused. Therefore, we can analyze that students' faces and eyes are focused when they are looking ahead.</p>
                                        
-                                    <!-- Box -->
-                                       <h3>Numbers on the chart</h3>
-                                       <div class="box">
-                                          <p>(The number of students looking ahead)/(Total number of students)*100(%)</p>
-                                       </div>
+                                       <div class="row gtr-200">
+														<div class="col-6 col-12-medium">
+			
+															<!-- Image -->
+															<h3>Classroom Behavior</h3>
+			
+															<div class="box alt">
+																<div class="row gtr-50 gtr-uniform">
+																	<div class="col-4"><span class="image fit"><img src="images/guide/pic09.jpg" alt="" /></span></div>
+																	<div class="col-4" sytle="height:10px;"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_164022501.jpg" alt="" /></span></div>
+																	<div class="col-4"><span class="image fit"><img src="images/guide/pic10.jpg" alt="" /></span></div>
+																	<!-- Break -->
+																	<div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162005353.jpg" alt="" /></span></div>
+																	<div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162006399.jpg" alt="" /></span></div>
+																	<div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162006109.jpg" alt="" /></span></div>
+																	<!-- Break -->
+																	<div class="col-4"><span class="image fit"><img src="images/guide/pic06.jpg" alt="" /></span></div>
+																	<div class="col-4"><span class="image fit"><img src="images/guide/KakaoTalk_20210214_162005709.jpg" alt="" /></span></div>
+																	<div class="col-4"><span class="image fit"><img src="images/guide/pic05.jpg" alt="" /></span></div>
+																
+																</div>
+															</div>
+															
+			
+														</div>
+														<div class="col-6 col-12-medium">
+			
 
+																<h4>Front</h4>
+																<p><span class="image left"><img src="images/guide/KakaoTalk_20210214_162006399.jpg" alt="" /></span>When students focus in the classroom, the behavior they see is to look ahead. When students open their eyes and do not sleep, it can be said that they are focused. Therefore, we can analyze that students' faces and eyes are focused when they are looking ahead.</p>
+																<hr />
+                                       
+                                          <!-- Box -->
+                                             <h3>Numbers on the chart</h3>
+                                             <div class="box">
+                                                <p>(The number of students looking ahead)/(Total number of students)*100(%)</p>
+                                             </div>
+                                          </div>
+													</div>
                                     </div>
                                  </div>
                               </div>
                            </header>
                            <div>
-                           
-                           <div class="wrap chartwrap">
+                           <hr />
+                           <div class="row aln-center" >
+                            <div class="wrap chartwrap">
                               
                               <div class="button_wrap" style="text-align: center;">
-                                 <div  class="button" onclick="curve()"  style="margin-left: 150px;" >Linear Chart</div>
+                                 <div  class="button" onclick="curve()">Linear Chart</div>
                                  <div  class="button" onclick="pie()" style="margin-left: 10px;">Pie Chart</div>
                                  <div  class="button" onclick="area()"  style="margin-left: 10px;">Area Chart</div>
-                                 <div  class="button" onclick="table()"  style="margin-left: 150px;">Table Chart</div>
-                                 <div  class="button" onclick="column()"  style="margin-left: 150px;">Column Chart</div>
+                                 <div  class="button" onclick="table()"  style="margin-left: 10px;">Table Chart</div>
+                                 <div  class="button" onclick="column()"  style="margin-left: 10px;">Column Chart</div>
                               </div>
-                              <div    style="height:100%; margin-left: 100px; margin-top:10px ;  margin-bottom: 20px;"id="chart_div"></div>
+											<div style="text-align: center;"id="chart_div"></div> 
                            </div>
                            <script>
                               function equalHeights( $objs )
@@ -327,7 +345,8 @@
                               });
                            </script>
                         </div>
-                           
+                       </div>
+                       
                         </section>
 
                      </section>
