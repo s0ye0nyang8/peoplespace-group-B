@@ -17,16 +17,16 @@ from models_func import *
 from flask import redirect
 from models_func import *
 from sam_models_func import *
-
+import ntpath
+from datetime import datetime, timedelta
 cwd = os.getcwd()
 path = cwd + '/'
 torch.cuda.empty_cache()
 model = load_learner(path, 'sam_final_onlyface.pkl')
+global userInfo
+global curr_file
 
-n = 0
-
-img_path = cwd + '/test_images'
-
+img_path = cwd + '/captured_image'
 
 
 def call_repeatedly(interval, func, *args):
@@ -42,58 +42,53 @@ app = Flask(__name__)
 capture_thread_stop = None
 
 
-# 로컬 폴더 이미지 프리딕트 
-def local_attentiongauge():
+# 로컬 폴더 이미지 프리딕트
+def attentiongauge(url):
     bbox, label = predict(img_path, model)
-    print(label)
-    global user
-    global n
-
-    labels_list = []
-    for k in range(0, len(label)):
-        # lb = label == "front"
-        front_num = 0
-        for i in range(0, len(label[k])):
-            if(label[k][i] == "front") :
-                front_num += 1
-                
-                url = storage.child(k).get_url(user['idToken'])
-                doc_ref = db.collection(u'screenshots').document()
-                doc_ref.set({
-                        u"attention": front_num,
-                        u"createdAt": time.strftime('%c', time.localtime(time.time())),      
-                        u"creatorId": userInfo["teacherID"],
-                    })
-                n += 1
-                database.child().push(doc_ref)
-
+    global userInfo
+    for i, lb in enumerate(label):
+        front = [i for i in lb if i == "front"]
+        gauge = len(front)
+        doc_ref = db.collection(u'people-space').document(ntpath.basename(Path(img_path).ls()[i+1]))
+        doc_ref.set({
+                u"attendance": gauge,
+                u"end" :userInfo["end"],
+                u"fileID":url,
+                u"start":userInfo["start"],
+                u"stNum":userInfo["stuNum"],
+                u"subject":userInfo["subject"],
+                u"teacherID": userInfo["teacherID"],
+                u"time": datetime.utcnow(),
+            })
     return 0
 
-
+#actually, there is only one image in the folder
 
 # start 버튼 클릭
-@app.route('/start/')
-def start_page():
-    #start()
-    local_attentiongauge()
-    return render_template('capturing.html')
 
+# def start_page():
+#     #start()
+#     attentiongauge()
+#     return render_template('capturing.html')
+@app.route('/start/')
 def start():
     global capture_thread_stop
     if capture_thread_stop:
         return "Already started"
     capture_thread_stop = call_repeatedly(1, capture)
-    return "Started"
+    return render_template('capturing.html')
 
-
-# stop 버튼 클릭 
+# stop 버튼 클릭
 @app.route('/stop/')
 def turn_to_index():
-     #stop()
+     stop()
      return render_template('index.html')
 
 def stop():
     global capture_thread_stop
+    capture_thread_stop()
+    capture_thread_stop = None
+    return "Stopped"
     if capture_thread_stop:
         capture_thread_stop()
         capture_thread_stop = None
@@ -102,86 +97,59 @@ def stop():
         return "Not running"
 
 
-global userInfo
-
 # 기본 idex 페이지
 @app.route('/')
 def index():
     global userInfo
-    if request.method == 'GET':
-        print()
-    else :
-        values = request.values
-        userInfo = {
-            "end" : values["end"],
-            "subject" : values["subject"],
-            "teacherID" : values["teacherID"],
-            "start" : values["start"],
-            "stuNum" : values["stuNum"]
+#     if request.method == 'GET':
+#         print()
+#     else :
+#         values = request.values
+#         userInfo = {
+#             "end" : values["end"],
+#             "subject" : values["subject"],
+#             "teacherID" : values["teacherID"],
+#             "start" : values["start"],
+#             "stuNum" : values["stuNum"]
+#         }
+    userInfo = {
+            "end" : datetime.utcnow()+timedelta(hours=2),
+            "subject" : "math",
+            "teacherID" : "dlwjddms@cau.ac.kr",
+            "start" : datetime.utcnow(),
+            "stuNum" : 30
         }
-
     return render_template('index.html')
 
-
-
-
-# 웹 팀 리다이렉트 
-@app.route('/web/') 
-def redirect_web_team(): 
+# 웹 팀 리다이렉트
+@app.route('/web/')
+def redirect_web_team():
     # boom-b900b.firebaseapp.com
     return redirect("https://www.naver.com")
 
 
-global detect_image
 def capture():
+    global userInfo
     myScreenshot = pyautogui.screenshot()
     filename = strftime("%Y%m%d%H%M%S", gmtime())+'.png'
-    global detect_image
-    detect_image = filename
     # myScreenshot.save(filename)
-    myScreenshot.save(img_path + '/' + filename)
-    upload(img_path + '/' + filename)
+    filepath = img_path + '/' + filename
+    myScreenshot.save(filepath)
+    upload(filename, filepath)
+
+
+def upload(name,path):
+    global userInfo
+    storage.child(name).put(path)
+    url = storage.child(name).get_url(user['idToken'])
+    database.child().push({"img": url})
     temp = tempfile.NamedTemporaryFile(delete=False)
+    attentiongauge(url)
+    # def attentiongauge()
+    # : analyze all pics(actually only one pic) in captured img folder. no params
+    # img_path <- folder of captured image
+    os.remove(img_path + '/' + name)
 
-
-def attentiongauge():
-    # bboxes, labels, scores = newpredict(model,img,train_json)
-    bbox, label = predict(img_path, model)
- 
-    rv_path = img_path + '/' + detect_image
-    os.remove(rv_path)
-
-    # lb = label == "front"
-    front_num = 0
-    for i in range(0, len(label)):
-        if(label[i] == "front") :
-            front_num += 1
-
-    return front_num
-
-
-global user
-
-def upload(filename):
-#     bucket = storage.bucket()
-#     blob = bucket.blob(filename)
-#     blob.upload_from_filename(filename)
-#     storage.child(filename).put(filename)
-
-    global user
-    global n
-    url = storage.child(filename).get_url(user['idToken'])
-#     print(url)
-    gauge = attentiongauge()
-    
-    doc_ref = db.collection(u'screenshots').document()
-    doc_ref.set({
-            u"attention": gauge,
-            u"createdAt": time.strftime('%c', time.localtime(time.time())),      
-            u"creatorId": userInfo["teacherID"],
-        })
-    n += 1
-    database.child().push(doc_ref)
 
 if __name__ == "__main__":
     app.run()

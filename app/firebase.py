@@ -2,24 +2,25 @@ import firebase_admin
 from firebase_admin import firestore
 from firebase_admin import credentials
 from firebase_admin import initialize_app
-from firebase_admin import storage
-import storage as storage
+# from firebase_admin import storage
+# import storage as storage
 import pyrebase
 import uuid
 
 
 firebaseConfig = {
-    "apiKey": "AIzaSyAK9Bc9Dk3sRxjqnVjHWm6kcJkUAY1JK7c",
-    "authDomain": "boom-b900b.firebaseapp.com",
-    "databaseURL": "https://boom-default-rtdb.firebaseio.com",
-    "projectId": "boom-b900b",
-    "storageBucket": "boom-b900b.appspot.com",
-    "messagingSenderId": "90431175931",
-    "appId": "1:90431175931:web:cd4c513c3db7dbb5cf845e",
-    "measurementId": "G-Y087ST1ZNH"
+    "apiKey": "AIzaSyAvjHClecVWEHei8FxDwZB3EBTuBqY9XEo",
+    "authDomain": "final-9ac8a.firebaseapp.com",
+    "databaseURL": "https://final-9ac8a-default-rtdb.firebaseio.com/",
+    "projectId": "final-9ac8a",
+    "storageBucket": "final-9ac8a.appspot.com",
+    "messagingSenderId": "836802909691",
+    "appId": "1:836802909691:web:4ad8bdb101da6adf5d675e",
+    "measurementId": "G-GKY7Q2GLE9"
 }
 
-cred = credentials.Certificate('boom-b900b-firebase-adminsdk-gjau1-e75591bd71.json')
+
+cred = credentials.Certificate('final-9ac8a-firebase-adminsdk-sn5p5-abb177668f.json')
 firebase_admin.initialize_app(cred)
 fbase = pyrebase.initialize_app(firebaseConfig)
 auth = fbase.auth()
@@ -29,6 +30,6 @@ database = fbase.database()
 db = firestore.client()
 storage = fbase.storage()
 
-email = "a@a.com"
-password = "aaaaaa"
+email = "dlwjddms@cau.ac.kr"
+password = "123456"
 user = auth.sign_in_with_email_and_password(email, password)
